@@ -32,6 +32,8 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  position: relative;
+  z-index: 2;
   padding: 12px 0px;
   box-shadow: 0px 25px 40px rgba(0, 0, 0, 0.03);
 
@@ -41,7 +43,7 @@ export default {
     justify-content: space-between;
   }
 
-  &__logo{
+  &__logo {
     cursor: pointer;
   }
 

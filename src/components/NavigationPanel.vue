@@ -23,7 +23,7 @@ export default {
         }
     },
     methods: {
-        tabItem(item){
+        tabItem(item) {
             for (const key in this.tabView) {
                 this.tabView[key].active = false
             }
@@ -68,6 +68,9 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
+    background: #FFFFFF;
+    position: relative;
+    z-index: 1;
     padding: 24px 0px;
 
     .container {
