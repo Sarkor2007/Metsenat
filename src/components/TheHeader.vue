@@ -33,11 +33,16 @@ export default {
 <style lang="scss" scoped>
 .header {
   padding: 12px 0px;
+  box-shadow: 0px 25px 40px rgba(0, 0, 0, 0.03);
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  &__logo{
+    cursor: pointer;
   }
 
   &__menu {
@@ -74,10 +79,11 @@ export default {
     }
   }
 
-  &__logout{
+  &__logout {
     cursor: pointer;
     width: 32px;
     height: 32px;
     object-fit: contain;
   }
-}</style>
+}
+</style>
