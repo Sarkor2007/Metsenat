@@ -1,6 +1,35 @@
 <script>
 export default {
     name: "NavigationPanel",
+    data() {
+        return {
+            tabView: [
+                {
+                    id: 1,
+                    active: true,
+                    title: 'Dashboard',
+                },
+                {
+                    id: 2,
+                    active: false,
+                    title: 'Homiylar',
+                },
+                {
+                    id: 3,
+                    active: false,
+                    title: 'Talabalar',
+                }
+            ]
+        }
+    },
+    methods: {
+        tabItem(item){
+            for (const key in this.tabView) {
+                this.tabView[key].active = false
+            }
+            item.active = true
+        }
+    }
 }
 </script>
 
@@ -9,9 +38,11 @@ export default {
         <div class="container">
             <nav class="nav">
                 <ul class="nav__list">
-                    <li class="nav__list-item active">Dashboard</li>
-                    <li class="nav__list-item">Homiylar</li>
-                    <li class="nav__list-item">Talabalar</li>
+                    <li v-for="(item, index) in this.tabView"
+                        :key="index"
+                        @click="tabItem(item)"
+                        :class="item.active ? 'active' : ''"
+                        class="nav__list-item">{{ item.title }}</li>
                 </ul>
             </nav>
             <div class="navbar__menu">
