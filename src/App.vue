@@ -2,12 +2,14 @@
 import TheHeader from './components/TheHeader.vue'
 import NavigationPanel from './components/NavigationPanel.vue'
 import Dashboard from './components/Dashboard.vue'
+import Sponsors from './components/Sponsors.vue'
 </script>
 
 <template>
   <TheHeader />
   <NavigationPanel />
   <Dashboard />
+  <Sponsors />
 </template>
 
 <style>
