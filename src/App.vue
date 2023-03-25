@@ -6,6 +6,9 @@ import NavigationPanel from './components/NavigationPanel.vue'
 import Dashboard from './components/Dashboard.vue'
 import Sponsors from './components/Sponsors.vue'
 import Students from './components/Students.vue'
+
+
+import Login from './components/Login.vue'
 </script>
 
 <script>
@@ -16,6 +19,7 @@ export default {
     Dashboard,
     Sponsors,
     Students,
+    Login,
   },
   computed: {
     tabActived() {
@@ -33,13 +37,14 @@ export default {
 </script>
 
 <template>
-  <TheHeader />
-  <NavigationPanel />
-  <div class="wrapper">
-    <Dashboard v-if="this.tabActived == 1" />
-    <Sponsors v-else-if="this.tabActived == 2" />
-    <Students v-else-if="this.tabActived == 3" />
-  </div>
+  <Login />
+  <!-- <TheHeader />
+    <NavigationPanel />
+    <div class="wrapper">
+      <Dashboard v-if="this.tabActived == 1" />
+      <Sponsors v-else-if="this.tabActived == 2" />
+      <Students v-else-if="this.tabActived == 3" />
+    </div> -->
 </template>
 
 <style>
