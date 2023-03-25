@@ -85,6 +85,9 @@ export default {
         border: 1px solid #EBEEFC;
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
+        @media (max-width: 768px) {
+            padding: 32px 16px;
+        }
 
         &-title {
             font-weight: 700;

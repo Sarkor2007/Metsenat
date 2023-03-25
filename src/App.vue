@@ -9,6 +9,10 @@ import Students from './components/Students.vue'
 
 
 import Login from './components/Login.vue'
+
+
+// modal windows
+import SponsorModalFilter from './components/SponsorModalFilter.vue'
 </script>
 
 <script>
@@ -20,6 +24,12 @@ export default {
     Sponsors,
     Students,
     Login,
+    SponsorModalFilter,
+
+  },
+  data() {
+    return {
+    }
   },
   computed: {
     tabActived() {
@@ -31,20 +41,25 @@ export default {
       }
 
       return activeTab
-    }
+    },
+    // SponsorFilter() {
+    //   return this.$store.state.isModalFilterSponsor
+    // }
   }
 }
 </script>
 
 <template>
-  <Login />
-  <!-- <TheHeader />
-    <NavigationPanel />
-    <div class="wrapper">
-      <Dashboard v-if="this.tabActived == 1" />
-      <Sponsors v-else-if="this.tabActived == 2" />
-      <Students v-else-if="this.tabActived == 3" />
-    </div> -->
+  <!-- <Login /> -->
+  <TheHeader />
+  <NavigationPanel />
+  <div class="wrapper">
+    <Dashboard v-if="this.tabActived == 1" />
+    <Sponsors v-else-if="this.tabActived == 2" />
+    <Students v-else-if="this.tabActived == 3" />
+  </div>
+
+  <sponsor-modal-filter />
 </template>
 
 <style>

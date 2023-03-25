@@ -12,15 +12,16 @@ const store = createStore({
                 },
                 {
                     id: 2,
-                    active: false,
+                    active: true,
                     title: 'Homiylar',
                 },
                 {
                     id: 3,
-                    active: true,
+                    active: false,
                     title: 'Talabalar',
                 }
-            ]
+            ],
+            isModalFilterSponsor: true,
         }
     },
     mutations: {
@@ -29,6 +30,13 @@ const store = createStore({
                 this.state.tabView[key].active = false
             }
             item.active = true
+        },
+        TOGGLE_FILTER_SPONSOR(state) {
+            if (state.isModalFilterSponsor == false) {
+                state.isModalFilterSponsor = true;
+            } else {
+                state.isModalFilterSponsor = false
+            }
         }
     }
 })

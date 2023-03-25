@@ -4,8 +4,23 @@ export default {
     methods: {
         tabItem(item) {
             this.$store.commit('CHANGE_TAB_ACTIVE', item)
+        },
+        activeSponsorFilter() {
+            this.$store.commit('TOGGLE_FILTER_SPONSOR')
         }
     },
+    computed: {
+        tabActived() {
+            let activeTab
+            for (const key in this.$store.state.tabView) {
+                if (this.$store.state.tabView[key].active == true) {
+                    activeTab = this.$store.state.tabView[key].id
+                }
+            }
+
+            return activeTab
+        },
+    }
 }
 </script>
 
@@ -32,7 +47,15 @@ export default {
                             alt="search">
                     </button>
                 </div>
-                <button class="filter">
+                <button v-if="this.tabActived == 2"
+                    @click="activeSponsorFilter"
+                    class="filter">
+                    <img src="../assets/icons/filter.svg"
+                        alt="filter">
+                    <h3>Filter</h3>
+                </button>
+                <button v-else-if="this.tabActived == 3"
+                    class="filter">
                     <img src="../assets/icons/filter.svg"
                         alt="filter">
                     <h3>Filter</h3>
