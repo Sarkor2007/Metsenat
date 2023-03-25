@@ -1,35 +1,11 @@
 <script>
 export default {
     name: "NavigationPanel",
-    data() {
-        return {
-            tabView: [
-                {
-                    id: 1,
-                    active: true,
-                    title: 'Dashboard',
-                },
-                {
-                    id: 2,
-                    active: false,
-                    title: 'Homiylar',
-                },
-                {
-                    id: 3,
-                    active: false,
-                    title: 'Talabalar',
-                }
-            ]
-        }
-    },
     methods: {
         tabItem(item) {
-            for (const key in this.tabView) {
-                this.tabView[key].active = false
-            }
-            item.active = true
+            this.$store.commit('CHANGE_TAB_ACTIVE', item)
         }
-    }
+    },
 }
 </script>
 
@@ -38,7 +14,7 @@ export default {
         <div class="container">
             <nav class="nav">
                 <ul class="nav__list">
-                    <li v-for="(item, index) in this.tabView"
+                    <li v-for="(item, index) in this.$store.state.tabView"
                         :key="index"
                         @click="tabItem(item)"
                         :class="item.active ? 'active' : ''"
