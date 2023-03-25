@@ -13,9 +13,9 @@ export default {
                     name: 'Alimov Abror Xabibullayevich',
                     tel: '+99899 973-72-60',
                     sumSponsor: '30 000 000',
-                    sum: '0',
+                    sumSpent: '0',
                     date: '15.01.2021',
-                    activity: 'Yangi',
+                    status: 'Yangi',
                     howis: 'new'
                 },
                 {
@@ -23,9 +23,9 @@ export default {
                     name: 'Saimov Rustam Saimjonovich',
                     tel: '+99899 973-72-60',
                     sumSponsor: '1 000 000',
-                    sum: '0',
+                    sumSpent: '0',
                     date: '02.02.2021',
-                    activity: 'Moderatsiyada',
+                    status: 'Moderatsiyada',
                     howis: 'modified'
                 },
                 {
@@ -33,9 +33,9 @@ export default {
                     name: 'Sanginov Otabek Muratovich',
                     tel: '+99899 973-72-60',
                     sumSponsor: '5 000 000',
-                    sum: '5 000 000',
+                    sumSpent: '5 000 000',
                     date: '20.04.2021',
-                    activity: 'Tasdiqlangan',
+                    status: 'Tasdiqlangan',
                     howis: 'actived'
                 },
                 {
@@ -43,9 +43,9 @@ export default {
                     name: 'Nazarov Sanjar Olimovich',
                     tel: '+99899 973-72-60',
                     sumSponsor: '7 000 000',
-                    sum: '7 000 000',
+                    sumSpent: '7 000 000',
                     date: '03.05.2021',
-                    activity: 'Bekor qilingan',
+                    status: 'Bekor qilingan',
                     howis: 'cancel'
                 },
             ]
@@ -63,10 +63,10 @@ export default {
                         <li class="number">#</li>
                         <li class="name">f.i.sh.</li>
                         <li class="telefon">Tel.Raqami</li>
-                        <li class="summ">Homiylik summasi</li>
-                        <li class="summ__two">Sarflangan summa</li>
+                        <li class="summ-sponsor">Homiylik summasi</li>
+                        <li class="summ-spent">Sarflangan summa</li>
                         <li class="date">Sana</li>
-                        <li class="activity">Holati</li>
+                        <li class="status">Holati</li>
                         <li class="show">Amallar</li>
                     </ul>
                 </div>
@@ -79,11 +79,11 @@ export default {
                                 <li class="number">{{ item.id }}</li>
                                 <li class="name">{{ item.name }}</li>
                                 <li class="telefon">{{ item.tel }}</li>
-                                <li class="summ">{{ item.sumSponsor }} <span>UZS</span></li>
-                                <li class="summ__two">{{ item.sum }} <span>UZS</span></li>
+                                <li class="summ-sponsor">{{ item.sumSponsor }} <span>UZS</span></li>
+                                <li class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
                                 <li class="date">{{ item.date }}</li>
-                                <li class="activity"
-                                    :class="item.howis">{{ item.activity }}</li>
+                                <li class="status"
+                                    :class="item.howis">{{ item.status }}</li>
                                 <li class="show">
                                     <img :src="showIcon"
                                         alt="showIcon">
@@ -93,9 +93,35 @@ export default {
                     </ul>
                 </div>
             </div>
-            <div class="sponsors__pagination">
-                <div class="sponsors__pagination-count">
-                    
+            <div class="pagination">
+                <div class="pagination__count">
+                    59 tadan 1-10 ko‘rsatilmoqda
+                </div>
+                <div class="pagination__block">
+                    <div class="pagination__show">
+                        <p>Ko‘rsatish</p>
+                        <select name="count"
+                            id="count">
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="pagination__box">
+                        <button class="pagination__btn left">
+                            <img src="../assets/icons/pagination.svg"
+                                alt="button">
+                        </button>
+                        <div class="pagination__wrapper">
+                            <div class="pagination__item active">1</div>
+                            <div class="pagination__item">2</div>
+                            <div class="pagination__item">...</div>
+                            <div class="pagination__item">9</div>
+                            <div class="pagination__item">10</div>
+                        </div>
+                        <button class="pagination__btn">
+                            <img src="../assets/icons/pagination.svg"
+                                alt="button">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -150,11 +176,11 @@ export default {
                     width: 15%;
                 }
 
-                &.summ {
+                &.summ-sponsor {
                     width: 15%;
                 }
 
-                &.summ__two {
+                &.summ-spent {
                     width: 15%;
                 }
 
@@ -162,7 +188,7 @@ export default {
                     width: 10%;
                 }
 
-                &.activity {
+                &.status {
                     width: 12%;
                 }
 
@@ -221,7 +247,7 @@ export default {
                         color: #1D1D1F;
                     }
 
-                    .summ {
+                    .summ-sponsor {
                         width: 15%;
                         font-weight: 500;
                         font-size: 14px;
@@ -233,7 +259,7 @@ export default {
                         }
                     }
 
-                    .summ__two {
+                    .summ-spent {
                         width: 15%;
                         font-weight: 500;
                         font-size: 14px;
@@ -254,7 +280,7 @@ export default {
                         color: #1D1D1F;
                     }
 
-                    .activity {
+                    .status {
                         width: 12%;
                         font-weight: 400;
                         font-size: 15px;
@@ -285,5 +311,96 @@ export default {
         }
     }
 
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 28px;
+
+        &__count {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            color: #1D1D1F;
+        }
+
+        &__show {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 22px;
+            color: #1D1D1F;
+
+            select {
+                cursor: pointer;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 22px;
+                color: #1D1D1F;
+                padding: 5px 7px;
+                border-radius: 4px;
+                background: #FFFFFF;
+                border: 1px solid #DFE3E8;
+            }
+        }
+
+
+        &__block {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        &__box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        &__btn {
+            background: #FFFFFF;
+            border: 1px solid #DFE3E8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 11px;
+            cursor: pointer;
+
+            &.left {
+                transform: rotate(180deg);
+                opacity: .35;
+                cursor: auto;
+            }
+        }
+
+        &__wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        &__item {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+            color: #1D1D1F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            border: 1px solid #DFE3E8;
+            border-radius: 4px;
+            &.active{
+                color: #3366FF;
+                border: 1px solid #3366FF;
+            }
+        }
+    }
 }
 </style>
