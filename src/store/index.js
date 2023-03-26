@@ -53,12 +53,13 @@ const store = createStore({
                     active: false
                 },
             ],
+            selectedStatus: 'all'
         }
     },
     mutations: {
         CHANGE_TAB_ACTIVE(state, item) {
             for (const key in store.state.tabView) {
-                this.state.tabView[key].active = false
+                state.tabView[key].active = false
             }
             item.active = true
         },
@@ -68,6 +69,9 @@ const store = createStore({
             } else {
                 state.isModalFilterSponsor = false
             }
+        },
+        UPDATE_SELECTED_STATUS(state, value) {
+            state.selectedStatus = value;
         }
     }
 })

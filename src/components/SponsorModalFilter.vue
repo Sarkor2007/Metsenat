@@ -1,41 +1,6 @@
 <script>
 export default {
     name: 'SponsorModalFilter',
-    // data() {
-    //     return {
-    //         sponsorSumFilter: [
-    //             {
-    //                 money: 'Barchasi',
-    //                 active: true,
-    //                 type: 'all'
-    //             },
-    //             {
-    //                 money: 1000000,
-    //                 active: false
-    //             },
-    //             {
-    //                 money: 5000000,
-    //                 active: false
-    //             },
-    //             {
-    //                 money: 7000000,
-    //                 active: false
-    //             },
-    //             {
-    //                 money: 10000000,
-    //                 active: false
-    //             },
-    //             {
-    //                 money: 30000000,
-    //                 active: false
-    //             },
-    //             {
-    //                 money: 50000000,
-    //                 active: false
-    //             },
-    //         ],
-    //     }
-    // },
     methods: {
         closeSponsorFilter() {
             this.$store.commit('TOGGLE_FILTER_SPONSOR')
@@ -53,8 +18,16 @@ export default {
         },
         sponsorSumFilter() {
             return this.$store.state.sponsorSumsFilter
-        }
-    }
+        },
+        selectedStatus: {
+            get() {
+                return this.$store.state.selectedStatus;
+            },
+            set(value) {
+                this.$store.commit("UPDATE_SELECTED_STATUS", value);
+            }
+        },
+    },
 }
 </script>
 
@@ -72,7 +45,8 @@ export default {
             </div>
             <div class="filter__status">
                 <h3 class="filter__status-title">Ariza holati</h3>
-                <select name="type"
+                <select v-model="selectedStatus"
+                    name="type"
                     id="type">
                     <option value="all">Barchasi</option>
                     <option value="new">Yangi</option>

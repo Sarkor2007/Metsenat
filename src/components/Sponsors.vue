@@ -26,7 +26,7 @@ export default {
                     sumSpent: 0,
                     date: '02.02.2021',
                     status: 'Moderatsiyada',
-                    howis: 'modified'
+                    howis: 'moderation'
                 },
                 {
                     id: 3,
@@ -74,7 +74,16 @@ export default {
             }
             return filteredSponsorListItem
         },
-    }
+        filteredStatus() {
+            let filterStatus
+            if (this.$store.state.selectedStatus == 'all') {
+                filterStatus = this.filteredSponsorSum
+            } else {
+                filterStatus = this.filteredSponsorSum.filter(el => el.howis == this.$store.state.selectedStatus)
+            }
+            return filterStatus
+        }
+    },
 }
 </script>
 
@@ -95,9 +104,9 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul v-if="this.filteredSponsorSum.length"
+                    <ul v-if="this.filteredStatus.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in this.filteredSponsorSum"
+                        <li v-for="(item, index) in this.filteredStatus"
                             :key="index"
                             class="item">
                             <ul class="item__box">
@@ -349,7 +358,7 @@ export default {
                             color: #5BABF2;
                         }
 
-                        &.modified {
+                        &.moderation {
                             color: #FFA445;
                         }
 
