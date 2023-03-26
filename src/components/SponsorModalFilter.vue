@@ -1,13 +1,54 @@
 <script>
 export default {
     name: 'SponsorModalFilter',
+    data() {
+        return {
+            sponsorSumFilter: [
+                {
+                    money: 'Barchasi',
+                    active: true,
+                    type: 'all'
+                },
+                {
+                    money: 1000000,
+                    active: false
+                },
+                {
+                    money: 5000000,
+                    active: false
+                },
+                {
+                    money: 7000000,
+                    active: false
+                },
+                {
+                    money: 10000000,
+                    active: false
+                },
+                {
+                    money: 30000000,
+                    active: false
+                },
+                {
+                    money: 50000000,
+                    active: false
+                },
+            ]
+        }
+    },
     methods: {
         closeSponsorFilter() {
             this.$store.commit('TOGGLE_FILTER_SPONSOR')
+        },
+        sponsorSumToggle(item) {
+            for (const key in this.sponsorSumFilter) {
+                this.sponsorSumFilter[key].active = false
+            }
+            item.active = true
         }
     },
     computed: {
-        SponsorFilter() {
+        sponsorFilter() {
             return this.$store.state.isModalFilterSponsor
         }
     }
@@ -15,9 +56,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="SponsorFilter"
+    <div v-if="sponsorFilter"
         class="filter">
-        <dialog :open="SponsorFilter">
+        <dialog :open="sponsorFilter">
             <div class="filter__header">
                 <h3 class="filter__title">Filter</h3>
                 <div class="filter__exit">
@@ -42,16 +83,23 @@ export default {
                     Homiylik summasi
                 </h3>
                 <div class="filter__summ-box">
-                    <div class="item all">Barchasi</div>
-                    <div class="item active">1 000 000 <span> UZS</span>
+                    <div v-for="(item, index) in this.sponsorSumFilter"
+                        :key="index"
+                        @click="sponsorSumToggle(item)"
+                        :class="item.active == true && item.type == 'all' ? 'all active' : item.active ? 'active' : item.type == 'all' ? 'all' : ''"
+                        class="item">{{ item.money }} <span v-if="item.type !== 'all'"> UZS</span>
                         <img src="../assets/icons/checked.svg"
                             alt="check">
                     </div>
-                    <div class="item">5 000 000 <span> UZS</span></div>
-                    <div class="item">7 000 000 <span> UZS</span></div>
-                    <div class="item">10 000 000 <span> UZS</span></div>
-                    <div class="item">30 000 000 <span> UZS</span></div>
-                    <div class="item">50 000 000 <span> UZS</span></div>
+                    <!-- <div class="item">1 000 000 <span> UZS</span>
+                                                    <img src="../assets/icons/checked.svg"
+                                                        alt="check">
+                                                </div> -->
+                    <!-- <div class="item">5 000 000 <span> UZS</span></div>
+                                                        <div class="item">7 000 000 <span> UZS</span></div>
+                                                        <div class="item">10 000 000 <span> UZS</span></div>
+                                                        <div class="item">30 000 000 <span> UZS</span></div>
+                                                        <div class="item">50 000 000 <span> UZS</span></div> -->
                 </div>
             </div>
             <label for="date"
@@ -181,6 +229,7 @@ export default {
 
                 &.active {
                     border: 2px solid #2E5BFF;
+
                     img {
                         display: inline-block;
                         position: absolute;

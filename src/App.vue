@@ -42,9 +42,6 @@ export default {
 
       return activeTab
     },
-    // SponsorFilter() {
-    //   return this.$store.state.isModalFilterSponsor
-    // }
   }
 }
 </script>

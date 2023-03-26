@@ -12,8 +12,8 @@ export default {
                     id: 1,
                     name: 'Alimov Abror Xabibullayevich',
                     tel: '+99899 973-72-60',
-                    sumSponsor: '30 000 000',
-                    sumSpent: '0',
+                    sumSponsor: 30000000,
+                    sumSpent: 0,
                     date: '15.01.2021',
                     status: 'Yangi',
                     howis: 'new'
@@ -22,8 +22,8 @@ export default {
                     id: 2,
                     name: 'Saimov Rustam Saimjonovich',
                     tel: '+99899 973-72-60',
-                    sumSponsor: '1 000 000',
-                    sumSpent: '0',
+                    sumSponsor: 1000000,
+                    sumSpent: 0,
                     date: '02.02.2021',
                     status: 'Moderatsiyada',
                     howis: 'modified'
@@ -32,8 +32,8 @@ export default {
                     id: 3,
                     name: 'Sanginov Otabek Muratovich',
                     tel: '+99899 973-72-60',
-                    sumSponsor: '5 000 000',
-                    sumSpent: '5 000 000',
+                    sumSponsor: 5000000,
+                    sumSpent: 5000000,
                     date: '20.04.2021',
                     status: 'Tasdiqlangan',
                     howis: 'actived'
@@ -42,8 +42,8 @@ export default {
                     id: 4,
                     name: 'Nazarov Sanjar Olimovich',
                     tel: '+99899 973-72-60',
-                    sumSponsor: '7 000 000',
-                    sumSpent: '7 000 000',
+                    sumSponsor: 7000000,
+                    sumSpent: 7000000,
                     date: '03.05.2021',
                     status: 'Bekor qilingan',
                     howis: 'cancel'
@@ -79,8 +79,11 @@ export default {
                                 <li class="number">{{ item.id }}</li>
                                 <li class="name">{{ item.name }}</li>
                                 <li class="telefon">{{ item.tel }}</li>
-                                <li class="summ-sponsor">{{ item.sumSponsor }} <span>UZS</span></li>
-                                <li class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
+                                <li class="summ-sponsor">{{ item.sumSponsor.toLocaleString().replaceAll(',', ' ') }}
+                                    <span>UZS</span>
+                                </li>
+                                <li class="summ-spent">{{ item.sumSpent.toLocaleString().replaceAll(',', ' ') }}
+                                    <span>UZS</span></li>
                                 <li class="date">{{ item.date }}</li>
                                 <li class="status"
                                     :class="item.howis">{{ item.status }}</li>

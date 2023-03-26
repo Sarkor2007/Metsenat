@@ -21,7 +21,7 @@ const store = createStore({
                     title: 'Talabalar',
                 }
             ],
-            isModalFilterSponsor: true,
+            isModalFilterSponsor: false,
         }
     },
     mutations: {
