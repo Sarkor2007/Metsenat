@@ -17,7 +17,6 @@ export default {
                     activeTab = this.$store.state.tabView[key].id
                 }
             }
-
             return activeTab
         },
     }

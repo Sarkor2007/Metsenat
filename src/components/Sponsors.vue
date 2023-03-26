@@ -50,6 +50,30 @@ export default {
                 },
             ]
         }
+    },
+    computed: {
+        filteredSponsorSum() {
+            let filteredSponsorListItem
+            let storeFilter = this.$store.state.sponsorSumsFilter
+            for (const key in storeFilter) {
+                if (storeFilter[key].active && storeFilter[key].money == 'Barchasi') {
+                    filteredSponsorListItem = this.sponsorsList
+                } else if (storeFilter[key].active && storeFilter[key].money == 1000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 1000000)
+                } else if (storeFilter[key].active && storeFilter[key].money == 5000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 5000000)
+                } else if (storeFilter[key].active && storeFilter[key].money == 7000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 7000000)
+                } else if (storeFilter[key].active && storeFilter[key].money == 10000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 10000000)
+                } else if (storeFilter[key].active && storeFilter[key].money == 30000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 30000000)
+                } else if (storeFilter[key].active && storeFilter[key].money == 50000000) {
+                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 50000000)
+                }
+            }
+            return filteredSponsorListItem
+        },
     }
 }
 </script>
@@ -71,19 +95,21 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul class="sponsors__body-list">
-                        <li v-for="(item, index) in this.sponsorsList"
+                    <ul v-if="this.filteredSponsorSum.length"
+                        class="sponsors__body-list">
+                        <li v-for="(item, index) in this.filteredSponsorSum"
                             :key="index"
                             class="item">
                             <ul class="item__box">
-                                <li class="number">{{ item.id }}</li>
+                                <li class="number">{{ index + 1 }}</li>
                                 <li class="name">{{ item.name }}</li>
                                 <li class="telefon">{{ item.tel }}</li>
                                 <li class="summ-sponsor">{{ item.sumSponsor.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
                                 <li class="summ-spent">{{ item.sumSpent.toLocaleString().replaceAll(',', ' ') }}
-                                    <span>UZS</span></li>
+                                    <span>UZS</span>
+                                </li>
                                 <li class="date">{{ item.date }}</li>
                                 <li class="status"
                                     :class="item.howis">{{ item.status }}</li>
@@ -94,6 +120,10 @@ export default {
                             </ul>
                         </li>
                     </ul>
+                    <div class="empty"
+                        v-else>
+                        Empty
+                    </div>
                 </div>
             </div>
             <div class="pagination">
@@ -337,6 +367,17 @@ export default {
                     }
                 }
             }
+        }
+
+        .empty {
+            background: #FFFFFF;
+            // border: 1px solid rgba(46, 91, 255, 0.08);
+            // border-radius: 8px;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 }

@@ -1,41 +1,41 @@
 <script>
 export default {
     name: 'SponsorModalFilter',
-    data() {
-        return {
-            sponsorSumFilter: [
-                {
-                    money: 'Barchasi',
-                    active: true,
-                    type: 'all'
-                },
-                {
-                    money: 1000000,
-                    active: false
-                },
-                {
-                    money: 5000000,
-                    active: false
-                },
-                {
-                    money: 7000000,
-                    active: false
-                },
-                {
-                    money: 10000000,
-                    active: false
-                },
-                {
-                    money: 30000000,
-                    active: false
-                },
-                {
-                    money: 50000000,
-                    active: false
-                },
-            ]
-        }
-    },
+    // data() {
+    //     return {
+    //         sponsorSumFilter: [
+    //             {
+    //                 money: 'Barchasi',
+    //                 active: true,
+    //                 type: 'all'
+    //             },
+    //             {
+    //                 money: 1000000,
+    //                 active: false
+    //             },
+    //             {
+    //                 money: 5000000,
+    //                 active: false
+    //             },
+    //             {
+    //                 money: 7000000,
+    //                 active: false
+    //             },
+    //             {
+    //                 money: 10000000,
+    //                 active: false
+    //             },
+    //             {
+    //                 money: 30000000,
+    //                 active: false
+    //             },
+    //             {
+    //                 money: 50000000,
+    //                 active: false
+    //             },
+    //         ],
+    //     }
+    // },
     methods: {
         closeSponsorFilter() {
             this.$store.commit('TOGGLE_FILTER_SPONSOR')
@@ -50,6 +50,9 @@ export default {
     computed: {
         sponsorFilter() {
             return this.$store.state.isModalFilterSponsor
+        },
+        sponsorSumFilter() {
+            return this.$store.state.sponsorSumsFilter
         }
     }
 }
@@ -91,15 +94,6 @@ export default {
                         <img src="../assets/icons/checked.svg"
                             alt="check">
                     </div>
-                    <!-- <div class="item">1 000 000 <span> UZS</span>
-                                                    <img src="../assets/icons/checked.svg"
-                                                        alt="check">
-                                                </div> -->
-                    <!-- <div class="item">5 000 000 <span> UZS</span></div>
-                                                        <div class="item">7 000 000 <span> UZS</span></div>
-                                                        <div class="item">10 000 000 <span> UZS</span></div>
-                                                        <div class="item">30 000 000 <span> UZS</span></div>
-                                                        <div class="item">50 000 000 <span> UZS</span></div> -->
                 </div>
             </div>
             <label for="date"

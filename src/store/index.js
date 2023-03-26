@@ -22,6 +22,37 @@ const store = createStore({
                 }
             ],
             isModalFilterSponsor: false,
+            sponsorSumsFilter: [
+                {
+                    money: 'Barchasi',
+                    active: true,
+                    type: 'all'
+                },
+                {
+                    money: 1000000,
+                    active: false
+                },
+                {
+                    money: 5000000,
+                    active: false
+                },
+                {
+                    money: 7000000,
+                    active: false
+                },
+                {
+                    money: 10000000,
+                    active: false
+                },
+                {
+                    money: 30000000,
+                    active: false
+                },
+                {
+                    money: 50000000,
+                    active: false
+                },
+            ],
         }
     },
     mutations: {
