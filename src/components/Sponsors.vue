@@ -54,21 +54,21 @@ export default {
     computed: {
         filteredSponsorSum() {
             let filteredSponsorListItem
-            let storeFilter = this.$store.state.sponsorSumsFilter
-            for (const key in storeFilter) {
-                if (storeFilter[key].active && storeFilter[key].money == 'Barchasi') {
+            let sumFilter = this.$store.state.sponsorSumsFilter
+            for (const key in sumFilter) {
+                if (sumFilter[key].active && sumFilter[key].money == 'Barchasi') {
                     filteredSponsorListItem = this.sponsorsList
-                } else if (storeFilter[key].active && storeFilter[key].money == 1000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 1000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 1000000)
-                } else if (storeFilter[key].active && storeFilter[key].money == 5000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 5000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 5000000)
-                } else if (storeFilter[key].active && storeFilter[key].money == 7000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 7000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 7000000)
-                } else if (storeFilter[key].active && storeFilter[key].money == 10000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 10000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 10000000)
-                } else if (storeFilter[key].active && storeFilter[key].money == 30000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 30000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 30000000)
-                } else if (storeFilter[key].active && storeFilter[key].money == 50000000) {
+                } else if (sumFilter[key].active && sumFilter[key].money == 50000000) {
                     filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 50000000)
                 }
             }
@@ -377,17 +377,6 @@ export default {
                 }
             }
         }
-
-        .empty {
-            background: #FFFFFF;
-            // border: 1px solid rgba(46, 91, 255, 0.08);
-            // border-radius: 8px;
-            width: 100%;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
     }
 }
 </style>
@@ -484,5 +473,16 @@ export default {
             border: 1px solid #3366FF;
         }
     }
+}
+
+.empty {
+    background: #FFFFFF;
+    // border: 1px solid rgba(46, 91, 255, 0.08);
+    // border-radius: 8px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

@@ -1,6 +1,5 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
-import checked from '../../assets/icons/checked.svg'
 
 </script>
 
@@ -53,24 +52,22 @@ export default {
             </div>
             <div class="filter__select">
                 <h3 class="filter__select-title">Talabalik turi</h3>
-                <select v-model="selectedUniversity"
+                <select v-model="selectedType"
                     name="type"
                     id="type">
                     <option value="all">Barchasi</option>
-                    <option value="bakalavr">Bakalavr</option>
-                    <option value="magistr">Magistr</option>
+                    <option value="Bakalavr">Bakalavr</option>
+                    <option value="Magistr">Magistr</option>
                 </select>
             </div>
             <div class="filter__select">
                 <h3 class="filter__select-title">OTM</h3>
-                <select v-model="selectedType"
+                <select v-model="selectedUniversity"
                     name="type"
                     id="type">
                     <option value="all">Barchasi</option>
                     <option value="inha">Toshkent shahridagi INHA Universiteti</option>
                     <option value="milliy">O’zbekiston milliy universiteti</option>
-                    <option value="actived">Tasdiqlangan</option>
-                    <option value="cancel">Bekor qilingan</option>
                 </select>
             </div>
         </dialog>

@@ -13,6 +13,7 @@ export default {
                     name: 'Alimov Abror Xabibullayevich',
                     type: 'Bakalavr',
                     otm: 'Toshkent shahridagi INHA Universiteti',
+                    university: 'inha',
                     sumSpent: '14 000 000',
                     sumContract: '30 000 000',
                 },
@@ -21,11 +22,34 @@ export default {
                     name: 'Saimov Rustam Saimjonovich',
                     type: 'Magistr',
                     otm: 'O’zbekiston milliy universiteti',
+                    university: 'milliy',
                     sumSpent: '28 000 000',
                     sumContract: '28 000 000',
                 },
             ]
         }
+    },
+    computed: {
+        filteredStudentType() {
+            let filteredStudentType
+            let filter = this.$store.state.selectedType
+            if (filter == 'all') {
+                filteredStudentType = this.studentsList
+            } else {
+                filteredStudentType = this.studentsList.filter(el => el.type == filter)
+            }
+            return filteredStudentType
+        },
+        filteredStudentUniversity() {
+            let filteredStudentUniversity
+            let filter = this.$store.state.selectedUniversity
+            if (filter == 'all') {
+                filteredStudentUniversity = this.filteredStudentType
+            } else {
+                filteredStudentUniversity = this.filteredStudentType.filter(el => el.university == filter)
+            }
+            return filteredStudentUniversity
+        },
     }
 }
 </script>
@@ -53,8 +77,9 @@ export default {
                     </ul>
                 </div>
                 <div class="students__body">
-                    <ul class="students__body-list">
-                        <li v-for="(item, index) in this.studentsList"
+                    <ul v-if="filteredStudentUniversity.length"
+                        class="students__body-list">
+                        <li v-for="(item, index) in this.filteredStudentUniversity"
                             :key="index"
                             class="item">
                             <ul class="item__box">
@@ -71,6 +96,10 @@ export default {
                             </ul>
                         </li>
                     </ul>
+                    <div class="empty"
+                        v-else>
+                        Empty
+                    </div>
                 </div>
             </div>
             <div class="pagination">
