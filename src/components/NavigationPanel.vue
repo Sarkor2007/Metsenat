@@ -5,8 +5,12 @@ export default {
         tabItem(item) {
             this.$store.commit('CHANGE_TAB_ACTIVE', item)
         },
-        activeSponsorFilter() {
-            this.$store.commit('TOGGLE_FILTER_SPONSOR')
+        activeFilter() {
+            if(this.tabActived == 2){
+                this.$store.commit('TOGGLE_FILTER_SPONSOR')
+            } else if(this.tabActived == 3){
+                this.$store.commit('TOGGLE_FILTER_STUDENTS')
+            }
         }
     },
     computed: {
@@ -47,13 +51,14 @@ export default {
                     </button>
                 </div>
                 <button v-if="this.tabActived == 2"
-                    @click="activeSponsorFilter"
+                    @click="activeFilter"
                     class="filter">
                     <img src="../assets/icons/filter.svg"
                         alt="filter">
                     <h3>Filter</h3>
                 </button>
                 <button v-else-if="this.tabActived == 3"
+                    @click="activeFilter"
                     class="filter">
                     <img src="../assets/icons/filter.svg"
                         alt="filter">

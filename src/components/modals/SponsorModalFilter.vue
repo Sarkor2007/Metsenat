@@ -1,3 +1,9 @@
+<script setup>
+import exitBtn from '../../assets/icons/exit.svg'
+import checked from '../../assets/icons/checked.svg'
+
+</script>
+
 <script>
 export default {
     name: 'SponsorModalFilter',
@@ -39,7 +45,7 @@ export default {
                 <h3 class="filter__title">Filter</h3>
                 <div class="filter__exit">
                     <img @click="closeSponsorFilter"
-                        src="../assets/icons/exit.svg"
+                        :src="exitBtn"
                         alt="exit btn">
                 </div>
             </div>
@@ -51,7 +57,7 @@ export default {
                     <option value="all">Barchasi</option>
                     <option value="new">Yangi</option>
                     <option value="moderation">Moderatsiya</option>
-                    <option value="active">Tasdiqlangan</option>
+                    <option value="actived">Tasdiqlangan</option>
                     <option value="cancel">Bekor qilingan</option>
                 </select>
             </div>
@@ -65,7 +71,7 @@ export default {
                         @click="sponsorSumToggle(item)"
                         :class="item.active == true && item.type == 'all' ? 'all active' : item.active ? 'active' : item.type == 'all' ? 'all' : ''"
                         class="item">{{ item.money }} <span v-if="item.type !== 'all'"> UZS</span>
-                        <img src="../assets/icons/checked.svg"
+                        <img :src="checked"
                             alt="check">
                     </div>
                 </div>
@@ -142,6 +148,7 @@ export default {
         }
 
         select {
+            cursor: pointer;
             background: rgba(224, 231, 255, 0.2);
             border: 1px solid #E0E7FF;
             border-radius: 6px;

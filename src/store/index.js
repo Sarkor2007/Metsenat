@@ -22,6 +22,7 @@ const store = createStore({
                 }
             ],
             isModalFilterSponsor: false,
+            isModalFilterStudents: false,
             sponsorSumsFilter: [
                 {
                     money: 'Barchasi',
@@ -53,7 +54,9 @@ const store = createStore({
                     active: false
                 },
             ],
-            selectedStatus: 'all'
+            selectedStatus: 'all',
+            selectedType: 'all',
+            selectedUniversity: 'all',
         }
     },
     mutations: {
@@ -70,8 +73,21 @@ const store = createStore({
                 state.isModalFilterSponsor = false
             }
         },
+        TOGGLE_FILTER_STUDENTS(state) {
+            if (state.isModalFilterStudents == false) {
+                state.isModalFilterStudents = true;
+            } else {
+                state.isModalFilterStudents = false
+            }
+        },
         UPDATE_SELECTED_STATUS(state, value) {
             state.selectedStatus = value;
+        },
+        UPDATE_SELECTED_TYPE(state, value) {
+            state.selectedType = value;
+        },
+        UPDATE_SELECTED_UNIVERSITY(state, value) {
+            state.selectedUniversity = value;
         }
     }
 })
