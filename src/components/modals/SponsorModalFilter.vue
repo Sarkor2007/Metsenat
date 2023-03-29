@@ -1,6 +1,8 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
 import checked from '../../assets/icons/checked.svg'
+import clearBtn from '../../assets/icons/clear.svg'
+import showBtn from '../../assets/icons/eye.svg'
 
 </script>
 
@@ -85,6 +87,18 @@ export default {
                     name="date"
                     id="date">
             </label>
+            <div class="filter__bottom">
+                <button class="filter__bottom-clear">
+                    <img :src="clearBtn"
+                        alt="clear">
+                    <h3>Tozalash</h3>
+                </button>
+                <button class="filter__bottom-show">
+                    <img :src="showBtn"
+                        alt="clear">
+                    <h3>Natijalarni ko‘rish</h3>
+                </button>
+            </div>
         </dialog>
     </div>
 </template>
@@ -242,6 +256,42 @@ export default {
             border: 1px solid #E0E7FF;
             border-radius: 6px;
             padding: 11px 16px;
+        }
+    }
+
+    &__bottom {
+        border-top: 2px solid #F5F5F7;
+        padding-top: 28px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+
+        button {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            letter-spacing: -0.35px;
+            height: 42px;
+            padding: 0px 32px;
+            cursor: pointer;
+        }
+
+        &-clear {
+            border: 1px solid #3366FF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #3366FF;
+        }
+
+        &-show {
+            background: #3366FF;
+            box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+            border-radius: 5px;
+            color: #FFFFFF;
         }
     }
 }

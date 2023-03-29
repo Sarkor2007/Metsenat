@@ -1,5 +1,5 @@
 <script setup>
-import showIcon from '../assets/icons/eye.svg'
+import showIconBlue from '../assets/icons/eyeblue.svg'
 </script>
 
 <script>
@@ -53,35 +53,24 @@ export default {
     },
     computed: {
         filteredSponsorSum() {
-            let filteredSponsorListItem
-            let sumFilter = this.$store.state.sponsorSumsFilter
+            const sumFilter = this.$store.state.sponsorSumsFilter;
+            let filteredSponsorListItem = this.sponsorsList;
             for (const key in sumFilter) {
-                if (sumFilter[key].active && sumFilter[key].money == 'Barchasi') {
-                    filteredSponsorListItem = this.sponsorsList
-                } else if (sumFilter[key].active && sumFilter[key].money == 1000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 1000000)
-                } else if (sumFilter[key].active && sumFilter[key].money == 5000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 5000000)
-                } else if (sumFilter[key].active && sumFilter[key].money == 7000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 7000000)
-                } else if (sumFilter[key].active && sumFilter[key].money == 10000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 10000000)
-                } else if (sumFilter[key].active && sumFilter[key].money == 30000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 30000000)
-                } else if (sumFilter[key].active && sumFilter[key].money == 50000000) {
-                    filteredSponsorListItem = this.sponsorsList.filter(el => el.sumSponsor <= 50000000)
+                if (sumFilter[key].active) {
+                    const money = sumFilter[key].money;
+                    if (money !== 'Barchasi') {
+                        filteredSponsorListItem = filteredSponsorListItem.filter(el => el.sumSponsor <= money);
+                    }
                 }
             }
-            return filteredSponsorListItem
+            return filteredSponsorListItem;
         },
         filteredStatus() {
-            let filterStatus
-            if (this.$store.state.selectedStatus == 'all') {
-                filterStatus = this.filteredSponsorSum
-            } else {
-                filterStatus = this.filteredSponsorSum.filter(el => el.howis == this.$store.state.selectedStatus)
-            }
-            return filterStatus
+            const selectedStatus = this.$store.state.selectedStatus;
+            const filteredSponsorSum = this.filteredSponsorSum;
+            return selectedStatus === 'all'
+                ? filteredSponsorSum
+                : filteredSponsorSum.filter(el => el.howis === selectedStatus);
         }
     },
 }
@@ -123,7 +112,8 @@ export default {
                                 <li class="status"
                                     :class="item.howis">{{ item.status }}</li>
                                 <li class="show">
-                                    <img :src="showIcon"
+                                    <img @click="this.$router.push('/single')"
+                                        :src="showIconBlue"
                                         alt="showIcon">
                                 </li>
                             </ul>
@@ -373,6 +363,7 @@ export default {
 
                     .show {
                         width: 8%;
+                        cursor: pointer; 
                     }
                 }
             }

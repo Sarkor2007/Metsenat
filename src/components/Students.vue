@@ -1,5 +1,5 @@
 <script setup>
-import showIcon from '../assets/icons/eye.svg'
+import showIconBlue from '../assets/icons/eyeblue.svg'
 </script>
 
 <script>
@@ -30,26 +30,14 @@ export default {
         }
     },
     computed: {
-        filteredStudentType() {
-            let filteredStudentType
-            let filter = this.$store.state.selectedType
-            if (filter == 'all') {
-                filteredStudentType = this.studentsList
-            } else {
-                filteredStudentType = this.studentsList.filter(el => el.type == filter)
-            }
-            return filteredStudentType
-        },
-        filteredStudentUniversity() {
-            let filteredStudentUniversity
-            let filter = this.$store.state.selectedUniversity
-            if (filter == 'all') {
-                filteredStudentUniversity = this.filteredStudentType
-            } else {
-                filteredStudentUniversity = this.filteredStudentType.filter(el => el.university == filter)
-            }
-            return filteredStudentUniversity
-        },
+        filteredStudents() {
+            const selectedType = this.$store.state.selectedType;
+            const selectedUniversity = this.$store.state.selectedUniversity;
+            return this.studentsList.filter(el =>
+                (selectedType === 'all' || el.type === selectedType) &&
+                (selectedUniversity === 'all' || el.university === selectedUniversity)
+            );
+        }
     }
 }
 </script>
@@ -77,9 +65,9 @@ export default {
                     </ul>
                 </div>
                 <div class="students__body">
-                    <ul v-if="filteredStudentUniversity.length"
+                    <ul v-if="filteredStudents.length"
                         class="students__body-list">
-                        <li v-for="(item, index) in this.filteredStudentUniversity"
+                        <li v-for="(item, index) in this.filteredStudents"
                             :key="index"
                             class="item">
                             <ul class="item__box">
@@ -90,7 +78,8 @@ export default {
                                 <li class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
                                 <li class="summ-contract">{{ item.sumContract }} <span>UZS</span></li>
                                 <li class="show">
-                                    <img :src="showIcon"
+                                    <img @click="this.$router.push('/single')"
+                                        :src="showIconBlue"
                                         alt="showIcon">
                                 </li>
                             </ul>
@@ -307,6 +296,7 @@ export default {
 
                     .show {
                         width: 8%;
+                        cursor: pointer;
                     }
                 }
             }

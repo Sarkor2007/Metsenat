@@ -6,22 +6,17 @@ export default {
             this.$store.commit('CHANGE_TAB_ACTIVE', item)
         },
         activeFilter() {
-            if(this.tabActived == 2){
+            if (this.tabActived == 2) {
                 this.$store.commit('TOGGLE_FILTER_SPONSOR')
-            } else if(this.tabActived == 3){
+            } else if (this.tabActived == 3) {
                 this.$store.commit('TOGGLE_FILTER_STUDENTS')
             }
         }
     },
     computed: {
         tabActived() {
-            let activeTab
-            for (const key in this.$store.state.tabView) {
-                if (this.$store.state.tabView[key].active == true) {
-                    activeTab = this.$store.state.tabView[key].id
-                }
-            }
-            return activeTab
+            const activeTabItem = this.$store.state.tabView.find(tab => tab.active)
+            return activeTabItem ? activeTabItem.id : null
         },
     }
 }

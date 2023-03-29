@@ -67,18 +67,10 @@ const store = createStore({
             item.active = true
         },
         TOGGLE_FILTER_SPONSOR(state) {
-            if (state.isModalFilterSponsor == false) {
-                state.isModalFilterSponsor = true;
-            } else {
-                state.isModalFilterSponsor = false
-            }
+            state.isModalFilterSponsor = !state.isModalFilterSponsor;
         },
         TOGGLE_FILTER_STUDENTS(state) {
-            if (state.isModalFilterStudents == false) {
-                state.isModalFilterStudents = true;
-            } else {
-                state.isModalFilterStudents = false
-            }
+            state.isModalFilterStudents = !state.isModalFilterStudents;
         },
         UPDATE_SELECTED_STATUS(state, value) {
             state.selectedStatus = value;
