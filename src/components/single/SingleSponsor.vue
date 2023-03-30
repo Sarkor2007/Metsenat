@@ -3,11 +3,23 @@ import userImg from '../../assets/images/user.jpg'
 import editIcon from '../../assets/icons/edit.svg'
 import leftarrowIcon from '../../assets/icons/leftarrow.svg'
 import bottomImg from '../../assets/images/rocket.png'
+
+import SingleEditModal from '../modals/SingleEditModal.vue'
 </script>
 
 <script>
 export default {
     name: "Single",
+    data() {
+        return {
+            edit: false,
+        }
+    },
+    methods: {
+        openModal() {
+            this.edit = !this.edit
+        }
+    }
 }
 </script>
 
@@ -29,7 +41,8 @@ export default {
         <div class="single__body">
             <div class="single__body-header">
                 <h1 class="title">Homiy haqida</h1>
-                <button class="edit">
+                <button @click="openModal"
+                    class="edit">
                     <img :src="editIcon"
                         alt="edit">
                     <h3 class="edit__text">Tahrirlash</h3>
@@ -64,6 +77,9 @@ export default {
                 alt="rocket">
         </div>
     </section>
+
+    <single-edit-modal @closeEdit="openModal"
+        :open="this.edit" />
 </template>
 
 <style lang="scss" scoped>

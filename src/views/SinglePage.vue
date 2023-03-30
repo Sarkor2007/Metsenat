@@ -1,6 +1,6 @@
 <script setup>
 import TheHeader from '../components/TheHeader.vue'
-import Single from '../components/single/Single.vue'
+import Single from '../components/single/SingleSponsor.vue'
 </script>
 
 <script>
