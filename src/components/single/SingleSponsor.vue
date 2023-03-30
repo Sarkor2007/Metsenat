@@ -12,7 +12,7 @@ export default {
     name: "Single",
     data() {
         return {
-            edit: false,
+            edit: true,
         }
     },
     methods: {

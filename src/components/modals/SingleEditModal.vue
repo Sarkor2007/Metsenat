@@ -1,5 +1,6 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
+import saveIcon from '../../assets/icons/save.svg'
 </script>
 
 <script>
@@ -7,7 +8,7 @@ export default {
     name: 'SingleEditModal',
     props: ['open'],
     methods: {
-        closeEdit(){
+        closeEdit() {
             this.$emit('closeEdit')
         }
     }
@@ -17,17 +18,104 @@ export default {
 <template>
     <div v-if="this.open"
         class="filter">
-        <dialog :open="this.open">
-            <div class="filter__header">
-                <h3 class="filter__title">Tahrirlash</h3>
-                <div class="filter__exit">
-                    <img @click="closeEdit"
-                        :src="exitBtn"
-                        alt="exit btn">
+        <div class="filter__wrapper">
+            <dialog :open="this.open">
+                <div class="filter__header">
+                    <h3 class="filter__title">Tahrirlash</h3>
+                    <div class="filter__exit">
+                        <img @click="closeEdit"
+                            :src="exitBtn"
+                            alt="exit btn">
+                    </div>
                 </div>
-            </div>
-
-        </dialog>
+                <div class="filter__body">
+                    <div class="filter__type">
+                        <div class="filter__type-item active left">Jismoniy shaxs</div>
+                        <div class="filter__type-item right">Yuridik shaxs</div>
+                    </div>
+                    <div class="filter__list">
+                        <ul>
+                            <li>
+                                <label for="name">
+                                    <h3>F.I.Sh. (Familiya Ism Sharifingiz)</h3>
+                                    <input class="filter__list-item"
+                                        id="name"
+                                        name="name"
+                                        value="Ishmuhammedov Aziz Ishqobilovich"
+                                        type="text">
+                                </label>
+                            </li>
+                            <li>
+                                <label for="tel">
+                                    <h3>Telefon raqam</h3>
+                                    <input class="filter__list-item"
+                                        id="tel"
+                                        name="tel"
+                                        value="+998 973-72-60"
+                                        type="tel">
+                                </label>
+                            </li>
+                            <li>
+                                <label for="status">
+                                    <h3>Holati</h3>
+                                    <select class="filter__list-item"
+                                        name="status"
+                                        id="status">
+                                        <option value="actived">Tasdiqlangan</option>
+                                        <option value="new">Yangi</option>
+                                        <option value="cancel">Bekor qilingan</option>
+                                        <option value="moderation">Moderatsiyada</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="sum">
+                                    <h3>Homiylik summasi</h3>
+                                    <select class="filter__list-item"
+                                        name="sum"
+                                        id="sum">
+                                        <option value="30000000">30 000 000 UZS</option>
+                                        <option value="10000000">10 000 000 UZS</option>
+                                        <option value="5000000">5 000 000 UZS</option>
+                                        <option value="1000000">1 000 000 UZS</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="type">
+                                    <h3>To‘lov turi</h3>
+                                    <select class="filter__list-item"
+                                        name="type"
+                                        id="type">
+                                        <option value="actived">Pul o‘tkazmalari</option>
+                                        <option value="new">30 000 000 UZS</option>
+                                        <option value="cancel">30 000 000 UZS</option>
+                                        <option value="moderation">30 000 000 UZS</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="company">
+                                    <h3>Tashkilot nomi</h3>
+                                    <input class="filter__list-item"
+                                        id="company"
+                                        name="company"
+                                        value="Orient Group"
+                                        type="text">
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter__bottom">
+                    <div class="filter__btn">
+                        <img :src="saveIcon"
+                            alt="save">
+                        <h3>Saqlash</h3>
+                    </div>
+                </div>
+            </dialog>
+        </div>
     </div>
 </template>
 
@@ -37,12 +125,18 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100vh;
     z-index: 2;
     background: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: inherit;
+        margin: 100px 0px;
+    }
 
     dialog {
         background: #FFFFFF;
@@ -66,6 +160,10 @@ export default {
 
     &__exit {
         cursor: pointer;
+
+        img {
+            user-select: none;
+        }
     }
 
     &__title {
@@ -75,5 +173,117 @@ export default {
         color: #28293D;
     }
 
+
+    &__body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    &__type {
+        display: flex;
+        align-items: center;
+        user-select: none;
+
+        &-item {
+            padding: 14px 0px;
+            background: #FFFFFF;
+            border: 2px solid #E0E7FF;
+            color: rgba(51, 102, 255, 0.6);
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 12px;
+            text-align: center;
+            letter-spacing: 1.125px;
+            text-transform: uppercase;
+            border: 2px solid #E0E7FF;
+            width: 50%;
+
+            &.active {
+                border: 2px solid #3366FF;
+                background: #3366FF;
+                color: #fff;
+            }
+
+            &.left {
+                border-radius: 6px 0px 0px 6px;
+            }
+
+            &.right {
+                border-radius: 0px 6px 6px 0px;
+            }
+        }
+    }
+
+    &__list {
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+
+            li {
+                label {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    h3 {
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 14px;
+                        letter-spacing: 1.125px;
+                        text-transform: uppercase;
+                        color: #1D1D1F;
+                    }
+
+                    .filter__list-item {
+                        background: rgba(224, 231, 255, 0.2);
+                        border: 1px solid #E0E7FF;
+                        border-radius: 6px;
+                        padding: 12px 16px;
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #2E384D;
+                    }
+
+                    select {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    &__bottom {
+        padding-top: 28px;
+        display: flex;
+        width: 100%;
+        border-top: 2px solid #F5F5F7;
+        justify-content: flex-end;
+    }
+
+    &__btn {
+        cursor: pointer;
+        background: #3366FF;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        height: 42px;
+        padding: 0px 32px;
+        box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+        border-radius: 5px;
+
+        h3 {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+            letter-spacing: -0.35px;
+            color: #FFFFFF;
+
+        }
+    }
 }
 </style>
