@@ -18,8 +18,9 @@ export default {
 <template>
     <div v-if="this.open"
         class="filter">
-        <div class="filter__wrapper">
-            <dialog :open="this.open">
+        <dialog :open="this.open">
+            <div class="filter__wrapper">
+
                 <div class="filter__header">
                     <h3 class="filter__title">Tahrirlash</h3>
                     <div class="filter__exit">
@@ -114,8 +115,9 @@ export default {
                         <h3>Saqlash</h3>
                     </div>
                 </div>
-            </dialog>
-        </div>
+            </div>
+
+        </dialog>
     </div>
 </template>
 
@@ -123,6 +125,7 @@ export default {
 .filter {
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100vh;
@@ -130,15 +133,13 @@ export default {
     background: rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
 
-    &__wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: inherit;
-        margin: 100px 0px;
+    dialog {
+        padding: 100px 0px;
+        width: 100%;
+        background: transparent;
     }
 
-    dialog {
+    &__wrapper {
         background: #FFFFFF;
         border-radius: 12px;
         padding: 28px;

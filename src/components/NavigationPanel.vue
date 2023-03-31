@@ -1,6 +1,13 @@
 <script>
 export default {
     name: "NavigationPanel",
+    props: ['selectedComponent'],
+    data() {
+        return {
+            selectComponent: this.selectedComponent
+
+        }
+    },
     methods: {
         tabItem(item) {
             this.$store.commit('CHANGE_TAB_ACTIVE', item)
@@ -13,12 +20,19 @@ export default {
             }
         }
     },
+    watch: {
+        selectComponent(newVal) {
+            this.$emit('updateSelectedComponent', newVal);
+            // console.log(this.selectComponent);
+        }
+    },
     computed: {
         tabActived() {
             const activeTabItem = this.$store.state.tabView.find(tab => tab.active)
             return activeTabItem ? activeTabItem.id : null
         },
-    }
+    },
+
 }
 </script>
 
@@ -31,7 +45,14 @@ export default {
                         :key="index"
                         @click="tabItem(item)"
                         :class="item.active ? 'active' : ''"
-                        class="nav__list-item">{{ item.title }}</li>
+                        class="nav__list-item">
+                        <input type="radio"
+                            name="admin-page"
+                            :id="item.id"
+                            :value="item.value"
+                            v-model="selectComponent">
+                        <label :for="item.value">{{ item.title }}</label>
+                    </li>
                 </ul>
             </nav>
             <div class="navbar__menu">
@@ -87,7 +108,6 @@ export default {
             align-items: center;
 
             &-item {
-                cursor: pointer;
                 width: calc(100% / 3);
                 padding: 14px 0px;
                 background: #fff;
@@ -98,6 +118,7 @@ export default {
                 line-height: 12px;
                 letter-spacing: 1.125px;
                 text-transform: uppercase;
+                position: relative;
 
                 color: rgba(51, 102, 255, 0.6);
 
@@ -113,6 +134,19 @@ export default {
 
                 &:last-child {
                     border-radius: 0px 6px 6px 0px;
+                }
+
+                input[type="radio"] {
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
                 }
             }
         }

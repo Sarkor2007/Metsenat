@@ -7,18 +7,21 @@ const store = createStore({
             tabView: [
                 {
                     id: 1,
-                    active: false,
+                    active: true,
                     title: 'Dashboard',
+                    value: "dashboard"
                 },
                 {
                     id: 2,
-                    active: true,
+                    active: false,
                     title: 'Homiylar',
+                    value: "sponsors"
                 },
                 {
                     id: 3,
                     active: false,
                     title: 'Talabalar',
+                    value: "students"
                 }
             ],
             isModalFilterSponsor: false,

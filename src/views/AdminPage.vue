@@ -27,10 +27,16 @@ export default {
         StudentsModalFilter,
 
     },
-    // data() {
-    //     return {
-    //     }
-    // },
+    data() {
+        return {
+            selectedComponent: ''
+        }
+    },
+    methods: {
+        updateSelectedComponent(newSelectedComponent) {
+            this.selectedComponent = newSelectedComponent;
+        }
+    },
     computed: {
         tabActived() {
             let activeTab
@@ -39,21 +45,32 @@ export default {
                     activeTab = this.$store.state.tabView[key].id
                 }
             }
-
             return activeTab
         },
-    }
+        componentPath() {
+            return `/admin/${this.selectedComponent}`
+        }
+    },
+    watch: {
+        // selectedComponent(newVal) {
+        //     console.log(newVal);
+        // },
+        componentPath(newPath) {
+            this.$router.push(newPath)
+        }
+    },
 }
 </script>
 
 
 <template>
-    <TheHeader />
-    <NavigationPanel />
+    <the-header />
+    <navigation-panel @updateSelectedComponent="updateSelectedComponent"
+        :selectedComponent="this.selectedComponent" />
     <div class="wrapper">
-        <Dashboard v-if="this.tabActived == 1" />
-        <Sponsors v-else-if="this.tabActived == 2" />
-        <Students v-else-if="this.tabActived == 3" />
+        <dashboard v-if="this.tabActived == 1" />
+        <sponsors v-else-if="this.tabActived == 2" />
+        <students v-else-if="this.tabActived == 3" />
     </div>
 
     <sponsor-modal-filter />
