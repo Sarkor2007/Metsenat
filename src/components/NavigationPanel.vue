@@ -11,6 +11,14 @@ export default {
     methods: {
         tabItem(item) {
             this.$store.commit('CHANGE_TAB_ACTIVE', item)
+            this.updateTabView()
+        },
+        updateTabView() {
+            let data = JSON.stringify(this.$store.state.tabView)
+            localStorage.setItem('tabView', data)
+        },
+        showTab() {
+            this.$store.state.tabView = JSON.parse(localStorage.getItem('tabView'))
         },
         activeFilter() {
             if (this.tabActived == 2) {
@@ -23,7 +31,6 @@ export default {
     watch: {
         selectComponent(newVal) {
             this.$emit('updateSelectedComponent', newVal);
-            // console.log(this.selectComponent);
         }
     },
     computed: {
@@ -32,6 +39,9 @@ export default {
             return activeTabItem ? activeTabItem.id : null
         },
     },
+    mounted() {
+        this.showTab()
+    }
 
 }
 </script>
@@ -108,6 +118,7 @@ export default {
             align-items: center;
 
             &-item {
+                cursor: pointer;
                 width: calc(100% / 3);
                 padding: 14px 0px;
                 background: #fff;

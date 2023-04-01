@@ -112,7 +112,7 @@ export default {
                                 <li class="status"
                                     :class="item.howis">{{ item.status }}</li>
                                 <li class="show">
-                                    <img @click="this.$router.push('/sponsor/single')"
+                                    <img @click="this.$router.push('/admin/sponsors/single')"
                                         :src="showIconBlue"
                                         alt="showIcon">
                                 </li>

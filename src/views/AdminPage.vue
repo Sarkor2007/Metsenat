@@ -17,6 +17,7 @@ import StudentsModalFilter from '../components/modals/StudentsModalFilter.vue'
 
 <script>
 export default {
+    name: "AdminPage",
     component: {
         TheHeader,
         NavigationPanel,
@@ -59,6 +60,13 @@ export default {
             this.$router.push(newPath)
         }
     },
+    mounted() {
+        const activeItem = this.$store.state.tabView.find(item => item.active);
+
+        if (activeItem) {
+            this.$router.push(`/admin/${activeItem.value}`);
+        }
+    }
 }
 </script>
 

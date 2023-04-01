@@ -46,6 +46,10 @@ export default {
 
   &__logo {
     cursor: pointer;
+
+    img {
+      user-select: none;
+    }
   }
 
   &__menu {

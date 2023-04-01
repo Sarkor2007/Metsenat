@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/LoginPage.vue'
 import AdminPage from '../views/AdminPage.vue'
 import SinglePage from '../views/SinglePage.vue'
-
-
+import AddStudentPage from '../views/AddStudentPage.vue'
 
 
 
@@ -31,10 +30,15 @@ const router = createRouter({
             component: AdminPage
         },
         {
-            path: '/sponsor/single',
+            path: '/admin/sponsors/single',
             name: 'single',
             component: SinglePage
-        }
+        },
+        {
+            path: '/admin/students/add',
+            name: 'add',
+            component: AddStudentPage
+        },
     ]
 })
 

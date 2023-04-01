@@ -1,4 +1,5 @@
 <script setup>
+// icons
 import showIconBlue from '../assets/icons/eyeblue.svg'
 </script>
 
@@ -46,7 +47,8 @@ export default {
     <section class="students">
         <div class="container">
             <div class="students__add">
-                <div class="students__add-box">
+                <div @click="this.$router.push('/admin/students/add')"
+                    class="students__add-box">
                     <img src="../assets/icons/add.svg"
                         alt="add">
                     <h3>Talaba qo‘shish</h3>
@@ -143,6 +145,7 @@ export default {
         justify-content: flex-end;
 
         &-box {
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 14px;

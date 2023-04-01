@@ -10,6 +10,9 @@ import SingleEditModal from '../modals/SingleEditModal.vue'
 <script>
 export default {
     name: "Single",
+    components: {
+        SingleEditModal,
+    },
     data() {
         return {
             edit: false,
@@ -27,7 +30,7 @@ export default {
     <section class="single">
         <div class="single__header">
             <div class="container">
-                <button @click="this.$router.push('/admin')"
+                <button @click="this.$router.push('/admin/sponsors')"
                     class="single__header-btn">
                     <img :src="leftarrowIcon"
                         alt="arrow">
