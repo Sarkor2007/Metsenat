@@ -53,9 +53,6 @@ export default {
         }
     },
     watch: {
-        // selectedComponent(newVal) {
-        //     console.log(newVal);
-        // },
         componentPath(newPath) {
             this.$router.push(newPath)
         }

@@ -1,9 +1,11 @@
 <script setup>
 // icons
-// import userImg from '../../assets/images/user.jpg'
-// import editIcon from '../../assets/icons/edit.svg'
+
 import leftarrowIcon from '../assets/icons/leftarrow.svg'
-// import bottomImg from '../../assets/images/rocket.png'
+import plusBtn from "../assets/icons/add.svg"
+
+
+import { useToast } from "vue-toastification"
 
 </script>
 
@@ -12,8 +14,50 @@ export default {
     name: "AddStudent",
     data() {
         return {
+            data: [],
+            name: '',
+            university: '',
+            type: '',
+            sumContract: '',
+            tel: '998'
         }
     },
+
+    methods: {
+        addStudent() {
+            const toast = useToast()
+            let user = {
+                name: this.name,
+                type: this.type,
+                university: this.university,
+                sumContract: this.sumContract,
+                tel: this.tel
+            }
+
+            this.name = '';
+            this.type = '';
+            this.university = '';
+            this.sumContract = '';
+            this.tel = '998';
+
+            toast("Ученик добавлен!", {
+                position: "top-right",
+                timeout: 2000,
+                hideProgressBar: false,
+                closeButton: true,
+                closeOnClick: true,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: true,
+                draggablePercent: 0.6,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+
+            this.$emit('newStudent', user)
+        }
+    }
 }
 </script>
 
@@ -31,12 +75,15 @@ export default {
                 </div>
             </div>
         </div>
-        <div class="add__body">
-            <div class="add__body-top">
+        <form @submit.prevent="addStudent()"
+            class="add__body">
+            <div class="add__body-box">
                 <label class="add__el"
                     for="name">
                     <h3 class="add__subtitle">F.I.Sh. (Familiya Ism Sharif)</h3>
-                    <input id="name"
+                    <input v-model="name"
+                        id="name"
+                        required
                         name="name"
                         placeholder="F.I.Sh."
                         type="text">
@@ -44,8 +91,10 @@ export default {
                 <label class="add__el"
                     for="tel">
                     <h3 class="add__subtitle">Telefon raqam</h3>
-                    <input id="tel"
+                    <input v-model="tel"
+                        id="tel"
                         name="tel"
+                        required
                         placeholder="+998 00 000-00-00"
                         type="number">
                 </label>
@@ -53,17 +102,52 @@ export default {
             <label for="university"
                 class="add__university add__el">
                 <h3 class="add__subtitle">OTM</h3>
-                <select class=""
+                <select v-model="university"
                     name="university"
-                    id="university">
+                    id="university"
+                    required>
                     <option value=""
                         disabled
-                        selected>OTM ni tanlang</option>
+                        selected>-- OTM ni tanlang</option>
                     <option value="inha">Toshkent shahridagi INHA Universiteti</option>
                     <option value="milliy">O’zbekiston milliy universiteti</option>
                 </select>
             </label>
-        </div>
+            <div class="add__body-box">
+                <label class="add__el"
+                    for="name">
+                    <h3 class="add__subtitle">Talabalik turi</h3>
+                    <select v-model="type"
+                        required
+                        name="university"
+                        id="university">
+                        <option value=""
+                            disabled
+                            selected>-- Talabalik turini tanlang</option>
+                        <option value="Bakalavr">Bakalavr</option>
+                        <option value="Magistr">Magistr</option>
+                    </select>
+                </label>
+                <label class="add__el"
+                    for="sum">
+                    <h3 class="add__subtitle">Kontrakt summa</h3>
+                    <input v-model="sumContract"
+                        required
+                        id="sum"
+                        name="sum"
+                        placeholder="Summani kiriting"
+                        type="number">
+                </label>
+            </div>
+            <div class="add__bottom">
+                <button type="submit"
+                    class="add__bottom-btn">
+                    <img :src="plusBtn"
+                        alt="plus">
+                    <h3>Qo‘shish</h3>
+                </button>
+            </div>
+        </form>
     </section>
 </template>
 
@@ -97,6 +181,7 @@ export default {
         &-btn {
             background: none;
             cursor: pointer;
+            user-select: none;
         }
 
         &-name {
@@ -142,7 +227,7 @@ export default {
         border-radius: 12px;
         padding: 24px 32px;
 
-        &-top {
+        &-box {
             display: flex;
             align-items: center;
             gap: 28px;
@@ -170,6 +255,39 @@ export default {
 
         select {
             width: 100%;
+        }
+    }
+
+    &__bottom {
+        border-top: 2px solid #F5F5F7;
+        padding-top: 28px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        &-btn {
+            cursor: pointer;
+            width: fit-content;
+            background: #3366FF;
+            box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+            border-radius: 5px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0px 32px;
+
+            img {
+                user-select: none;
+            }
+
+            h3 {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 24px;
+                letter-spacing: -0.35px;
+                color: #FFFFFF;
+            }
         }
     }
 }

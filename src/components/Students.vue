@@ -1,16 +1,22 @@
 <script setup>
 // icons
 import showIconBlue from '../assets/icons/eyeblue.svg'
+
+
+import AddStudent from './AddStudent.vue';
 </script>
 
 <script>
 export default {
     name: 'Students',
+    components: {
+        AddStudent
+    },
     data() {
         return {
             studentsList: [
                 {
-                    id: 1,
+                    // id: 1,
                     name: 'Alimov Abror Xabibullayevich',
                     type: 'Bakalavr',
                     otm: 'Toshkent shahridagi INHA Universiteti',
@@ -19,7 +25,7 @@ export default {
                     sumContract: '30 000 000',
                 },
                 {
-                    id: 2,
+                    // id: 2,
                     name: 'Saimov Rustam Saimjonovich',
                     type: 'Magistr',
                     otm: 'O’zbekiston milliy universiteti',
@@ -28,6 +34,12 @@ export default {
                     sumContract: '28 000 000',
                 },
             ]
+        }
+    },
+    methods: {
+        addNewStudent(data) {
+            console.log(data);
+            this.studentsList.push(data)
         }
     },
     computed: {
@@ -73,7 +85,7 @@ export default {
                             :key="index"
                             class="item">
                             <ul class="item__box">
-                                <li class="number">{{ item.id }}</li>
+                                <li class="number">{{ ++index }}</li>
                                 <li class="name">{{ item.name }}</li>
                                 <li class="type">{{ item.type }}</li>
                                 <li class="unversity">{{ item.otm }}</li>

@@ -5,7 +5,6 @@ export default {
     data() {
         return {
             selectComponent: this.selectedComponent
-
         }
     },
     methods: {
@@ -14,11 +13,11 @@ export default {
             this.updateTabView()
         },
         updateTabView() {
-            let data = JSON.stringify(this.$store.state.tabView)
+            let data = JSON.stringify(this.tabView)
             localStorage.setItem('tabView', data)
         },
         showTab() {
-            this.$store.state.tabView = JSON.parse(localStorage.getItem('tabView'))
+            this.tabView = JSON.parse(localStorage.getItem('tabView'))
         },
         activeFilter() {
             if (this.tabActived == 2) {
@@ -38,6 +37,9 @@ export default {
             const activeTabItem = this.$store.state.tabView.find(tab => tab.active)
             return activeTabItem ? activeTabItem.id : null
         },
+        tabView() {
+            return this.$store.state.tabView
+        }
     },
     mounted() {
         this.showTab()
