@@ -18,12 +18,17 @@ export default {
     data() {
         return {
             edit: false,
+            user: {}
         }
     },
     methods: {
         openModal() {
             this.edit = !this.edit
         }
+    },
+    mounted() {
+        this.user = this.$store.state.studentsList.find(el => el.name == this.$route.params.id)
+        console.log(this.user);
     }
 }
 </script>
@@ -39,7 +44,7 @@ export default {
                             alt="arrow">
                     </button>
                     <div class="single__header-box">
-                        <h2 class="single__header-name">Ishmuhammedov Aziz Ishqobilovich</h2>
+                        <h2 class="single__header-name">{{ user.name }}</h2>
                     </div>
                 </div>
                 <div class="single__header-right">
@@ -72,7 +77,7 @@ export default {
                             alt="">
                     </div>
                     <div class="user__name">
-                        Ishmuhammedov Aziz Ishqobilovich
+                        {{ user.name }}
                     </div>
                 </div>
                 <div class="single__body-box">
@@ -90,21 +95,34 @@ export default {
                 <div class="single__body-box">
                     <div class="item">
                         <h4 class="item__title">OTM</h4>
-                        <h3 class="item__text">O’zbekiston davlat jahon tillari universiteti</h3>
+                        <h3 class="item__text">{{ user.otm }}</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Talabalik turi</h4>
-                        <h3 class="item__text">Bakalavr</h3>
+                        <h3 class="item__text">{{ user.type }}</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Ajratilingan summa</h4>
-                        <h3 class="item__text">14 000 000 UZS</h3>
+                        <h3 class="item__text">{{ user.sumSpent }} UZS</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Kontrakt miqdori</h4>
-                        <h3 class="item__text">30 000 000 UZS</h3>
+                        <h3 class="item__text">{{ user.sumContract }} UZS</h3>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="single__under">
+            <div class="single__under-header">
+                <h3 class="single__under-title">
+                    Talabaga homiylar
+                </h3>
+                <button class="single__under-btn">
+                    <img :src="plusIcon"
+                        alt="plus">
+                    <h3>Homiy qo‘shish</h3>
+                </button>
             </div>
         </div>
         <div class="single__bottom">
@@ -124,6 +142,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 40px;
 
     &__header {
         width: 100%;
@@ -190,7 +209,6 @@ export default {
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
         padding: 24px 32px;
-        margin-top: 40px;
 
         &-header {
             display: flex;
@@ -317,6 +335,49 @@ export default {
                     letter-spacing: -0.01em;
                     color: #212121;
                 }
+            }
+        }
+    }
+
+    &__under {
+        background: #FFFFFF;
+        border: 1px solid #EBEEFC;
+        box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
+        border-radius: 12px;
+        padding: 24px 32px;
+        max-width: 790px;
+        width: 100%;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        &-title {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 28px;
+            color: #28293D;
+        }
+
+        &-btn {
+            cursor: pointer;
+            background: #EDF1FD;
+            border-radius: 5px;
+            padding: 0px 36px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            h3 {
+                font-weight: 500;
+                font-size: 14px;
+                letter-spacing: -0.35px;
+                color: #3365FC;
             }
         }
     }

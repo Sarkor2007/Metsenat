@@ -16,6 +16,9 @@ export default {
         }
     },
     methods: {
+        goSingle(name) {
+            this.$router.push(`/admin/students/single/${name}`)
+        }
     },
     computed: {
         filteredStudents() {
@@ -78,7 +81,7 @@ export default {
                                     class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
                                 <li class="summ-contract">{{ item.sumContract }} <span>UZS</span></li>
                                 <li class="show">
-                                    <img @click="this.$router.push('/admin/students/single')"
+                                    <img @click="goSingle(item.name)"
                                         :src="showIconBlue"
                                         draggable="false"
                                         alt="showIcon">

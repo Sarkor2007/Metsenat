@@ -35,7 +35,7 @@ const router = createRouter({
             component: AdminPage
         },
         {
-            path: '/admin/sponsors/single',
+            path: '/admin/sponsors/single/:id',
             name: 'singleSponsor',
             component: SingleSponsorPage
         },
@@ -45,7 +45,7 @@ const router = createRouter({
             component: AddStudentPage
         },
         {
-            path: '/admin/students/single',
+            path: '/admin/students/single/:id',
             name: 'singleStudents',
             component: SingleStudentsPage
         },

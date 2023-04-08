@@ -16,12 +16,16 @@ export default {
     data() {
         return {
             edit: false,
+            user: {}
         }
     },
     methods: {
         openModal() {
             this.edit = !this.edit
         }
+    },
+    mounted() {
+        this.user = this.$store.state.sponsorsList.find(el => el.name == this.$route.params.id)
     }
 }
 </script>
@@ -36,7 +40,7 @@ export default {
                         alt="arrow">
                 </button>
                 <div class="single__header-box">
-                    <h2 class="single__header-name">Ishmuhammedov Aziz Ishqobilovich</h2>
+                    <h2 class="single__header-name">{{ user.name }}</h2>
                     <div class="single__header-status actived">Tasdiqlangan</div>
                 </div>
             </div>
@@ -57,17 +61,17 @@ export default {
                         alt="">
                 </div>
                 <div class="user__name">
-                    Ishmuhammedov Aziz Ishqobilovich
+                    {{ user.name }}
                 </div>
             </div>
             <div class="single__body-box">
                 <div class="item">
                     <h4 class="item__title">telefon raqam</h4>
-                    <h3 class="item__text">+998 99 973-72-60</h3>
+                    <h3 class="item__text">{{ user.tel }}</h3>
                 </div>
                 <div class="item">
                     <h4 class="item__title">Homiylik summasi</h4>
-                    <h3 class="item__text">30 000 000 UZS</h3>
+                    <h3 class="item__text">{{ user.sumSponsor }} UZS</h3>
                 </div>
                 <div class="item">
                     <h4 class="item__title">Tashkilot nomi</h4>

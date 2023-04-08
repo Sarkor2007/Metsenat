@@ -7,48 +7,12 @@ export default {
     name: 'Sponsors',
     data() {
         return {
-            sponsorsList: [
-                {
-                    id: 1,
-                    name: 'Alimov Abror Xabibullayevich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 30000000,
-                    sumSpent: 0,
-                    date: '15.01.2021',
-                    status: 'Yangi',
-                    howis: 'new'
-                },
-                {
-                    id: 2,
-                    name: 'Saimov Rustam Saimjonovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 1000000,
-                    sumSpent: 0,
-                    date: '02.02.2021',
-                    status: 'Moderatsiyada',
-                    howis: 'moderation'
-                },
-                {
-                    id: 3,
-                    name: 'Sanginov Otabek Muratovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 5000000,
-                    sumSpent: 5000000,
-                    date: '20.04.2021',
-                    status: 'Tasdiqlangan',
-                    howis: 'actived'
-                },
-                {
-                    id: 4,
-                    name: 'Nazarov Sanjar Olimovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 7000000,
-                    sumSpent: 7000000,
-                    date: '03.05.2021',
-                    status: 'Bekor qilingan',
-                    howis: 'cancel'
-                },
-            ]
+            sponsorsList: []
+        }
+    },
+    methods: {
+        goSingle(name) {
+            this.$router.push(`/admin/sponsors/single/${name}`)
         }
     },
     computed: {
@@ -73,6 +37,14 @@ export default {
                 : filteredSponsorSum.filter(el => el.howis === selectedStatus);
         }
     },
+    watch: {
+        '$store.state.sponsorsList': function (newData) {
+            this.sponsorsList = newData
+        }
+    },
+    mounted() {
+        this.sponsorsList = this.$store.state.sponsorsList
+    }
 }
 </script>
 
@@ -112,7 +84,7 @@ export default {
                                 <li class="status"
                                     :class="item.howis">{{ item.status }}</li>
                                 <li class="show">
-                                    <img @click="this.$router.push('/admin/sponsors/single')"
+                                    <img @click="goSingle(item.name)"
                                         :src="showIconBlue"
                                         alt="showIcon">
                                 </li>
