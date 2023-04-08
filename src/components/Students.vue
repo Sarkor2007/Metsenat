@@ -3,44 +3,19 @@
 import showIconBlue from '../assets/icons/eyeblue.svg'
 
 
-import AddStudent from './AddStudent.vue';
 </script>
 
 <script>
 export default {
     name: 'Students',
     components: {
-        AddStudent
     },
     data() {
         return {
-            studentsList: [
-                {
-                    // id: 1,
-                    name: 'Alimov Abror Xabibullayevich',
-                    type: 'Bakalavr',
-                    otm: 'Toshkent shahridagi INHA Universiteti',
-                    university: 'inha',
-                    sumSpent: '14 000 000',
-                    sumContract: '30 000 000',
-                },
-                {
-                    // id: 2,
-                    name: 'Saimov Rustam Saimjonovich',
-                    type: 'Magistr',
-                    otm: 'O’zbekiston milliy universiteti',
-                    university: 'milliy',
-                    sumSpent: '28 000 000',
-                    sumContract: '28 000 000',
-                },
-            ]
+            studentsList: []
         }
     },
     methods: {
-        addNewStudent(data) {
-            console.log(data);
-            this.studentsList.push(data)
-        }
     },
     computed: {
         filteredStudents() {
@@ -51,6 +26,14 @@ export default {
                 (selectedUniversity === 'all' || el.university === selectedUniversity)
             );
         }
+    },
+    watch: {
+        '$store.state.studentsList': function (newData) {
+            this.studentsList = newData
+        }
+    },
+    mounted() {
+        this.studentsList = this.$store.state.studentsList;
     }
 }
 </script>
@@ -89,11 +72,15 @@ export default {
                                 <li class="name">{{ item.name }}</li>
                                 <li class="type">{{ item.type }}</li>
                                 <li class="unversity">{{ item.otm }}</li>
-                                <li class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
+                                <li v-if="!item.sumSpent"
+                                    class="summ-spent"><span>Ajratilmagan</span></li>
+                                <li v-else
+                                    class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
                                 <li class="summ-contract">{{ item.sumContract }} <span>UZS</span></li>
                                 <li class="show">
-                                    <img @click="this.$router.push('/single')"
+                                    <img @click="this.$router.push('/admin/students/single')"
                                         :src="showIconBlue"
+                                        draggable="false"
                                         alt="showIcon">
                                 </li>
                             </ul>

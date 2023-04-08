@@ -46,10 +46,6 @@ export default {
 
   &__logo {
     cursor: pointer;
-
-    img {
-      user-select: none;
-    }
   }
 
   &__menu {
@@ -76,7 +72,6 @@ export default {
     }
 
     &-img {
-      user-select: none;
       width: 32px;
       height: 32px;
       border-radius: 4px;
@@ -92,7 +87,6 @@ export default {
     width: 32px;
     height: 32px;
     object-fit: contain;
-    user-select: none;
   }
 }
 </style>

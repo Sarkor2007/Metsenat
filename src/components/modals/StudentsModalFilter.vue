@@ -45,7 +45,8 @@ export default {
             <div class="filter__header">
                 <h3 class="filter__title">Filter</h3>
                 <div class="filter__exit">
-                    <img @click="closeStudentsFilter"
+                    <img draggable="false"
+                        @click="closeStudentsFilter"
                         :src="exitBtn"
                         alt="exit btn">
                 </div>

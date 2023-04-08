@@ -1,20 +1,21 @@
 <script setup>
 import TheHeader from '../components/TheHeader.vue'
-import Single from '../components/single/SingleSponsor.vue'
+import SingleStudents from '../components/single/SingleStudents.vue'
 </script>
 
 <script>
 export default {
     name: "SinglePage",
     component: {
-        TheHeader
+        TheHeader,
+        SingleStudents
     }
 }
 </script>
 
 <template>
     <TheHeader />
-    <Single />
+    <SingleStudents />
 </template>
 
 <style lang="scss" scoped></style>

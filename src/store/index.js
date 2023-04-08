@@ -60,9 +60,32 @@ const store = createStore({
             selectedStatus: 'all',
             selectedType: 'all',
             selectedUniversity: 'all',
+            studentsList: [
+                {
+                    // id: 1,
+                    name: 'Alimov Abror Xabibullayevich',
+                    type: 'Bakalavr',
+                    otm: 'Toshkent shahridagi INHA Universiteti',
+                    university: 'inha',
+                    sumSpent: '14 000 000',
+                    sumContract: '30 000 000',
+                },
+                {
+                    // id: 2,
+                    name: 'Saimov Rustam Saimjonovich',
+                    type: 'Magistr',
+                    otm: 'O’zbekiston milliy universiteti',
+                    university: 'milliy',
+                    sumSpent: '28 000 000',
+                    sumContract: '28 000 000',
+                },
+            ]
         }
     },
     mutations: {
+        NEW_TAB_VIEW(state, data) {
+            state.tabView = data
+        },
         CHANGE_TAB_ACTIVE(state, item) {
             for (const key in store.state.tabView) {
                 state.tabView[key].active = false
@@ -83,6 +106,9 @@ const store = createStore({
         },
         UPDATE_SELECTED_UNIVERSITY(state, value) {
             state.selectedUniversity = value;
+        },
+        ADD_NEW_STUDENT(state, data) {
+            state.studentsList.push(data)
         }
     }
 })

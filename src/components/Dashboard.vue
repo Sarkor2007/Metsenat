@@ -88,9 +88,6 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                img{
-                    user-select: none;
-                }
 
                 &.blue {
                     background: rgba(76, 111, 255, 0.1);

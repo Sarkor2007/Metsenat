@@ -13,11 +13,11 @@ export default {
             this.updateTabView()
         },
         updateTabView() {
-            let data = JSON.stringify(this.tabView)
+            let data = JSON.stringify(this.$store.state.tabView)
             localStorage.setItem('tabView', data)
         },
         showTab() {
-            this.tabView = JSON.parse(localStorage.getItem('tabView'))
+            this.$store.commit('NEW_TAB_VIEW', JSON.parse(localStorage.getItem('tabView')))
         },
         activeFilter() {
             if (this.tabActived == 2) {
@@ -37,9 +37,6 @@ export default {
             const activeTabItem = this.$store.state.tabView.find(tab => tab.active)
             return activeTabItem ? activeTabItem.id : null
         },
-        tabView() {
-            return this.$store.state.tabView
-        }
     },
     mounted() {
         this.showTab()

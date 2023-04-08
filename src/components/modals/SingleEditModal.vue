@@ -24,7 +24,8 @@ export default {
                 <div class="filter__header">
                     <h3 class="filter__title">Tahrirlash</h3>
                     <div class="filter__exit">
-                        <img @click="closeEdit"
+                        <img draggable="false"
+                            @click="closeEdit"
                             :src="exitBtn"
                             alt="exit btn">
                     </div>
@@ -162,9 +163,6 @@ export default {
     &__exit {
         cursor: pointer;
 
-        img {
-            user-select: none;
-        }
     }
 
     &__title {
@@ -185,7 +183,6 @@ export default {
     &__type {
         display: flex;
         align-items: center;
-        user-select: none;
 
         &-item {
             padding: 14px 0px;

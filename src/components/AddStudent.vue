@@ -26,13 +26,13 @@ export default {
     methods: {
         addStudent() {
             const toast = useToast()
-            let user = {
+            this.$store.commit('ADD_NEW_STUDENT', {
                 name: this.name,
                 type: this.type,
                 university: this.university,
                 sumContract: this.sumContract,
                 tel: this.tel
-            }
+            })
 
             this.name = '';
             this.type = '';
@@ -55,7 +55,6 @@ export default {
                 rtl: false
             });
 
-            this.$emit('newStudent', user)
         }
     }
 }
@@ -181,7 +180,6 @@ export default {
         &-btn {
             background: none;
             cursor: pointer;
-            user-select: none;
         }
 
         &-name {
@@ -277,9 +275,7 @@ export default {
             gap: 10px;
             padding: 0px 32px;
 
-            img {
-                user-select: none;
-            }
+
 
             h3 {
                 font-weight: 500;

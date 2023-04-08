@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/LoginPage.vue'
 import AdminPage from '../views/AdminPage.vue'
-import SinglePage from '../views/SinglePage.vue'
+
+
+import SingleSponsorPage from '../views/SingleSponsorPage.vue'
+import SingleStudentsPage from '../views/SingleStudentsPage.vue'
+
+
 import AddStudentPage from '../views/AddStudentPage.vue'
 
 
@@ -31,13 +36,18 @@ const router = createRouter({
         },
         {
             path: '/admin/sponsors/single',
-            name: 'single',
-            component: SinglePage
+            name: 'singleSponsor',
+            component: SingleSponsorPage
         },
         {
             path: '/admin/students/add',
             name: 'add',
             component: AddStudentPage
+        },
+        {
+            path: '/admin/students/single',
+            name: 'singleStudents',
+            component: SingleStudentsPage
         },
     ]
 })
