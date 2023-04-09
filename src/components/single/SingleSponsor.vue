@@ -4,14 +4,14 @@ import editIcon from '../../assets/icons/edit.svg'
 import leftarrowIcon from '../../assets/icons/leftarrow.svg'
 import bottomImg from '../../assets/images/rocket.png'
 
-import SingleEditModal from '../modals/SingleEditModal.vue'
+import SponsorEditModal from '../modals/SponsorEditModal.vue'
 </script>
 
 <script>
 export default {
     name: "Single",
     components: {
-        SingleEditModal,
+        SponsorEditModal,
     },
     data() {
         return {
@@ -41,7 +41,8 @@ export default {
                 </button>
                 <div class="single__header-box">
                     <h2 class="single__header-name">{{ user.name }}</h2>
-                    <div class="single__header-status actived">Tasdiqlangan</div>
+                    <div :class="user.howis ? `${user.howis}` : ''"
+                        class="single__header-status">{{ user.status }}</div>
                 </div>
             </div>
         </div>
@@ -86,7 +87,7 @@ export default {
         </div>
     </section>
 
-    <single-edit-modal @closeEdit="openModal"
+    <sponsor-edit-modal @closeEdit="openModal"
         :open="this.edit" />
 </template>
 
@@ -99,7 +100,7 @@ export default {
 
     &__header {
         width: 100%;
-        background: hsl(0, 0%, 100%);
+        background: #ffffff;
         padding: 20px 0px;
 
         .container {
@@ -261,8 +262,6 @@ export default {
         position: absolute;
         bottom: 0;
         z-index: -1;
-
-
     }
 }
 </style>

@@ -6,14 +6,14 @@ import bottomImg from '../../assets/images/rocket.png'
 import plusIcon from '../../assets/icons/addblue.svg'
 
 
-import SingleEditModal from '../modals/SingleEditModal.vue'
+// import SingleEditModal from '../modals/SponsorEditModal.vue'
 </script>
 
 <script>
 export default {
     name: "Single",
     components: {
-        SingleEditModal,
+
     },
     data() {
         return {
@@ -28,7 +28,6 @@ export default {
     },
     mounted() {
         this.user = this.$store.state.studentsList.find(el => el.name == this.$route.params.id)
-        console.log(this.user);
     }
 }
 </script>
@@ -123,6 +122,40 @@ export default {
                         alt="plus">
                     <h3>Homiy qo‘shish</h3>
                 </button>
+            </div>
+            <div class="single__under-content sponsors">
+                <div class="sponsors__header">
+                    <h3 class="number">#</h3>
+                    <h3 class="name">f.i.sh</h3>
+                    <h3 class="sum">Ajratilingan summa</h3>
+                    <h3 class="edit">Amallar</h3>
+                </div>
+                <div class="sponsors__body">
+                    <ul>
+                        <li>
+                            <h3 class="number">1</h3>
+                            <h3 class="name">Saimov Rustam Saimjonovich</h3>
+                            <h3 class="sum">1 000 000 <span> UZS</span> </h3>
+                            <h3 class="edit">
+                                <button>
+                                    <img :src="editIcon"
+                                        alt="">
+                                </button>
+                            </h3>
+                        </li>
+                        <li>
+                            <h3 class="number">1</h3>
+                            <h3 class="name">Saimov Rustam Saimjonovich</h3>
+                            <h3 class="sum">1 000 000 <span> UZS</span> </h3>
+                            <h3 class="edit">
+                                <button>
+                                    <img :src="editIcon"
+                                        alt="">
+                                </button>
+                            </h3>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="single__bottom">
@@ -378,6 +411,111 @@ export default {
                 font-size: 14px;
                 letter-spacing: -0.35px;
                 color: #3365FC;
+            }
+        }
+
+        &-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin-top: 36px;
+        }
+
+        .sponsors {
+            .number {
+                width: 7%;
+            }
+
+            .name {
+                text-align: left;
+                width: 43%;
+            }
+
+            .sum {
+                width: 35%;
+            }
+
+            .edit {
+                width: 15%;
+            }
+
+            &__header {
+                display: flex;
+                align-items: center;
+
+                h3 {
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 14px;
+                    letter-spacing: 1.125px;
+                    text-transform: uppercase;
+                    color: #B1B1B8;
+                    text-align: center;
+                }
+            }
+
+            &__body {
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                    width: 100%;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+                        height: 60px;
+                        background: #FBFBFC;
+                        border: 1px solid rgba(46, 91, 255, 0.08);
+                        border-radius: 8px;
+
+
+                        h3 {
+                            text-align: center;
+                        }
+
+                        .number {
+                            font-weight: 400;
+                            font-size: 15px;
+                            line-height: 22px;
+                            color: #1D1D1F;
+                        }
+
+                        .name {
+                            font-weight: 500;
+                            font-size: 15px;
+                            line-height: 18px;
+                            color: #1D1D1F;
+                        }
+
+                        .sum {
+                            font-weight: 500;
+                            font-size: 14px;
+                            line-height: 22px;
+                            color: #2E384D;
+
+                            span {
+                                color: #B2B7C1;
+                            }
+                        }
+
+                        .edit {
+                            display: flex;
+                            justify-content: center;
+
+                            button {
+                                cursor: pointer;
+                                width: 40px;
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background: transparent;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
