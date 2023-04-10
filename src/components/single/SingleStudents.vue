@@ -7,22 +7,29 @@ import plusIcon from '../../assets/icons/addblue.svg'
 
 
 import StudentsEditModal from '../modals/StudentsEditModal.vue'
+import SponsorsAddModal from '../modals/SponsorsAddModal.vue'
+
 </script>
 
 <script>
 export default {
     name: "Single",
     components: {
-
+        StudentsEditModal,
+        SponsorsAddModal
     },
     data() {
         return {
             edit: false,
+            add: false,
         }
     },
     methods: {
         openModal() {
             this.edit = !this.edit
+        },
+        openAdd() {
+            this.add = !this.add;
         },
         goBack() {
             this.$router.push('/admin/students')
@@ -52,7 +59,7 @@ export default {
                     </div>
                 </div>
                 <div class="single__header-right">
-                    <button>
+                    <button @click="openAdd">
                         <img :src="plusIcon"
                             alt="plus">
                         <h3>Homiy qo‘shish</h3>
@@ -122,7 +129,8 @@ export default {
                 <h3 class="single__under-title">
                     Talabaga homiylar
                 </h3>
-                <button class="single__under-btn">
+                <button @click="openAdd"
+                    class="single__under-btn">
                     <img :src="plusIcon"
                         alt="plus">
                     <h3>Homiy qo‘shish</h3>
@@ -172,6 +180,8 @@ export default {
 
     <students-edit-modal @closeEdit="openModal"
         :open="this.edit" />
+    <sponsors-add-modal @closeAdd="openAdd"
+        :open="this.add" />
 </template>
 
 <style lang="scss" scoped>

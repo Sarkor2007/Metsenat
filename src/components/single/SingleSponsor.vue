@@ -4,14 +4,14 @@ import editIcon from '../../assets/icons/edit.svg'
 import leftarrowIcon from '../../assets/icons/leftarrow.svg'
 import bottomImg from '../../assets/images/rocket.png'
 
-import SponsorEditModal from '../modals/SponsorEditModal.vue'
+import SponsorsEditModal from '../modals/SponsorsEditModal.vue'
 </script>
 
 <script>
 export default {
     name: "Single",
     components: {
-        SponsorEditModal,
+        SponsorsEditModal,
     },
     data() {
         return {
@@ -21,8 +21,8 @@ export default {
     },
     methods: {
         openModal() {
-            this.edit = !this.edit
-        }
+            this.edit = !this.edit;
+        },
     },
     mounted() {
         this.user = this.$store.state.sponsorsList.find(el => el.name == this.$route.params.id)
@@ -87,7 +87,7 @@ export default {
         </div>
     </section>
 
-    <sponsor-edit-modal @closeEdit="openModal"
+    <sponsors-edit-modal @closeEdit="openModal"
         :open="this.edit" />
 </template>
 
