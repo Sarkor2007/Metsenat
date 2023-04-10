@@ -1,6 +1,10 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
 import saveIcon from '../../assets/icons/save.svg'
+
+
+import { useToast } from "vue-toastification"
+
 </script>
 
 <script>
@@ -9,6 +13,26 @@ export default {
     props: ['open'],
     methods: {
         closeEdit() {
+            this.$emit('closeEdit')
+        },
+        updateStudent() {
+            const toast = useToast()
+
+            toast("Данные обновлены!", {
+                position: "top-right",
+                timeout: 2000,
+                hideProgressBar: false,
+                closeButton: true,
+                closeOnClick: true,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: true,
+                draggablePercent: 0.6,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+
             this.$emit('closeEdit')
         }
     }
@@ -20,7 +44,6 @@ export default {
         class="filter">
         <dialog :open="this.open">
             <div class="filter__wrapper">
-
                 <div class="filter__header">
                     <h3 class="filter__title">Tahrirlash</h3>
                     <div class="filter__exit">
@@ -78,7 +101,8 @@ export default {
                     </div>
                 </div>
                 <div class="filter__bottom">
-                    <div class="filter__btn">
+                    <div @click="updateStudent"
+                        class="filter__btn">
                         <img :src="saveIcon"
                             alt="save">
                         <h3>Saqlash</h3>

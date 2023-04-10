@@ -1,6 +1,9 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
 import saveIcon from '../../assets/icons/save.svg'
+
+import { useToast } from "vue-toastification"
+
 </script>
 
 <script>
@@ -10,6 +13,27 @@ export default {
     methods: {
         closeEdit() {
             this.$emit('closeEdit')
+        },
+        updateSponsor() {
+            const toast = useToast()
+
+            toast("Данные обновлены!", {
+                position: "top-right",
+                timeout: 2000,
+                hideProgressBar: false,
+                closeButton: true,
+                closeOnClick: true,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: true,
+                draggablePercent: 0.6,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+
+            this.$emit('closeEdit')
+
         }
     }
 }
@@ -110,7 +134,8 @@ export default {
                     </div>
                 </div>
                 <div class="filter__bottom">
-                    <div class="filter__btn">
+                    <div @click="updateSponsor"
+                        class="filter__btn">
                         <img :src="saveIcon"
                             alt="save">
                         <h3>Saqlash</h3>
