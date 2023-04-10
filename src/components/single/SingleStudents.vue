@@ -6,7 +6,7 @@ import bottomImg from '../../assets/images/rocket.png'
 import plusIcon from '../../assets/icons/addblue.svg'
 
 
-// import SingleEditModal from '../modals/SponsorEditModal.vue'
+import StudentsEditModal from '../modals/StudentsEditModal.vue'
 </script>
 
 <script>
@@ -18,16 +18,20 @@ export default {
     data() {
         return {
             edit: false,
-            user: {}
         }
     },
     methods: {
         openModal() {
             this.edit = !this.edit
+        },
+        goBack() {
+            this.$router.push('/admin/students')
         }
     },
-    mounted() {
-        this.user = this.$store.state.studentsList.find(el => el.name == this.$route.params.id)
+    computed: {
+        user() {
+            return this.$store.state.studentsList.find(el => el.name == this.$route.params.id)
+        }
     }
 }
 </script>
@@ -37,7 +41,8 @@ export default {
         <div class="single__header">
             <div class="container">
                 <div class="single__header-left">
-                    <button @click="this.$router.push('/admin/students')"
+                    <button @click="goBack"
+                        tabindex="-1"
                         class="single__header-btn">
                         <img :src="leftarrowIcon"
                             alt="arrow">
@@ -165,7 +170,7 @@ export default {
         </div>
     </section>
 
-    <single-edit-modal @closeEdit="openModal"
+    <students-edit-modal @closeEdit="openModal"
         :open="this.edit" />
 </template>
 

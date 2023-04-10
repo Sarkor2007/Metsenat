@@ -5,7 +5,7 @@ import saveIcon from '../../assets/icons/save.svg'
 
 <script>
 export default {
-    name: 'SponsorsEditModal',
+    name: 'StudentsEditModal',
     props: ['open'],
     methods: {
         closeEdit() {
@@ -31,10 +31,6 @@ export default {
                     </div>
                 </div>
                 <div class="filter__body">
-                    <div class="filter__type">
-                        <div class="filter__type-item active left">Jismoniy shaxs</div>
-                        <div class="filter__type-item right">Yuridik shaxs</div>
-                    </div>
                     <div class="filter__list">
                         <ul>
                             <li>
@@ -58,52 +54,24 @@ export default {
                                 </label>
                             </li>
                             <li>
-                                <label for="status">
-                                    <h3>Holati</h3>
+                                <label for="university">
+                                    <h3>OTM</h3>
                                     <select class="filter__list-item"
-                                        name="status"
-                                        id="status">
-                                        <option value="actived">Tasdiqlangan</option>
-                                        <option value="new">Yangi</option>
-                                        <option value="cancel">Bekor qilingan</option>
-                                        <option value="moderation">Moderatsiyada</option>
+                                        name="university"
+                                        id="university">
+                                        <option value="inha">Toshkent shahridagi INHA Universiteti</option>
+                                        <option value="milliy">O’zbekiston milliy universiteti</option>
                                     </select>
                                 </label>
                             </li>
                             <li>
-                                <label for="sum">
-                                    <h3>Homiylik summasi</h3>
-                                    <select class="filter__list-item"
-                                        name="sum"
-                                        id="sum">
-                                        <option value="30000000">30 000 000 UZS</option>
-                                        <option value="10000000">10 000 000 UZS</option>
-                                        <option value="5000000">5 000 000 UZS</option>
-                                        <option value="1000000">1 000 000 UZS</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type">
-                                    <h3>To‘lov turi</h3>
-                                    <select class="filter__list-item"
-                                        name="type"
-                                        id="type">
-                                        <option value="actived">Pul o‘tkazmalari</option>
-                                        <option value="new">30 000 000 UZS</option>
-                                        <option value="cancel">30 000 000 UZS</option>
-                                        <option value="moderation">30 000 000 UZS</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="company">
-                                    <h3>Tashkilot nomi</h3>
+                                <label for="contract">
+                                    <h3>Kontrakt miqdori</h3>
                                     <input class="filter__list-item"
-                                        id="company"
-                                        name="company"
-                                        value="Orient Group"
-                                        type="text">
+                                        id="contract"
+                                        name="contract"
+                                        value="300000000"
+                                        type="number">
                                 </label>
                             </li>
                         </ul>
