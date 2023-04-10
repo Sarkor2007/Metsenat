@@ -12,15 +12,20 @@ export default {
     props: ['open'],
     data() {
         return {
+            sponsor: '',
+            sum: ''
         }
     },
     methods: {
         closeAdd() {
             this.$emit('closeAdd')
+            this.sponsor = ''
+            this.sum = ''
         },
         addSponsor() {
             const toast = useToast()
-
+            this.sponsor = ''
+            this.sum = ''
             toast("Спонсор добавлен!", {
                 position: "top-right",
                 timeout: 2000,
@@ -65,7 +70,8 @@ export default {
                                 <li>
                                     <label for="name">
                                         <h3>F.I.Sh. (Familiya Ism Sharifingiz)</h3>
-                                        <select class="filter__list-item"
+                                        <select v-model="sponsor"
+                                            class="filter__list-item"
                                             name="name"
                                             id="name"
                                             required>
@@ -81,7 +87,8 @@ export default {
                                 <li>
                                     <label for="summ">
                                         <h3>Ajratilgan summa</h3>
-                                        <input required
+                                        <input v-model="sum"
+                                            required
                                             class="filter__list-item"
                                             id="summ"
                                             name="summ"
