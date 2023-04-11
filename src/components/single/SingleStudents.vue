@@ -8,6 +8,7 @@ import plusIcon from '../../assets/icons/addblue.svg'
 
 import StudentsEditModal from '../modals/StudentsEditModal.vue'
 import SponsorsAddModal from '../modals/SponsorsAddModal.vue'
+import SponsorEditModal from '../modals/SponsorEditModal.vue'
 
 </script>
 
@@ -16,12 +17,24 @@ export default {
     name: "Single",
     components: {
         StudentsEditModal,
-        SponsorsAddModal
+        SponsorsAddModal,
+        SponsorEditModal
     },
     data() {
         return {
             edit: false,
             add: false,
+            editSponsor: false,
+            sponsors: [
+                {
+                    name: 'Saimov Rustam Saimjonovich',
+                    sum: 1000000
+                },
+                {
+                    name: 'Sanginov Otabek Muratovich',
+                    sum: 7000000
+                }
+            ],
         }
     },
     methods: {
@@ -33,6 +46,9 @@ export default {
         },
         goBack() {
             this.$router.push('/admin/students')
+        },
+        editSponsorOpen() {
+            this.editSponsor = !this.editSponsor
         }
     },
     computed: {
@@ -145,23 +161,13 @@ export default {
                 </div>
                 <div class="sponsors__body">
                     <ul>
-                        <li>
-                            <h3 class="number">1</h3>
-                            <h3 class="name">Saimov Rustam Saimjonovich</h3>
-                            <h3 class="sum">1 000 000 <span> UZS</span> </h3>
+                        <li v-for="(item, index) in sponsors"
+                            :key="index">
+                            <h3 class="number">{{ ++index }}</h3>
+                            <h3 class="name">{{ item.name }}</h3>
+                            <h3 class="sum">{{ item.sum }} <span> UZS</span> </h3>
                             <h3 class="edit">
-                                <button>
-                                    <img :src="editIcon"
-                                        alt="">
-                                </button>
-                            </h3>
-                        </li>
-                        <li>
-                            <h3 class="number">1</h3>
-                            <h3 class="name">Saimov Rustam Saimjonovich</h3>
-                            <h3 class="sum">1 000 000 <span> UZS</span> </h3>
-                            <h3 class="edit">
-                                <button>
+                                <button @click="editSponsorOpen">
                                     <img :src="editIcon"
                                         alt="">
                                 </button>
@@ -182,6 +188,8 @@ export default {
         :open="this.edit" />
     <sponsors-add-modal @closeAdd="openAdd"
         :open="this.add" />
+    <sponsor-edit-modal @closeEditSponsor="editSponsorOpen"
+        :open="this.editSponsor" />
 </template>
 
 <style lang="scss" scoped>
@@ -536,9 +544,9 @@ export default {
     }
 
     &__bottom {
-        position: absolute;
-        bottom: 0;
-        z-index: -1;
+        // position: absolute;
+        // bottom: 0;
+        // z-index: -1;
     }
 }
 </style>

@@ -1,5 +1,6 @@
 <script setup>
 import showIconBlue from '../assets/icons/eyeblue.svg'
+import { mapActions, mapGetters } from 'vuex'
 </script>
 
 <script>
@@ -11,11 +12,13 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['fetchSponsors']),
         goSingle(name) {
             this.$router.push(`/admin/sponsors/single/${name}`)
         }
     },
     computed: {
+        ...mapGetters(['getSponsorsList']),
         filteredSponsorSum() {
             const sumFilter = this.$store.state.sponsorSumsFilter;
             let filteredSponsorListItem = this.sponsorsList;
@@ -43,6 +46,7 @@ export default {
         }
     },
     mounted() {
+        this.fetchSponsors()
         this.sponsorsList = this.$store.state.sponsorsList
     }
 }
@@ -67,22 +71,22 @@ export default {
                 <div class="sponsors__body">
                     <ul v-if="this.filteredStatus.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in this.filteredStatus"
+                        <li v-for="(item, index) in getSponsorsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">
                                 <li class="number">{{ index + 1 }}</li>
-                                <li class="name">{{ item.name }}</li>
-                                <li class="telefon">{{ item.tel }}</li>
-                                <li class="summ-sponsor">{{ item.sumSponsor.toLocaleString().replaceAll(',', ' ') }}
+                                <li class="name">{{ item.full_name }}</li>
+                                <li class="telefon">{{ item.phone }}</li>
+                                <li class="summ-sponsor">{{ item.sum.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
-                                <li class="summ-spent">{{ item.sumSpent.toLocaleString().replaceAll(',', ' ') }}
+                                <li class="summ-spent">{{ item.spent.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
-                                <li class="date">{{ item.date }}</li>
+                                <li class="date">{{ item.created_at.slice(0, 10) }}</li>
                                 <li class="status"
-                                    :class="item.howis">{{ item.status }}</li>
+                                    :class="item.get_status_display">{{ item.get_status_display }}</li>
                                 <li class="show">
                                     <img @click="goSingle(item.name)"
                                         :src="showIconBlue"
@@ -320,7 +324,7 @@ export default {
                             color: #5BABF2;
                         }
 
-                        &.moderation {
+                        &.Moderatsiyada {
                             color: #FFA445;
                         }
 

@@ -1,7 +1,7 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
 import saveIcon from '../../assets/icons/save.svg'
-
+import deleteIcon from '../../assets/icons/delete.svg'
 
 import { useToast } from "vue-toastification"
 
@@ -9,16 +9,22 @@ import { useToast } from "vue-toastification"
 
 <script>
 export default {
-    name: 'StudentsEditModal',
+    name: 'SponsorEditModal',
     props: ['open'],
+    data() {
+        return {
+            sponsor: 'new',
+            sum: 80000000
+        }
+    },
     methods: {
-        closeEdit() {
-            this.$emit('closeEdit')
+        closeAdd() {
+            this.$emit('closeEditSponsor')
         },
-        updateStudent() {
+        updateSponsor() {
             const toast = useToast()
 
-            toast("Данные обновлены!", {
+            toast("Спонсор обновлён!", {
                 position: "top-right",
                 timeout: 2000,
                 hideProgressBar: false,
@@ -33,7 +39,8 @@ export default {
                 rtl: false
             });
 
-            this.$emit('closeEdit')
+            this.$emit('closeEditSponsor')
+
         }
     }
 }
@@ -44,70 +51,68 @@ export default {
         class="filter">
         <dialog :open="this.open">
             <div class="filter__wrapper">
+
                 <div class="filter__header">
-                    <h3 class="filter__title">Tahrirlash</h3>
+                    <h3 class="filter__title">Homiylarni tahrirlash</h3>
                     <div class="filter__exit">
                         <img draggable="false"
-                            @click="closeEdit"
+                            @click="closeAdd"
                             :src="exitBtn"
                             alt="exit btn">
                     </div>
                 </div>
-                <div class="filter__body">
-                    <div class="filter__list">
-                        <ul>
-                            <li>
-                                <label for="name">
-                                    <h3>F.I.Sh. (Familiya Ism Sharifingiz)</h3>
-                                    <input class="filter__list-item"
-                                        id="name"
-                                        name="name"
-                                        value="Ishmuhammedov Aziz Ishqobilovich"
-                                        type="text">
-                                </label>
-                            </li>
-                            <li>
-                                <label for="tel">
-                                    <h3>Telefon raqam</h3>
-                                    <input class="filter__list-item"
-                                        id="tel"
-                                        name="tel"
-                                        value="+998 973-72-60"
-                                        type="tel">
-                                </label>
-                            </li>
-                            <li>
-                                <label for="university">
-                                    <h3>OTM</h3>
-                                    <select class="filter__list-item"
-                                        name="university"
-                                        id="university">
-                                        <option value="inha">Toshkent shahridagi INHA Universiteti</option>
-                                        <option value="milliy">O’zbekiston milliy universiteti</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="contract">
-                                    <h3>Kontrakt miqdori</h3>
-                                    <input class="filter__list-item"
-                                        id="contract"
-                                        name="contract"
-                                        value="300000000"
-                                        type="number">
-                                </label>
-                            </li>
-                        </ul>
+                <form @submit.prevent="updateSponsor">
+                    <div class="filter__body">
+                        <div class="filter__list">
+                            <ul>
+                                <li>
+                                    <label for="name">
+                                        <h3>F.I.Sh. (Familiya Ism Sharifingiz)</h3>
+                                        <select v-model="sponsor"
+                                            class="filter__list-item"
+                                            name="name"
+                                            id="name"
+                                            required>
+                                            <option value=""
+                                                selected
+                                                disabled>-- Homiyni tanlang</option>
+                                            <option value="new">Yangi</option>
+                                            <option value="cancel">Bekor qilingan</option>
+                                            <option value="moderation">Moderatsiyada</option>
+                                        </select>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="summ">
+                                        <h3>Ajratilgan summa</h3>
+                                        <input v-model="sum"
+                                            required
+                                            class="filter__list-item"
+                                            id="summ"
+                                            name="summ"
+                                            type="number"
+                                            placeholder="Summani kiriting">
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="filter__bottom">
-                    <div @click="updateStudent"
-                        class="filter__btn">
-                        <img :src="saveIcon"
-                            alt="save">
-                        <h3>Saqlash</h3>
+                    <div class="filter__bottom">
+                        <button type="submit"
+                            class="filter__btn delete">
+                            <img :src="deleteIcon"
+                                alt="delete">
+                            <h3>Homiyni o‘chirish</h3>
+                        </button>
+                        <button type="submit"
+                            class="filter__btn update">
+                            <img :src="saveIcon"
+                                alt="save">
+                            <h3>Saqlash</h3>
+                        </button>
+
                     </div>
-                </div>
+                </form>
             </div>
 
         </dialog>
@@ -121,10 +126,10 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     z-index: 2;
     background: rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
@@ -145,6 +150,13 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 28px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 28px;
+        }
     }
 
     &__header {
@@ -173,40 +185,6 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 32px;
-    }
-
-    &__type {
-        display: flex;
-        align-items: center;
-
-        &-item {
-            padding: 14px 0px;
-            background: #FFFFFF;
-            border: 2px solid #E0E7FF;
-            color: rgba(51, 102, 255, 0.6);
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 12px;
-            text-align: center;
-            letter-spacing: 1.125px;
-            text-transform: uppercase;
-            border: 2px solid #E0E7FF;
-            width: 50%;
-
-            &.active {
-                border: 2px solid #3366FF;
-                background: #3366FF;
-                color: #fff;
-            }
-
-            &.left {
-                border-radius: 6px 0px 0px 6px;
-            }
-
-            &.right {
-                border-radius: 0px 6px 6px 0px;
-            }
-        }
     }
 
     &__list {
@@ -256,17 +234,33 @@ export default {
         width: 100%;
         border-top: 2px solid #F5F5F7;
         justify-content: flex-end;
+        gap: 16px;
     }
 
     &__btn {
+        &.update {
+            background: #3366FF;
+            box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+
+            h3 {
+                color: #FFFFFF;
+            }
+        }
+
+        &.delete {
+            background: #FFECEB;
+
+            h3 {
+                color: #FF4945;
+            }
+        }
+
         cursor: pointer;
-        background: #3366FF;
         display: flex;
         gap: 14px;
         align-items: center;
         height: 42px;
         padding: 0px 32px;
-        box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
         border-radius: 5px;
 
         h3 {
@@ -274,8 +268,6 @@ export default {
             font-size: 14px;
             line-height: 24px;
             letter-spacing: -0.35px;
-            color: #FFFFFF;
-
         }
     }
 }

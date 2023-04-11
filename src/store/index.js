@@ -1,7 +1,12 @@
 import { createStore } from 'vuex'
+import sponsor from './sponsor.js'
+
 
 
 const store = createStore({
+    modules: {
+        sponsor
+    },
     state() {
         return {
             tabView: [
