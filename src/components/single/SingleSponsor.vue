@@ -5,6 +5,9 @@ import leftarrowIcon from '../../assets/icons/leftarrow.svg'
 import bottomImg from '../../assets/images/rocket.png'
 
 import SponsorsEditModal from '../modals/SponsorsEditModal.vue'
+
+import { mapActions, mapGetters } from 'vuex'
+
 </script>
 
 <script>
@@ -20,12 +23,21 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['fetchSponsors']),
         openModal() {
             this.edit = !this.edit;
         },
     },
+    computed: {
+        ...mapGetters(['getSponsorsList']),
+    },
+    watch: {
+        'getSponsorsList': function (data) {
+            this.user = data.find(el => el.id == this.$route.params.id)
+        }
+    },
     mounted() {
-        this.user = this.$store.state.sponsorsList.find(el => el.name == this.$route.params.id)
+        this.fetchSponsors()
     }
 }
 </script>
@@ -40,9 +52,9 @@ export default {
                         alt="arrow">
                 </button>
                 <div class="single__header-box">
-                    <h2 class="single__header-name">{{ user.name }}</h2>
-                    <div :class="user.howis ? `${user.howis}` : ''"
-                        class="single__header-status">{{ user.status }}</div>
+                    <h2 class="single__header-name">{{ user.full_name }}</h2>
+                    <div :class="user.get_status_display"
+                        class="single__header-status">{{ user.get_status_display }}</div>
                 </div>
             </div>
         </div>
@@ -62,21 +74,21 @@ export default {
                         alt="">
                 </div>
                 <div class="user__name">
-                    {{ user.name }}
+                    {{ user.full_name }}
                 </div>
             </div>
             <div class="single__body-box">
                 <div class="item">
                     <h4 class="item__title">telefon raqam</h4>
-                    <h3 class="item__text">{{ user.tel }}</h3>
+                    <h3 class="item__text">{{ user.phone }}</h3>
                 </div>
                 <div class="item">
                     <h4 class="item__title">Homiylik summasi</h4>
-                    <h3 class="item__text">{{ user.sumSponsor }} UZS</h3>
+                    <h3 class="item__text">{{ user.sum?.toLocaleString().replaceAll(',', ' ') }} UZS</h3>
                 </div>
-                <div class="item">
+                <div v-if="user.firm?.length" class="item">
                     <h4 class="item__title">Tashkilot nomi</h4>
-                    <h3 class="item__text">Orient Group Corporation</h3>
+                    <h3 class="item__text">{{ user.firm }}</h3>
                 </div>
             </div>
         </div>
@@ -134,7 +146,7 @@ export default {
                 background: #DDFFF2;
             }
 
-            &.moderation {
+            &.Moderatsiyada {
                 color: #FFA445;
                 background: #ffe7cd;
             }

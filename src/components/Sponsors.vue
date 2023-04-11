@@ -13,8 +13,8 @@ export default {
     },
     methods: {
         ...mapActions(['fetchSponsors']),
-        goSingle(name) {
-            this.$router.push(`/admin/sponsors/single/${name}`)
+        goSingle(id) {
+            this.$router.push(`/admin/sponsors/single/${id}`)
         }
     },
     computed: {
@@ -41,13 +41,12 @@ export default {
         }
     },
     watch: {
-        '$store.state.sponsorsList': function (newData) {
-            this.sponsorsList = newData
+        'getSponsorsList': function (data) {
+            this.sponsorsList = data
         }
     },
     mounted() {
         this.fetchSponsors()
-        this.sponsorsList = this.$store.state.sponsorsList
     }
 }
 </script>
@@ -71,7 +70,7 @@ export default {
                 <div class="sponsors__body">
                     <ul v-if="this.filteredStatus.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in getSponsorsList"
+                        <li v-for="(item, index) in sponsorsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">
@@ -88,7 +87,7 @@ export default {
                                 <li class="status"
                                     :class="item.get_status_display">{{ item.get_status_display }}</li>
                                 <li class="show">
-                                    <img @click="goSingle(item.name)"
+                                    <img @click="goSingle(item.id)"
                                         :src="showIconBlue"
                                         alt="showIcon">
                                 </li>

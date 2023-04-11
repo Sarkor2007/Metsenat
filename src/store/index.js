@@ -96,36 +96,6 @@ const store = createStore({
                     status: 'Yangi',
                     howis: 'new'
                 },
-                {
-                    id: 2,
-                    name: 'Saimov Rustam Saimjonovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 1000000,
-                    sumSpent: 0,
-                    date: '02.02.2021',
-                    status: 'Moderatsiyada',
-                    howis: 'moderation'
-                },
-                {
-                    id: 3,
-                    name: 'Sanginov Otabek Muratovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 5000000,
-                    sumSpent: 5000000,
-                    date: '20.04.2021',
-                    status: 'Tasdiqlangan',
-                    howis: 'actived'
-                },
-                {
-                    id: 4,
-                    name: 'Nazarov Sanjar Olimovich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 7000000,
-                    sumSpent: 7000000,
-                    date: '03.05.2021',
-                    status: 'Bekor qilingan',
-                    howis: 'cancel'
-                },
             ]
         }
     },
