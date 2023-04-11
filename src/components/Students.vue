@@ -2,6 +2,7 @@
 // icons
 import showIconBlue from '../assets/icons/eyeblue.svg'
 
+import { mapActions, mapGetters } from 'vuex'
 
 </script>
 
@@ -16,33 +17,36 @@ export default {
         }
     },
     methods: {
-        goSingle(name) {
-            this.$router.push(`/admin/students/single/${name}`)
+        ...mapActions(['fetchStudents']),
+        goSingle(id) {
+            this.$router.push(`/admin/students/single/${id}`)
         }
     },
     computed: {
-        filteredStudents() {
-            const selectedType = this.$store.state.selectedType;
-            const selectedUniversity = this.$store.state.selectedUniversity;
-            return this.studentsList.filter(el =>
-                (selectedType === 'all' || el.type === selectedType) &&
-                (selectedUniversity === 'all' || el.university === selectedUniversity)
-            );
-        }
+        ...mapGetters(['getStudentsList']),
+        // filteredStudents() {
+        //     const selectedType = this.$store.state.selectedType;
+        //     const selectedUniversity = this.$store.state.selectedUniversity;
+        //     return this.studentsList.filter(el =>
+        //         (selectedType === 'all' || el.type === selectedType) &&
+        //         (selectedUniversity === 'all' || el.university === selectedUniversity)
+        //     );
+        // }
     },
     watch: {
-        '$store.state.studentsList': function (newData) {
-            this.studentsList = newData
+        'getStudentsList': function (data) {
+            this.studentsList = data
         }
     },
     mounted() {
-        this.studentsList = this.$store.state.studentsList;
+        this.fetchStudents()
     }
 }
 </script>
 
 <template>
     <section class="students">
+        {{ getStudentsList }}
         <div class="container">
             <div class="students__add">
                 <div @click="this.$router.push('/admin/students/add')"
@@ -65,23 +69,27 @@ export default {
                     </ul>
                 </div>
                 <div class="students__body">
-                    <ul v-if="filteredStudents.length"
+                    <ul v-if="studentsList.length"
                         class="students__body-list">
-                        <li v-for="(item, index) in this.filteredStudents"
+                        <li v-for="(item, index) in this.studentsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">
                                 <li class="number">{{ ++index }}</li>
-                                <li class="name">{{ item.name }}</li>
-                                <li class="type">{{ item.type }}</li>
-                                <li class="unversity">{{ item.otm }}</li>
-                                <li v-if="!item.sumSpent"
+                                <li class="name">{{ item.full_name }}</li>
+                                <li class="type">{{ item.type == 1 ? 'Bakalavr' : 'Magistr' }}</li>
+                                <li class="unversity">{{ item.institute.name }}</li>
+                                <li v-if="!item.given"
                                     class="summ-spent"><span>Ajratilmagan</span></li>
                                 <li v-else
-                                    class="summ-spent">{{ item.sumSpent }} <span>UZS</span></li>
-                                <li class="summ-contract">{{ item.sumContract }} <span>UZS</span></li>
+                                    class="summ-spent">{{ item.given.toLocaleString().replaceAll(',', ' ') }}
+                                    <span>UZS</span>
+                                </li>
+                                <li class="summ-contract">{{ item.contract.toLocaleString().replaceAll(',', ' ') }}
+                                    <span>UZS</span>
+                                </li>
                                 <li class="show">
-                                    <img @click="goSingle(item.name)"
+                                    <img @click="goSingle(item.id)"
                                         :src="showIconBlue"
                                         draggable="false"
                                         alt="showIcon">
@@ -274,11 +282,23 @@ export default {
                     align-items: center;
                     text-align: center;
 
+                    li {
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 22px;
+                        color: #1D1D1F;
+                    }
+
                     .number {
                         width: 5%;
                     }
 
                     .name {
+                        font-weight: 500;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #1D1D1F;
+
                         width: 22%;
                         text-align: left;
                     }
@@ -291,12 +311,18 @@ export default {
                         width: 22%;
                     }
 
-                    .summ-spent {
-                        width: 15%;
-                    }
-
+                    .summ-spent,
                     .summ-contract {
                         width: 15%;
+
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 22px;
+                        color: #2E384D;
+
+                        span {
+                            color: #B2B7C1;
+                        }
                     }
 
                     .show {

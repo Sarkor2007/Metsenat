@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
 import sponsor from './sponsor.js'
+import student from './student.js'
 
 
 
 const store = createStore({
     modules: {
+        student,
         sponsor
     },
     state() {
@@ -85,18 +87,6 @@ const store = createStore({
                     sumContract: '28 000 000',
                 },
             ],
-            sponsorsList: [
-                {
-                    id: 1,
-                    name: 'Alimov Abror Xabibullayevich',
-                    tel: '+99899 973-72-60',
-                    sumSponsor: 30000000,
-                    sumSpent: 0,
-                    date: '15.01.2021',
-                    status: 'Yangi',
-                    howis: 'new'
-                },
-            ]
         }
     },
     mutations: {
