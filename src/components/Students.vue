@@ -17,14 +17,14 @@ export default {
     },
     computed: {
         ...mapGetters(['getStudentsList']),
-        // filteredStudents() {
-        //     const selectedType = this.$store.state.selectedType;
-        //     const selectedUniversity = this.$store.state.selectedUniversity;
-        //     return this.studentsList.filter(el =>
-        //         (selectedType === 'all' || el.type === selectedType) &&
-        //         (selectedUniversity === 'all' || el.university === selectedUniversity)
-        //     );
-        // }
+        filteredStudents() {
+            let selectedType = this.$store.state.selectedType;
+            let selectedUniversity = this.$store.state.selectedUniversity;
+            return this.getStudentsList?.filter(el =>
+                (selectedType === 'all' || el.type == selectedType) &&
+                (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
+            );
+        }
     },
     mounted() {
         this.fetchStudents()
@@ -56,9 +56,9 @@ export default {
                     </ul>
                 </div>
                 <div class="students__body">
-                    <ul v-if="getStudentsList?.length"
+                    <ul v-if="filteredStudents?.length"
                         class="students__body-list">
-                        <li v-for="(item, index) in getStudentsList"
+                        <li v-for="(item, index) in filteredStudents"
                             :key="index"
                             class="item">
                             <ul class="item__box">

@@ -3,6 +3,9 @@ import exitBtn from '../../assets/icons/exit.svg'
 import clearBtn from '../../assets/icons/clear.svg'
 import showBtn from '../../assets/icons/eye.svg'
 
+
+import { mapGetters } from 'vuex'
+
 </script>
 
 <script>
@@ -13,8 +16,13 @@ export default {
             this.$store.commit('TOGGLE_FILTER_STUDENTS')
             document.body.style.overflow = '';
         },
+        clearAll() {
+            this.$store.commit('CLEAR_STUDENTS_FILTER')
+        }
+
     },
     computed: {
+        ...mapGetters(['getUniversityList']),
         studentsFilter() {
             return this.$store.state.isModalFilterStudents
         },
@@ -38,6 +46,9 @@ export default {
             }
         },
     },
+    mounted() {
+        this.$store.dispatch('getUniversity')
+    }
 }
 </script>
 
@@ -60,8 +71,8 @@ export default {
                     name="type"
                     id="type">
                     <option value="all">Barchasi</option>
-                    <option value="Bakalavr">Bakalavr</option>
-                    <option value="Magistr">Magistr</option>
+                    <option value="1">Bakalavr</option>
+                    <option value="2">Magistr</option>
                 </select>
             </div>
             <div class="filter__select">
@@ -70,8 +81,9 @@ export default {
                     name="type"
                     id="type">
                     <option value="all">Barchasi</option>
-                    <option value="inha">Toshkent shahridagi INHA Universiteti</option>
-                    <option value="milliy">O’zbekiston milliy universiteti</option>
+                    <option v-for="(item, index) in getUniversityList"
+                        :key="index"
+                        :value="item.id">{{ item.name }}</option>
                 </select>
             </div>
             <div class="filter__bottom">

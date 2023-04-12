@@ -120,9 +120,9 @@ export default {
                                 :key="index"
                                 class="pagination__item active">{{ item }}</div>
                             <!-- <div class="pagination__item">{{ item }}</div>
-                                                                            <div class="pagination__item">...</div>
-                                                                            <div class="pagination__item">9</div>
-                                                                            <div class="pagination__item">10</div> -->
+                                                                                <div class="pagination__item">...</div>
+                                                                                <div class="pagination__item">9</div>
+                                                                                <div class="pagination__item">10</div> -->
                         </div>
                         <button class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"

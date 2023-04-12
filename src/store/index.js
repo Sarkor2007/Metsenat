@@ -88,6 +88,10 @@ const store = createStore({
             }
             state.sponsorSumsFilter[0].active = true
         },
+        CLEAR_STUDENTS_FILTER(state) {
+            state.selectedUniversity = 'all';
+            state.selectedType = 'all';
+        },
         TOGGLE_FILTER_SPONSOR(state) {
             state.isModalFilterSponsor = !state.isModalFilterSponsor;
         },
