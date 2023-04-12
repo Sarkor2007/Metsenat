@@ -70,7 +70,7 @@ export default {
                     </div>
                     <div class="item__box">
                         <h4 class="item__title">{{ item.title }}</h4>
-                        <h3 class="item__price">{{ item.price }} <span>UZS</span></h3>
+                        <h3 class="item__price">{{ item.price.toLocaleString().replaceAll(',', ' ') }} <span>UZS</span></h3>
                     </div>
                 </li>
             </ul>

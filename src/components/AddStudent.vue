@@ -7,6 +7,9 @@ import plusBtn from "../assets/icons/add.svg"
 
 import { useToast } from "vue-toastification"
 
+import { mapGetters } from 'vuex'
+
+
 </script>
 
 <script>
@@ -19,26 +22,32 @@ export default {
             university: '',
             type: '',
             sumContract: '',
-            tel: '998'
+            tel: '998',
+            newStudent: {
+                full_name: "",
+                type: '',
+                phone: "",
+                institute: null,
+                contract: null,
+                given: null
+            }
         }
     },
 
     methods: {
         addStudent() {
             const toast = useToast()
-            this.$store.commit('ADD_NEW_STUDENT', {
-                name: this.name,
-                type: this.type,
-                university: this.university,
-                sumContract: this.sumContract,
-                tel: this.tel
-            })
 
-            this.name = '';
-            this.type = '';
-            this.university = '';
-            this.sumContract = '';
-            this.tel = '998';
+            this.$store.dispatch('postStudent', this.newStudent)
+
+            this.newStudent = {
+                full_name: "",
+                type: '',
+                phone: "",
+                institute: null,
+                contract: null,
+                given: null
+            }
 
             toast("Ученик добавлен!", {
                 position: "top-right",
@@ -54,14 +63,20 @@ export default {
                 icon: true,
                 rtl: false
             });
-
         }
+    },
+    computed: {
+        ...mapGetters(['getUniversityList'])
+    },
+    mounted() {
+        this.$store.dispatch('getUniversity')
     }
 }
 </script>
 
 <template>
     <section class="add">
+        <!-- {{ getUniversityList }} -->
         <div class="add__header">
             <div class="container">
                 <button @click="this.$router.push('/admin/students')"
@@ -80,7 +95,7 @@ export default {
                 <label class="add__el"
                     for="name">
                     <h3 class="add__subtitle">F.I.Sh. (Familiya Ism Sharif)</h3>
-                    <input v-model="name"
+                    <input v-model="newStudent.full_name"
                         id="name"
                         required
                         name="name"
@@ -90,12 +105,12 @@ export default {
                 <label class="add__el"
                     for="tel">
                     <h3 class="add__subtitle">Telefon raqam</h3>
-                    <input v-model="tel"
+                    <input v-model="newStudent.phone"
                         id="tel"
                         name="tel"
                         required
-                        placeholder="+998 00 000-00-00"
-                        type="number">
+                        placeholder="+998(00)000-00-00"
+                        type="text">
                 </label>
             </div>
             <label for="university"
@@ -108,29 +123,28 @@ export default {
                     <option value=""
                         disabled
                         selected>-- OTM ni tanlang</option>
-                    <option value="inha">Toshkent shahridagi INHA Universiteti</option>
-                    <option value="milliy">O’zbekiston milliy universiteti</option>
+                        <option v-for="(item,index) in getUniversityList" :key="index" :value="item.id">{{ item.name }}</option>
                 </select>
             </label>
             <div class="add__body-box">
                 <label class="add__el"
                     for="name">
                     <h3 class="add__subtitle">Talabalik turi</h3>
-                    <select v-model="type"
+                    <select v-model="newStudent.type"
                         required
                         name="university"
                         id="university">
                         <option value=""
                             disabled
                             selected>-- Talabalik turini tanlang</option>
-                        <option value="Bakalavr">Bakalavr</option>
-                        <option value="Magistr">Magistr</option>
+                        <option value="1">Bakalavr</option>
+                        <option value="2">Magistr</option>
                     </select>
                 </label>
                 <label class="add__el"
                     for="sum">
                     <h3 class="add__subtitle">Kontrakt summa</h3>
-                    <input v-model="sumContract"
+                    <input v-model="newStudent.contract"
                         required
                         id="sum"
                         name="sum"

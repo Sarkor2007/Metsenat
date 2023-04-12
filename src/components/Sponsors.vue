@@ -1,42 +1,49 @@
 <script setup>
 import showIconBlue from '../assets/icons/eyeblue.svg'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 </script>
 
 <script>
 export default {
     name: 'Sponsors',
+    data() {
+        return {
+            paginationList: []
+        }
+    },
     methods: {
-        ...mapActions(['fetchSponsors']),
+        getSponsors(item) {
+            this.$store.dispatch('fetchSponsors', item)
+        },
         goSingle(id) {
             this.$router.push(`/admin/sponsors/single/${id}`)
         }
     },
     computed: {
         ...mapGetters(['getSponsorsList']),
+        filteredStatus() {
+            let selectedStatus = this.$store.state.selectedStatus;
+            let item = this.getSponsorsList;
+            return selectedStatus === 'all'
+                ? item
+                : item.filter(el => el.get_status_display === selectedStatus);
+        },
         filteredSponsorSum() {
-            const sumFilter = this.$store.state.sponsorSumsFilter;
-            let filteredSponsorListItem = this.sponsorsList;
+            let sumFilter = this.$store.state.sponsorSumsFilter;
+            let item = this.filteredStatus;
             for (const key in sumFilter) {
                 if (sumFilter[key].active) {
-                    const money = sumFilter[key].money;
+                    let money = sumFilter[key].money;
                     if (money !== 'Barchasi') {
-                        filteredSponsorListItem = filteredSponsorListItem.filter(el => el.sumSponsor <= money);
+                        item = item.filter(el => el.sum <= money);
                     }
                 }
             }
-            return filteredSponsorListItem;
+            return item;
         },
-        filteredStatus() {
-            const selectedStatus = this.$store.state.selectedStatus;
-            const filteredSponsorSum = this.filteredSponsorSum;
-            return selectedStatus === 'all'
-                ? filteredSponsorSum
-                : filteredSponsorSum.filter(el => el.howis === selectedStatus);
-        }
     },
     created() {
-        this.fetchSponsors()
+        this.getSponsors(1)
     }
 }
 </script>
@@ -58,14 +65,14 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul v-if="getSponsorsList?.length"
+                    <ul v-if="filteredSponsorSum?.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in getSponsorsList"
+                        <li v-for="(item, index) in filteredSponsorSum"
                             :key="index"
                             class="item">
-                            <ul class="item__box">
-                                <li class="number">{{ index + 1 }}</li>
-                                <li class="name">{{ item.full_name }}</li>
+                        <ul class="item__box">
+                            <li class="number">{{ index + 1 }}</li>
+                            <li class="name">{{ item.full_name }}</li>
                                 <li class="telefon">{{ item.phone }}</li>
                                 <li class="summ-sponsor">{{ item.sum.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
@@ -108,11 +115,14 @@ export default {
                                 alt="button">
                         </button>
                         <div class="pagination__wrapper">
-                            <div class="pagination__item active">1</div>
-                            <div class="pagination__item">2</div>
-                            <div class="pagination__item">...</div>
-                            <div class="pagination__item">9</div>
-                            <div class="pagination__item">10</div>
+                            <div @click="getSponsors(item)"
+                                v-for="(item, index) in 10"
+                                :key="index"
+                                class="pagination__item active">{{ item }}</div>
+                            <!-- <div class="pagination__item">{{ item }}</div>
+                                                                            <div class="pagination__item">...</div>
+                                                                            <div class="pagination__item">9</div>
+                                                                            <div class="pagination__item">10</div> -->
                         </div>
                         <button class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"
@@ -309,7 +319,7 @@ export default {
                         font-size: 15px;
                         line-height: 22px;
 
-                        &.new {
+                        &.Yangi {
                             color: #5BABF2;
                         }
 

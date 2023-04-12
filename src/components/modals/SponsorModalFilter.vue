@@ -18,6 +18,14 @@ export default {
                 this.sponsorSumFilter[key].active = false
             }
             item.active = true
+        },
+        clearAll() {
+            sponsorFilter = 'all'
+            this.$store.state.sponsorSumsFilter[0] = 'all'
+            for (const key in this.sponsorSumFilter) {
+                this.sponsorSumFilter[key].active = false
+            }
+            item.active = true
         }
     },
     computed: {
@@ -58,8 +66,8 @@ export default {
                     name="type"
                     id="type">
                     <option value="all">Barchasi</option>
-                    <option value="new">Yangi</option>
-                    <option value="moderation">Moderatsiya</option>
+                    <option value="Yangi">Yangi</option>
+                    <option value="Moderatsiyada">Moderatsiya</option>
                     <option value="actived">Tasdiqlangan</option>
                     <option value="cancel">Bekor qilingan</option>
                 </select>
@@ -89,7 +97,8 @@ export default {
                     id="date">
             </label>
             <div class="filter__bottom">
-                <button class="filter__bottom-clear">
+                <button @click="clearAll"
+                    class="filter__bottom-clear">
                     <img :src="clearBtn"
                         alt="clear">
                     <h3>Tozalash</h3>
@@ -271,14 +280,17 @@ export default {
             display: flex;
             gap: 10px;
             align-items: center;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
             text-align: center;
             letter-spacing: -0.35px;
             height: 42px;
             padding: 0px 32px;
             cursor: pointer;
+
+            h3 {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 24px;
+            }
         }
 
         &-clear {

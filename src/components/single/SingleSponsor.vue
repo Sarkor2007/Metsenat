@@ -151,7 +151,7 @@ export default {
                 background: #ffe7cd;
             }
 
-            &.new {
+            &.Yangi {
                 color: #5BABF2;
                 background: #e0f1ff;
             }

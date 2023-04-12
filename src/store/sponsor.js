@@ -2,10 +2,10 @@ import axios from 'axios'
 
 export default {
     actions: {
-        fetchSponsors(context) {
-            axios.get('https://metsenatclub.xn--h28h.uz/api/v1/sponsor-list/')
+        fetchSponsors({ commit }, page) {
+            axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/sponsor-list/?page=${page}`)
                 .then((res) => {
-                    context.commit("UPDATE_SPONSORS", res.data)
+                    commit("UPDATE_SPONSORS", res.data)
                 })
         }
     },
@@ -15,7 +15,8 @@ export default {
         }
     },
     state: {
-        sponsors: []
+        sponsors: [],
+        pageNumber: 1
     },
     getters: {
         getSponsorsList(state) {
