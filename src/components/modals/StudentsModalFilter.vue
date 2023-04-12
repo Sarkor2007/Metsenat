@@ -1,5 +1,7 @@
 <script setup>
 import exitBtn from '../../assets/icons/exit.svg'
+import clearBtn from '../../assets/icons/clear.svg'
+import showBtn from '../../assets/icons/eye.svg'
 
 </script>
 
@@ -9,6 +11,7 @@ export default {
     methods: {
         closeStudentsFilter() {
             this.$store.commit('TOGGLE_FILTER_STUDENTS')
+            document.body.style.overflow = '';
         },
     },
     computed: {
@@ -70,6 +73,19 @@ export default {
                     <option value="inha">Toshkent shahridagi INHA Universiteti</option>
                     <option value="milliy">O’zbekiston milliy universiteti</option>
                 </select>
+            </div>
+            <div class="filter__bottom">
+                <button @click="clearAll"
+                    class="filter__bottom-clear">
+                    <img :src="clearBtn"
+                        alt="clear">
+                    <h3>Tozalash</h3>
+                </button>
+                <button class="filter__bottom-show">
+                    <img :src="showBtn"
+                        alt="clear">
+                    <h3>Natijalarni ko‘rish</h3>
+                </button>
             </div>
         </dialog>
     </div>
@@ -140,6 +156,45 @@ export default {
             border-radius: 6px;
             width: 100%;
             padding: 12px 16px;
+        }
+    }
+
+    &__bottom {
+        border-top: 2px solid #F5F5F7;
+        padding-top: 28px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+
+        button {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            text-align: center;
+            letter-spacing: -0.35px;
+            height: 42px;
+            padding: 0px 32px;
+            cursor: pointer;
+
+            h3 {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 24px;
+            }
+        }
+
+        &-clear {
+            border: 1px solid #3366FF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #3366FF;
+        }
+
+        &-show {
+            background: #3366FF;
+            box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+            border-radius: 5px;
+            color: #FFFFFF;
         }
     }
 }

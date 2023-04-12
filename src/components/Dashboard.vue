@@ -50,7 +50,7 @@ export default {
             this.dashboardList[2].price = data.total_must_pay
         }
     },
-    created() {
+    mounted() {
         this.fetchDashboard()
     }
 }

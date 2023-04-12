@@ -12,6 +12,7 @@ export default {
     methods: {
         closeSponsorFilter() {
             this.$store.commit('TOGGLE_FILTER_SPONSOR')
+            document.body.style.overflow = '';
         },
         sponsorSumToggle(item) {
             for (const key in this.sponsorSumFilter) {
@@ -20,12 +21,7 @@ export default {
             item.active = true
         },
         clearAll() {
-            sponsorFilter = 'all'
-            this.$store.state.sponsorSumsFilter[0] = 'all'
-            for (const key in this.sponsorSumFilter) {
-                this.sponsorSumFilter[key].active = false
-            }
-            item.active = true
+            this.$store.commit('CLEAR_SPONSOR_FILTER')
         }
     },
     computed: {
@@ -116,6 +112,7 @@ export default {
 <style lang="scss" scoped>
 .filter {
     position: fixed;
+    overflow: hidden;
     top: 0;
     left: 0;
     width: 100%;

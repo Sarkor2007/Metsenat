@@ -20,6 +20,7 @@ export default {
             this.$store.commit('NEW_TAB_VIEW', JSON.parse(localStorage.getItem('tabView')))
         },
         activeFilter() {
+            document.body.style.overflow = 'hidden';
             if (this.tabActived == 2) {
                 this.$store.commit('TOGGLE_FILTER_SPONSOR')
             } else if (this.tabActived == 3) {

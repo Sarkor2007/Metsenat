@@ -18,18 +18,13 @@ export default {
     data() {
         return {
             data: [],
-            name: '',
-            university: '',
-            type: '',
-            sumContract: '',
-            tel: '998',
             newStudent: {
                 full_name: "",
                 type: '',
                 phone: "",
-                institute: null,
+                institute: '',
                 contract: null,
-                given: null
+                given: 0
             }
         }
     },
@@ -44,9 +39,9 @@ export default {
                 full_name: "",
                 type: '',
                 phone: "",
-                institute: null,
+                institute: '',
                 contract: null,
-                given: null
+                given: 0
             }
 
             toast("Ученик добавлен!", {
@@ -76,7 +71,6 @@ export default {
 
 <template>
     <section class="add">
-        <!-- {{ getUniversityList }} -->
         <div class="add__header">
             <div class="container">
                 <button @click="this.$router.push('/admin/students')"
@@ -116,14 +110,16 @@ export default {
             <label for="university"
                 class="add__university add__el">
                 <h3 class="add__subtitle">OTM</h3>
-                <select v-model="university"
+                <select v-model="newStudent.institute"
                     name="university"
                     id="university"
                     required>
                     <option value=""
                         disabled
                         selected>-- OTM ni tanlang</option>
-                        <option v-for="(item,index) in getUniversityList" :key="index" :value="item.id">{{ item.name }}</option>
+                    <option v-for="(item, index) in getUniversityList"
+                        :key="index"
+                        :value="item.id">{{ item.name }}</option>
                 </select>
             </label>
             <div class="add__body-box">

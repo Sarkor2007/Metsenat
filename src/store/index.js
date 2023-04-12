@@ -81,6 +81,13 @@ const store = createStore({
             }
             item.active = true
         },
+        CLEAR_SPONSOR_FILTER(state) {
+            state.selectedStatus = 'all';
+            for (const key in state.sponsorSumsFilter) {
+                state.sponsorSumsFilter[key].active = false
+            }
+            state.sponsorSumsFilter[0].active = true
+        },
         TOGGLE_FILTER_SPONSOR(state) {
             state.isModalFilterSponsor = !state.isModalFilterSponsor;
         },
@@ -96,9 +103,6 @@ const store = createStore({
         UPDATE_SELECTED_UNIVERSITY(state, value) {
             state.selectedUniversity = value;
         },
-        ADD_NEW_STUDENT(state, data) {
-            state.studentsList.push(data)
-        }
     }
 })
 
