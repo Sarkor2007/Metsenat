@@ -68,7 +68,7 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul v-if="this.filteredStatus.length"
+                    <ul v-if="filteredStatus.length"
                         class="sponsors__body-list">
                         <li v-for="(item, index) in sponsorsList"
                             :key="index"

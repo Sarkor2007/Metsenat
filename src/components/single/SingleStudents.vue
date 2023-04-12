@@ -10,6 +10,8 @@ import StudentsEditModal from '../modals/StudentsEditModal.vue'
 import SponsorsAddModal from '../modals/SponsorsAddModal.vue'
 import SponsorEditModal from '../modals/SponsorEditModal.vue'
 
+
+import { mapActions, mapGetters } from 'vuex'
 </script>
 
 <script>
@@ -22,6 +24,7 @@ export default {
     },
     data() {
         return {
+            user: {},
             edit: false,
             add: false,
             editSponsor: false,
@@ -38,6 +41,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['fetchStudents']),
         openModal() {
             this.edit = !this.edit
         },
@@ -52,9 +56,15 @@ export default {
         }
     },
     computed: {
-        user() {
-            return this.$store.state.studentsList.find(el => el.name == this.$route.params.id)
+        ...mapGetters(['getStudentsList']),
+    },
+    watch: {
+        'getStudentsList': function (data) {
+            this.user = data.find(el => el.id == this.$route.params.id)
         }
+    },
+    mounted() {
+        this.fetchStudents()
     }
 }
 </script>
@@ -65,13 +75,12 @@ export default {
             <div class="container">
                 <div class="single__header-left">
                     <button @click="goBack"
-                        tabindex="-1"
                         class="single__header-btn">
                         <img :src="leftarrowIcon"
                             alt="arrow">
                     </button>
                     <div class="single__header-box">
-                        <h2 class="single__header-name">{{ user.name }}</h2>
+                        <h2 class="single__header-name">{{ user.full_name }}</h2>
                     </div>
                 </div>
                 <div class="single__header-right">
@@ -104,13 +113,13 @@ export default {
                             alt="">
                     </div>
                     <div class="user__name">
-                        {{ user.name }}
+                        {{ user.full_name }}
                     </div>
                 </div>
                 <div class="single__body-box">
                     <div class="item">
                         <h4 class="item__title">telefon raqam</h4>
-                        <h3 class="item__text">+998 99 973-72-60</h3>
+                        <h3 class="item__text">{{ user.phone }}</h3>
                     </div>
                 </div>
             </div>
@@ -122,19 +131,19 @@ export default {
                 <div class="single__body-box">
                     <div class="item">
                         <h4 class="item__title">OTM</h4>
-                        <h3 class="item__text">{{ user.otm }}</h3>
+                        <h3 class="item__text">{{ user.institute?.name }}</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Talabalik turi</h4>
-                        <h3 class="item__text">{{ user.type }}</h3>
+                        <h3 class="item__text">{{ user.type == 1 ? "Bakalavr" : "Magistr" }}</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Ajratilingan summa</h4>
-                        <h3 class="item__text">{{ user.sumSpent }} UZS</h3>
+                        <h3 class="item__text">{{ user.given?.toLocaleString().replaceAll(',', ' ') }} UZS</h3>
                     </div>
                     <div class="item">
                         <h4 class="item__title">Kontrakt miqdori</h4>
-                        <h3 class="item__text">{{ user.sumContract }} UZS</h3>
+                        <h3 class="item__text">{{ user.contract?.toLocaleString().replaceAll(',', ' ') }} UZS</h3>
                     </div>
                 </div>
             </div>

@@ -46,7 +46,6 @@ export default {
 
 <template>
     <section class="students">
-        {{ getStudentsList }}
         <div class="container">
             <div class="students__add">
                 <div @click="this.$router.push('/admin/students/add')"
@@ -71,7 +70,7 @@ export default {
                 <div class="students__body">
                     <ul v-if="studentsList.length"
                         class="students__body-list">
-                        <li v-for="(item, index) in this.studentsList"
+                        <li v-for="(item, index) in studentsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">
