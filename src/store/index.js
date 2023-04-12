@@ -1,13 +1,15 @@
 import { createStore } from 'vuex'
 import sponsor from './sponsor.js'
 import student from './student.js'
+import dashboard from './dashboard.js'
 
 
 
 const store = createStore({
     modules: {
         student,
-        sponsor
+        sponsor,
+        dashboard
     },
     state() {
         return {

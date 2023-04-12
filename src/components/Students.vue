@@ -87,9 +87,9 @@ export default {
                                 <li class="summ-contract">{{ item.contract.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
-                                <li class="show">
-                                    <img @click="goSingle(item.id)"
-                                        :src="showIconBlue"
+                                <li @click="goSingle(item.id)"
+                                    class="show">
+                                    <img :src="showIconBlue"
                                         draggable="false"
                                         alt="showIcon">
                                 </li>

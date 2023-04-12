@@ -86,9 +86,9 @@ export default {
                                 <li class="date">{{ item.created_at.slice(0, 10) }}</li>
                                 <li class="status"
                                     :class="item.get_status_display">{{ item.get_status_display }}</li>
-                                <li class="show">
-                                    <img @click="goSingle(item.id)"
-                                        :src="showIconBlue"
+                                <li @click="goSingle(item.id)"
+                                    class="show">
+                                    <img :src="showIconBlue"
                                         alt="showIcon">
                                 </li>
                             </ul>

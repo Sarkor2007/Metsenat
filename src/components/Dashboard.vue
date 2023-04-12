@@ -2,6 +2,9 @@
 import redTicket from '../assets/icons/red.svg'
 import blueTicket from '../assets/icons/blue.svg'
 import yellowTicket from '../assets/icons/yellow.svg'
+
+import { mapActions, mapGetters } from 'vuex'
+
 </script>
 
 <script>
@@ -13,26 +16,42 @@ export default {
                 {
                     id: 1,
                     class: 'blue',
-                    price: "1 684 325 000",
+                    price: 0,
                     title: 'Jami to‘langan summa',
                     img: blueTicket,
                 },
                 {
                     id: 2,
                     class: 'yellow',
-                    price: "14 098 530 000",
+                    price: 0,
                     title: 'Jami so‘ralgan summa',
                     img: yellowTicket,
                 },
                 {
                     id: 3,
                     class: 'red',
-                    price: "12 414 205 000",
+                    price: 0,
                     title: 'To‘lanishi kerak summa',
                     img: redTicket,
                 },
             ]
         }
+    },
+    methods: {
+        ...mapActions(['fetchDashboard']),
+    },
+    computed: {
+        ...mapGetters(['getDashboardList']),
+    },
+    watch: {
+        'getDashboardList': function (data) {
+            this.dashboardList[0].price = data.total_paid
+            this.dashboardList[1].price = data.total_need
+            this.dashboardList[2].price = data.total_must_pay
+        }
+    },
+    mounted() {
+        this.fetchDashboard()
     }
 }
 </script>
@@ -41,7 +60,7 @@ export default {
     <section class="dashboard">
         <div class="container">
             <ul class="dashboard__features">
-                <li v-for="(item, index) in this.dashboardList"
+                <li v-for="(item, index) in dashboardList"
                     :key="index"
                     class="dashboard__features-item item">
                     <div :class="item.class"
