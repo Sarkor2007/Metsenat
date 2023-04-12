@@ -6,11 +6,6 @@ import { mapActions, mapGetters } from 'vuex'
 <script>
 export default {
     name: 'Sponsors',
-    data() {
-        return {
-            sponsorsList: []
-        }
-    },
     methods: {
         ...mapActions(['fetchSponsors']),
         goSingle(id) {
@@ -40,12 +35,7 @@ export default {
                 : filteredSponsorSum.filter(el => el.howis === selectedStatus);
         }
     },
-    watch: {
-        'getSponsorsList': function (data) {
-            this.sponsorsList = data
-        }
-    },
-    mounted() {
+    created() {
         this.fetchSponsors()
     }
 }
@@ -68,9 +58,9 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul v-if="filteredStatus.length"
+                    <ul v-if="getSponsorsList?.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in sponsorsList"
+                        <li v-for="(item, index) in getSponsorsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">

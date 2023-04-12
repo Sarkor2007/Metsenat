@@ -9,13 +9,6 @@ import { mapActions, mapGetters } from 'vuex'
 <script>
 export default {
     name: 'Students',
-    components: {
-    },
-    data() {
-        return {
-            studentsList: []
-        }
-    },
     methods: {
         ...mapActions(['fetchStudents']),
         goSingle(id) {
@@ -33,12 +26,7 @@ export default {
         //     );
         // }
     },
-    watch: {
-        'getStudentsList': function (data) {
-            this.studentsList = data
-        }
-    },
-    mounted() {
+    created() {
         this.fetchStudents()
     }
 }
@@ -68,9 +56,9 @@ export default {
                     </ul>
                 </div>
                 <div class="students__body">
-                    <ul v-if="studentsList.length"
+                    <ul v-if="getStudentsList?.length"
                         class="students__body-list">
-                        <li v-for="(item, index) in studentsList"
+                        <li v-for="(item, index) in getStudentsList"
                             :key="index"
                             class="item">
                             <ul class="item__box">

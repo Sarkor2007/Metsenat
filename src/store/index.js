@@ -69,26 +69,6 @@ const store = createStore({
             selectedStatus: 'all',
             selectedType: 'all',
             selectedUniversity: 'all',
-            studentsList: [
-                {
-                    // id: 1,
-                    name: 'Alimov Abror Xabibullayevich',
-                    type: 'Bakalavr',
-                    otm: 'Toshkent shahridagi INHA Universiteti',
-                    university: 'inha',
-                    sumSpent: '14 000 000',
-                    sumContract: '30 000 000',
-                },
-                {
-                    // id: 2,
-                    name: 'Saimov Rustam Saimjonovich',
-                    type: 'Magistr',
-                    otm: 'O’zbekiston milliy universiteti',
-                    university: 'milliy',
-                    sumSpent: '28 000 000',
-                    sumContract: '28 000 000',
-                },
-            ],
         }
     },
     mutations: {
