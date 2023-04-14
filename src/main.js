@@ -18,4 +18,5 @@ app.use(Toast, {
     newestOnTop: true
 });
 
+
 app.use(router).use(store).mount('#app')

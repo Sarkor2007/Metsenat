@@ -1,6 +1,7 @@
 <script setup>
 import showIconBlue from '../assets/icons/eyeblue.svg'
 import { mapGetters } from 'vuex'
+
 </script>
 
 <script>
@@ -8,7 +9,11 @@ export default {
     name: 'Sponsors',
     data() {
         return {
-            paginationList: []
+            paginationList: [],
+            activePage: null,
+            pageCount: null,
+            startNum: null,
+            endNum: null
         }
     },
     methods: {
@@ -17,10 +22,17 @@ export default {
         },
         goSingle(id) {
             this.$router.push(`/admin/sponsors/single/${id}`)
+        },
+        minusPagination() {
+            this.$store.dispatch('fetchSponsors', 'minus')
+        },
+        plusPagination() {
+            this.$store.dispatch('fetchSponsors', 'plus')
         }
     },
     computed: {
         ...mapGetters(['getSponsorsList']),
+        ...mapGetters(['getSponsorsCount']),
         filteredStatus() {
             let selectedStatus = this.$store.state.selectedStatus;
             let item = this.getSponsorsList;
@@ -42,9 +54,23 @@ export default {
             return item;
         },
     },
+    watch: {
+        getSponsorsCount: function (data) {
+            this.pageCount = Math.floor(data.count / 10);
+            this.activePage = data.active;
+            this.startNum = 1
+            if (data.active >= 2) {
+                this.startNum = ((data.active - 1) * 10) + 1
+            }
+            this.endNum = data.active * 10
+            if (data.active > (Math.floor(data.count - 10) / 10)) {
+                this.endNum = data.count
+            }
+        }
+    },
     created() {
         this.getSponsors(1)
-    }
+    },
 }
 </script>
 
@@ -70,9 +96,9 @@ export default {
                         <li v-for="(item, index) in filteredSponsorSum"
                             :key="index"
                             class="item">
-                        <ul class="item__box">
-                            <li class="number">{{ index + 1 }}</li>
-                            <li class="name">{{ item.full_name }}</li>
+                            <ul class="item__box">
+                                <li class="number">{{ index + 1 }}</li>
+                                <li class="name">{{ item.full_name }}</li>
                                 <li class="telefon">{{ item.phone }}</li>
                                 <li class="summ-sponsor">{{ item.sum.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
@@ -99,7 +125,7 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    59 tadan 1-10 ko‘rsatilmoqda
+                    {{ getSponsorsCount.count }} tadan {{ startNum }}-{{ endNum }} ko‘rsatilmoqda
                 </div>
                 <div class="pagination__block">
                     <div class="pagination__show">
@@ -110,21 +136,28 @@ export default {
                         </select>
                     </div>
                     <div class="pagination__box">
-                        <button class="pagination__btn left">
+                        <button :disabled="activePage <= 1"
+                            :class="activePage <= 1 ? 'disabled' : ''"
+                            @click="minusPagination"
+                            class="pagination__btn left">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>
                         <div class="pagination__wrapper">
-                            <div @click="getSponsors(item)"
-                                v-for="(item, index) in 10"
-                                :key="index"
-                                class="pagination__item active">{{ item }}</div>
-                            <!-- <div class="pagination__item">{{ item }}</div>
-                                                                                <div class="pagination__item">...</div>
-                                                                                <div class="pagination__item">9</div>
-                                                                                <div class="pagination__item">10</div> -->
+                            <div v-if="activePage > 1"
+                                @click="getSponsors(activePage - 1)"
+                                class="pagination__item">{{ activePage - 1 }}</div>
+                            <div class="pagination__item active">{{ activePage }}</div>
+                            <div class="pagination__item">...</div>
+                            <div @click="getSponsors(activePage + 1)"
+                                class="pagination__item">{{ activePage + 1 }}</div>
+                            <div @click="getSponsors(activePage + 2)"
+                                class="pagination__item">{{ activePage + 2 }}</div>
                         </div>
-                        <button class="pagination__btn">
+                        <button :disabled="activePage >= pageCount"
+                            @click="plusPagination"
+                            :class="activePage >= pageCount ? 'disabled' : ''"
+                            class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>
@@ -408,6 +441,9 @@ export default {
 
         &.left {
             transform: rotate(180deg);
+        }
+
+        &.disabled {
             opacity: .35;
             cursor: auto;
         }
