@@ -2,21 +2,38 @@
 // icons
 import showIconBlue from '../assets/icons/eyeblue.svg'
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 </script>
 
 <script>
 export default {
     name: 'Students',
+    data() {
+        return {
+            activePage: null,
+            pageCount: null,
+            startNum: null,
+            endNum: null
+        }
+    },
     methods: {
-        ...mapActions(['fetchStudents']),
         goSingle(id) {
             this.$router.push(`/admin/students/single/${id}`)
+        },
+        getStudents(item) {
+            this.$store.dispatch('fetchStudents', item)
+        },
+        minusPagination() {
+            this.$store.dispatch('fetchStudents', 'minus')
+        },
+        plusPagination() {
+            this.$store.dispatch('fetchStudents', 'plus')
         }
     },
     computed: {
         ...mapGetters(['getStudentsList']),
+        ...mapGetters(['getStudentsCount']),
         filteredStudents() {
             let selectedType = this.$store.state.selectedType;
             let selectedUniversity = this.$store.state.selectedUniversity;
@@ -24,10 +41,24 @@ export default {
                 (selectedType === 'all' || el.type == selectedType) &&
                 (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
             );
+        },
+    },
+    watch: {
+        getStudentsCount: function (data) {
+            this.pageCount = Math.floor(data.count / 10);
+            this.activePage = data.active;
+            this.startNum = 1
+            if (data.active >= 2) {
+                this.startNum = ((data.active - 1) * 10) + 1
+            }
+            this.endNum = data.active * 10
+            if (data.active > (Math.floor(data.count - 10) / 10)) {
+                this.endNum = data.count
+            }
         }
     },
-    mounted() {
-        this.fetchStudents()
+    created() {
+        this.getStudents(1)
     }
 }
 </script>
@@ -92,7 +123,7 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    59 tadan 1-10 ko‘rsatilmoqda
+                    {{ getStudentsCount.count }} tadan {{ startNum }}-{{ endNum }} ko‘rsatilmoqda
                 </div>
                 <div class="pagination__block">
                     <div class="pagination__show">
@@ -103,18 +134,28 @@ export default {
                         </select>
                     </div>
                     <div class="pagination__box">
-                        <button class="pagination__btn left">
+                        <button :disabled="activePage <= 1"
+                            :class="activePage <= 1 ? 'disabled' : ''"
+                            @click="minusPagination"
+                            class="pagination__btn left">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>
                         <div class="pagination__wrapper">
-                            <div class="pagination__item active">1</div>
-                            <div class="pagination__item">2</div>
+                            <div v-if="activePage > 1"
+                                @click="getSponsors(activePage - 1)"
+                                class="pagination__item">{{ activePage - 1 }}</div>
+                            <div class="pagination__item active">{{ activePage }}</div>
                             <div class="pagination__item">...</div>
-                            <div class="pagination__item">9</div>
-                            <div class="pagination__item">10</div>
+                            <div @click="getSponsors(activePage + 1)"
+                                class="pagination__item">{{ activePage + 1 }}</div>
+                            <div @click="getSponsors(activePage + 2)"
+                                class="pagination__item">{{ activePage + 2 }}</div>
                         </div>
-                        <button class="pagination__btn">
+                        <button :disabled="activePage >= pageCount"
+                            @click="plusPagination"
+                            :class="activePage >= pageCount ? 'disabled' : ''"
+                            class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>

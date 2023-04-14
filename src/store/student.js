@@ -2,10 +2,18 @@ import axios from 'axios'
 
 export default {
     actions: {
-        fetchStudents(context) {
-            axios.get('https://metsenatclub.xn--h28h.uz/api/v1/student-list/')
+        fetchStudents({ commit, state }, page) {
+            if (typeof page == 'number') {
+                state.pageNumber = page
+            } else if (page == 'minus') {
+                state.pageNumber--
+            } else if (page == 'plus') {
+                state.pageNumber++
+            }
+            axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/student-list/?page=${state.pageNumber}`)
                 .then((res) => {
-                    context.commit("UPDATE_STUDENTS", res.data)
+                    commit("UPDATE_STUDENTS", res.data)
+                    console.log(res);
                 })
         },
         postStudent({ commit }, payload) {
@@ -29,7 +37,8 @@ export default {
     },
     mutations: {
         UPDATE_STUDENTS(state, payload) {
-            state.students = payload
+            state.students = payload.results
+            state.pagesCount = payload.count
         },
         UPDATE_UNVERSITIES(state, payload) {
             state.universityList = payload
@@ -37,14 +46,22 @@ export default {
     },
     state: {
         students: [],
-        universityList: []
+        universityList: [],
+        pageNumber: 1,
+        pagesCount: null
     },
     getters: {
         getStudentsList(state) {
-            return state.students.results
+            return state.students
         },
         getUniversityList(state) {
             return state.universityList
+        },
+        getStudentsCount(state) {
+            return {
+                count: state.pagesCount,
+                active: state.pageNumber
+            }
         }
     }
 }
