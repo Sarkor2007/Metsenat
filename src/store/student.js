@@ -13,7 +13,6 @@ export default {
             axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/student-list/?page=${state.pageNumber}`)
                 .then((res) => {
                     commit("UPDATE_STUDENTS", res.data)
-                    console.log(res);
                 })
         },
         postStudent({ commit }, payload) {

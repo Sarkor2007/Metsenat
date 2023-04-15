@@ -11,6 +11,7 @@ export default {
     name: 'Students',
     data() {
         return {
+            filteredStudents: [],
             activePage: null,
             pageCount: null,
             startNum: null,
@@ -29,19 +30,30 @@ export default {
         },
         plusPagination() {
             this.$store.dispatch('fetchStudents', 'plus')
+        },
+        filterStudents() {
+            let selectedType = this.$store.state.selectedType;
+            let selectedUniversity = this.$store.state.selectedUniversity;
+            this.filteredStudents = this.getStudentsList?.filter(el =>
+                (selectedType === 'all' || el.type == selectedType) &&
+                (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
+            );
         }
     },
     computed: {
         ...mapGetters(['getStudentsList']),
         ...mapGetters(['getStudentsCount']),
-        filteredStudents() {
-            let selectedType = this.$store.state.selectedType;
-            let selectedUniversity = this.$store.state.selectedUniversity;
-            return this.getStudentsList?.filter(el =>
-                (selectedType === 'all' || el.type == selectedType) &&
-                (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
-            );
-        },
+        updateList() {
+            return this.$store.state.studentsFilter
+        }
+        // filteredStudents() {
+        //     let selectedType = this.$store.state.selectedType;
+        //     let selectedUniversity = this.$store.state.selectedUniversity;
+        //     return this.getStudentsList?.filter(el =>
+        //         (selectedType === 'all' || el.type == selectedType) &&
+        //         (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
+        //     );
+        // },
     },
     watch: {
         getStudentsCount: function (data) {
@@ -55,6 +67,12 @@ export default {
             if (data.active > (Math.floor(data.count - 10) / 10)) {
                 this.endNum = data.count
             }
+        },
+        getStudentsList: function (data) {
+            this.filteredStudents = data
+        },
+        updateList: function () {
+            this.filterStudents()
         }
     },
     created() {
@@ -143,13 +161,13 @@ export default {
                         </button>
                         <div class="pagination__wrapper">
                             <div v-if="activePage > 1"
-                                @click="getSponsors(activePage - 1)"
+                                @click="getStudents(activePage - 1)"
                                 class="pagination__item">{{ activePage - 1 }}</div>
                             <div class="pagination__item active">{{ activePage }}</div>
                             <div class="pagination__item">...</div>
-                            <div @click="getSponsors(activePage + 1)"
+                            <div @click="getStudents(activePage + 1)"
                                 class="pagination__item">{{ activePage + 1 }}</div>
-                            <div @click="getSponsors(activePage + 2)"
+                            <div @click="getStudents(activePage + 2)"
                                 class="pagination__item">{{ activePage + 2 }}</div>
                         </div>
                         <button :disabled="activePage >= pageCount"
