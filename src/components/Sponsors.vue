@@ -10,6 +10,7 @@ export default {
     data() {
         return {
             paginationList: [],
+            filteredSponsor: [],
             activePage: null,
             pageCount: null,
             startNum: null,
@@ -28,31 +29,34 @@ export default {
         },
         plusPagination() {
             this.$store.dispatch('fetchSponsors', 'plus')
-        }
+        },
+        filterSponsors() {
+            let selectedStatus = this.$store.state.selectedStatus;
+            let sumFilter = this.$store.state.sponsorSumsFilter;
+            let sponsors = this.getSponsorsList;
+
+            let filteredSponsors = selectedStatus === 'all'
+                ? sponsors
+                : sponsors.filter(el => el.get_status_display === selectedStatus);
+
+            for (const key in sumFilter) {
+                if (sumFilter[key].active) {
+                    const money = sumFilter[key].money;
+                    if (money !== 'Barchasi') {
+                        filteredSponsors = filteredSponsors.filter(el => el.sum <= money);
+                    }
+                }
+            }
+
+            this.filteredSponsor = filteredSponsors;
+        },
     },
     computed: {
         ...mapGetters(['getSponsorsList']),
         ...mapGetters(['getSponsorsCount']),
-        filteredStatus() {
-            let selectedStatus = this.$store.state.selectedStatus;
-            let item = this.getSponsorsList;
-            return selectedStatus === 'all'
-                ? item
-                : item.filter(el => el.get_status_display === selectedStatus);
-        },
-        filteredSponsorSum() {
-            let sumFilter = this.$store.state.sponsorSumsFilter;
-            let item = this.filteredStatus;
-            for (const key in sumFilter) {
-                if (sumFilter[key].active) {
-                    let money = sumFilter[key].money;
-                    if (money !== 'Barchasi') {
-                        item = item.filter(el => el.sum <= money);
-                    }
-                }
-            }
-            return item;
-        },
+        updateSponsorList() {
+            return this.$store.state.sponsorsFilter
+        }
     },
     watch: {
         getSponsorsCount: function (data) {
@@ -66,6 +70,12 @@ export default {
             if (data.active > (Math.floor(data.count - 10) / 10)) {
                 this.endNum = data.count
             }
+        },
+        getSponsorsList: function (data) {
+            this.filteredSponsor = data
+        },
+        updateSponsorList: function () {
+            this.filterSponsors()
         }
     },
     created() {
@@ -91,9 +101,9 @@ export default {
                     </ul>
                 </div>
                 <div class="sponsors__body">
-                    <ul v-if="filteredSponsorSum?.length"
+                    <ul v-if="filteredSponsor?.length"
                         class="sponsors__body-list">
-                        <li v-for="(item, index) in filteredSponsorSum"
+                        <li v-for="(item, index) in filteredSponsor"
                             :key="index"
                             class="item">
                             <ul class="item__box">
@@ -125,7 +135,9 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    {{ getSponsorsCount.count }} tadan {{ startNum }}-{{ endNum }} ko‘rsatilmoqda
+                    {{ getSponsorsCount.count ? getSponsorsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
+                        ?
+                        endNum : 10 }} ko‘rsatilmoqda
                 </div>
                 <div class="pagination__block">
                     <div class="pagination__show">

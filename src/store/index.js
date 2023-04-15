@@ -67,6 +67,7 @@ const store = createStore({
                 },
             ],
             studentsFilter: 0,
+            sponsorsFilter: 0,
             selectedStatus: 'all',
             selectedType: 'all',
             selectedUniversity: 'all',
@@ -89,14 +90,15 @@ const store = createStore({
             }
             state.sponsorSumsFilter[0].active = true
         },
+        UPDATE_SPONSORS_FILTER(state) {
+            state.sponsorsFilter++
+        },
         CLEAR_STUDENTS_FILTER(state) {
             state.selectedUniversity = 'all';
             state.selectedType = 'all';
         },
         UPDATE_STUDENTS_FILTER(state) {
-            console.log('hello');
             state.studentsFilter++
-            // state.studentsFilter--
         },
         TOGGLE_FILTER_SPONSOR(state) {
             state.isModalFilterSponsor = !state.isModalFilterSponsor;

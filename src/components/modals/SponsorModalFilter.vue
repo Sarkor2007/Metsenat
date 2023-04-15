@@ -22,6 +22,10 @@ export default {
         },
         clearAll() {
             this.$store.commit('CLEAR_SPONSOR_FILTER')
+            this.updateFilter()
+        },
+        updateFilter() {
+            this.$store.commit('UPDATE_SPONSORS_FILTER')
         }
     },
     computed: {
@@ -99,7 +103,8 @@ export default {
                         alt="clear">
                     <h3>Tozalash</h3>
                 </button>
-                <button class="filter__bottom-show">
+                <button @click="updateFilter"
+                    class="filter__bottom-show">
                     <img :src="showBtn"
                         alt="clear">
                     <h3>Natijalarni ko‘rish</h3>

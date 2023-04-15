@@ -43,17 +43,9 @@ export default {
     computed: {
         ...mapGetters(['getStudentsList']),
         ...mapGetters(['getStudentsCount']),
-        updateList() {
+        updateStudentsList() {
             return this.$store.state.studentsFilter
         }
-        // filteredStudents() {
-        //     let selectedType = this.$store.state.selectedType;
-        //     let selectedUniversity = this.$store.state.selectedUniversity;
-        //     return this.getStudentsList?.filter(el =>
-        //         (selectedType === 'all' || el.type == selectedType) &&
-        //         (selectedUniversity === 'all' || el.institute.id === selectedUniversity)
-        //     );
-        // },
     },
     watch: {
         getStudentsCount: function (data) {
@@ -71,7 +63,7 @@ export default {
         getStudentsList: function (data) {
             this.filteredStudents = data
         },
-        updateList: function () {
+        updateStudentsList: function () {
             this.filterStudents()
         }
     },
@@ -141,7 +133,9 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    {{ getStudentsCount.count }} tadan {{ startNum }}-{{ endNum }} ko‘rsatilmoqda
+                    {{ getStudentsCount.count ? getStudentsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
+                        ?
+                        endNum : 10 }} ko‘rsatilmoqda
                 </div>
                 <div class="pagination__block">
                     <div class="pagination__show">
