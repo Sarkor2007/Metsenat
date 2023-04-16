@@ -15,7 +15,7 @@ export default {
                     commit("UPDATE_STUDENTS", res.data)
                 })
         },
-        postStudent({ commit }, payload) {
+        postStudent(context, payload) {
             axios.post(`https://metsenatclub.xn--h28h.uz/api/v1/student-create/`, payload)
                 .then((res) => {
                     console.log('Ученик добавлен: ', res);
@@ -32,6 +32,15 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 })
+        },
+        detailStudent(context, payload) {
+            axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/student-detail/${payload}`)
+                .then((res) => {
+                    context.commit('SINGLE_STUDENT', res.data)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
     },
     mutations: {
@@ -42,12 +51,16 @@ export default {
         UPDATE_UNVERSITIES(state, payload) {
             state.universityList = payload
         },
+        SINGLE_STUDENT(state, payload) {
+            state.detailStudentItem = payload
+        }
     },
     state: {
         students: [],
         universityList: [],
         pageNumber: 1,
-        pagesCount: null
+        pagesCount: null,
+        detailStudentItem: {}
     },
     getters: {
         getStudentsList(state) {
@@ -56,11 +69,14 @@ export default {
         getUniversityList(state) {
             return state.universityList
         },
-        getStudentsCount(state) {
+        studentsCount(state) {
             return {
                 count: state.pagesCount,
                 active: state.pageNumber
             }
+        },
+        singleStudent(state) {
+            return state.detailStudentItem
         }
     }
 }

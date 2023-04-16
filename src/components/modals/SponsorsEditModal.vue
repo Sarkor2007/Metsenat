@@ -4,18 +4,25 @@ import saveIcon from '../../assets/icons/save.svg'
 
 import { useToast } from "vue-toastification"
 
+import { mapGetters } from 'vuex'
+
 </script>
 
 <script>
 export default {
     name: 'SponsorsEditModal',
-    props: ['open'],
+    props: ['open', 'user'],
+    data() {
+        return {
+            updateItem: {}
+        }
+    },
     methods: {
         closeEdit() {
-            this.$emit('closeEdit')
+            this.$emit('closeEdit');
         },
         updateSponsor() {
-            const toast = useToast()
+            const toast = useToast();
 
             toast("Данные обновлены!", {
                 position: "top-right",
@@ -32,10 +39,23 @@ export default {
                 rtl: false
             });
 
-            this.$emit('closeEdit')
+            this.$emit('closeEdit');
 
+            this.updateItem = {
+                id: this.data.id,
+                data: this.data
+            };
+
+            this.$store.dispatch('updateSponsor', this.updateItem);
+
+            this.updateItem = {};
         }
-    }
+    },
+    computed: {
+        data() {
+            return this.user;
+        }
+    },
 }
 </script>
 
@@ -56,8 +76,10 @@ export default {
                 </div>
                 <div class="filter__body">
                     <div class="filter__type">
-                        <div class="filter__type-item active left">Jismoniy shaxs</div>
-                        <div class="filter__type-item right">Yuridik shaxs</div>
+                        <div :class="data.firm == '' ? 'active' : ''"
+                            class="filter__type-item left">Jismoniy shaxs</div>
+                        <div :class="data.firm != '' ? 'active' : ''"
+                            class="filter__type-item right">Yuridik shaxs</div>
                     </div>
                     <div class="filter__list">
                         <ul>
@@ -67,7 +89,7 @@ export default {
                                     <input class="filter__list-item"
                                         id="name"
                                         name="name"
-                                        value="Ishmuhammedov Aziz Ishqobilovich"
+                                        v-model="data.full_name"
                                         type="text">
                                 </label>
                             </li>
@@ -77,7 +99,8 @@ export default {
                                     <input class="filter__list-item"
                                         id="tel"
                                         name="tel"
-                                        value="+998 973-72-60"
+                                        placeholder="+998 (00) 000-00-00"
+                                        v-model="data.phone"
                                         type="tel">
                                 </label>
                             </li>
@@ -86,25 +109,23 @@ export default {
                                     <h3>Holati</h3>
                                     <select class="filter__list-item"
                                         name="status"
-                                        id="status">
-                                        <option value="actived">Tasdiqlangan</option>
-                                        <option value="new">Yangi</option>
-                                        <option value="cancel">Bekor qilingan</option>
-                                        <option value="moderation">Moderatsiyada</option>
+                                        id="status"
+                                        v-model="data.get_status_display">
+                                        <option value="Tasdiqlangan">Tasdiqlangan</option>
+                                        <option value="Yangi">Yangi</option>
+                                        <option value="Bekor qilingan">Bekor qilingan</option>
+                                        <option value="Moderatsiyada">Moderatsiyada</option>
                                     </select>
                                 </label>
                             </li>
                             <li>
                                 <label for="sum">
                                     <h3>Homiylik summasi</h3>
-                                    <select class="filter__list-item"
+                                    <input class="filter__list-item"
                                         name="sum"
+                                        placeholder="0 UZS"
+                                        v-model="data.sum"
                                         id="sum">
-                                        <option value="30000000">30 000 000 UZS</option>
-                                        <option value="10000000">10 000 000 UZS</option>
-                                        <option value="5000000">5 000 000 UZS</option>
-                                        <option value="1000000">1 000 000 UZS</option>
-                                    </select>
                                 </label>
                             </li>
                             <li>
@@ -120,13 +141,13 @@ export default {
                                     </select>
                                 </label>
                             </li>
-                            <li>
+                            <li v-if="data.firm != ''">
                                 <label for="company">
                                     <h3>Tashkilot nomi</h3>
                                     <input class="filter__list-item"
                                         id="company"
                                         name="company"
-                                        value="Orient Group"
+                                        v-model="data.firm"
                                         type="text">
                                 </label>
                             </li>

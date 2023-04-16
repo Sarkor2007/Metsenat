@@ -63,6 +63,10 @@ export default {
         if (activeItem) {
             this.$router.push(`/admin/${activeItem.value}`);
         }
+
+        this.$store.dispatch('fetchSponsors', 1)
+        this.$store.dispatch('fetchStudents', 1)
+
     }
 }
 </script>

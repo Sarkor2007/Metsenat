@@ -11,7 +11,7 @@ export default {
         return {
             paginationList: [],
             filteredSponsor: [],
-            activePage: null,
+            activePage: 1,
             pageCount: null,
             startNum: null,
             endNum: null
@@ -22,7 +22,7 @@ export default {
             this.$store.dispatch('fetchSponsors', item)
         },
         goSingle(id) {
-            this.$router.push(`/admin/sponsors/single/${id}`)
+            this.$router.push(`/admin/sponsors/single/${id}`);
         },
         minusPagination() {
             this.$store.dispatch('fetchSponsors', 'minus')
@@ -53,13 +53,13 @@ export default {
     },
     computed: {
         ...mapGetters(['getSponsorsList']),
-        ...mapGetters(['getSponsorsCount']),
+        ...mapGetters(['sponsorsCount']),
         updateSponsorList() {
             return this.$store.state.sponsorsFilter
         }
     },
     watch: {
-        getSponsorsCount: function (data) {
+        sponsorsCount: function (data) {
             this.pageCount = Math.floor(data.count / 10);
             this.activePage = data.active;
             this.startNum = 1
@@ -113,7 +113,10 @@ export default {
                                 <li class="summ-sponsor">{{ item.sum.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
-                                <li class="summ-spent">{{ item.spent.toLocaleString().replaceAll(',', ' ') }}
+                                <li v-if="!item.spent"
+                                    class="summ-spent"><span>Sarflanmagan</span></li>
+                                <li v-else
+                                    class="summ-spent">{{ item.spent.toLocaleString().replaceAll(',', ' ') }}
                                     <span>UZS</span>
                                 </li>
                                 <li class="date">{{ item.created_at.slice(0, 10) }}</li>
@@ -135,7 +138,7 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    {{ getSponsorsCount.count ? getSponsorsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
+                    {{ sponsorsCount.count ? sponsorsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
                         ?
                         endNum : 10 }} ko‘rsatilmoqda
                 </div>
@@ -148,27 +151,27 @@ export default {
                         </select>
                     </div>
                     <div class="pagination__box">
-                        <button :disabled="activePage <= 1"
-                            :class="activePage <= 1 ? 'disabled' : ''"
+                        <button :disabled="sponsorsCount.active <= 1"
+                            :class="sponsorsCount.active <= 1 ? 'disabled' : ''"
                             @click="minusPagination"
                             class="pagination__btn left">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>
                         <div class="pagination__wrapper">
-                            <div v-if="activePage > 1"
-                                @click="getSponsors(activePage - 1)"
-                                class="pagination__item">{{ activePage - 1 }}</div>
-                            <div class="pagination__item active">{{ activePage }}</div>
+                            <div v-if="sponsorsCount.active > 1"
+                                @click="getSponsors(sponsorsCount.active - 1)"
+                                class="pagination__item">{{ sponsorsCount.active - 1 }}</div>
+                            <div class="pagination__item active">{{ sponsorsCount.active }}</div>
                             <div class="pagination__item">...</div>
-                            <div @click="getSponsors(activePage + 1)"
-                                class="pagination__item">{{ activePage + 1 }}</div>
-                            <div @click="getSponsors(activePage + 2)"
-                                class="pagination__item">{{ activePage + 2 }}</div>
+                            <div @click="getSponsors(sponsorsCount.active + 1)"
+                                class="pagination__item">{{ sponsorsCount.active + 1 }}</div>
+                            <div @click="getSponsors(sponsorsCount.active + 2)"
+                                class="pagination__item">{{ sponsorsCount.active + 2 }}</div>
                         </div>
-                        <button :disabled="activePage >= pageCount"
+                        <button :disabled="sponsorsCount.active >= pageCount"
                             @click="plusPagination"
-                            :class="activePage >= pageCount ? 'disabled' : ''"
+                            :class="sponsorsCount.active >= pageCount ? 'disabled' : ''"
                             class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">

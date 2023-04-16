@@ -6,7 +6,7 @@ import bottomImg from '../../assets/images/rocket.png'
 
 import SponsorsEditModal from '../modals/SponsorsEditModal.vue'
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 </script>
 
@@ -19,25 +19,18 @@ export default {
     data() {
         return {
             edit: false,
-            user: {}
         }
     },
     methods: {
-        ...mapActions(['fetchSponsors']),
         openModal() {
             this.edit = !this.edit;
         },
     },
     computed: {
-        ...mapGetters(['getSponsorsList']),
-    },
-    watch: {
-        'getSponsorsList': function (data) {
-            this.user = data.find(el => el.id == this.$route.params.id)
-        }
+        ...mapGetters(['singleSponsor']),
     },
     mounted() {
-        this.fetchSponsors()
+        this.$store.dispatch('detailSponsor', this.$route.params.id)
     }
 }
 </script>
@@ -52,9 +45,9 @@ export default {
                         alt="arrow">
                 </button>
                 <div class="single__header-box">
-                    <h2 class="single__header-name">{{ user.full_name }}</h2>
-                    <div :class="user.get_status_display"
-                        class="single__header-status">{{ user.get_status_display }}</div>
+                    <h2 class="single__header-name">{{ singleSponsor.full_name }}</h2>
+                    <div :class="singleSponsor.get_status_display"
+                        class="single__header-status">{{ singleSponsor.get_status_display }}</div>
                 </div>
             </div>
         </div>
@@ -74,21 +67,22 @@ export default {
                         alt="">
                 </div>
                 <div class="user__name">
-                    {{ user.full_name }}
+                    {{ singleSponsor.full_name }}
                 </div>
             </div>
             <div class="single__body-box">
                 <div class="item">
                     <h4 class="item__title">telefon raqam</h4>
-                    <h3 class="item__text">{{ user.phone }}</h3>
+                    <h3 class="item__text">{{ singleSponsor.phone }}</h3>
                 </div>
                 <div class="item">
                     <h4 class="item__title">Homiylik summasi</h4>
-                    <h3 class="item__text">{{ user.sum?.toLocaleString().replaceAll(',', ' ') }} UZS</h3>
+                    <h3 class="item__text">{{ singleSponsor.sum?.toLocaleString().replaceAll(',', ' ') }} UZS</h3>
                 </div>
-                <div v-if="user.firm?.length" class="item">
+                <div v-if="singleSponsor.firm?.length"
+                    class="item">
                     <h4 class="item__title">Tashkilot nomi</h4>
-                    <h3 class="item__text">{{ user.firm }}</h3>
+                    <h3 class="item__text">{{ singleSponsor.firm }}</h3>
                 </div>
             </div>
         </div>
@@ -100,7 +94,8 @@ export default {
     </section>
 
     <sponsors-edit-modal @closeEdit="openModal"
-        :open="this.edit" />
+        :open="edit"
+        :user="singleSponsor" />
 </template>
 
 <style lang="scss" scoped>

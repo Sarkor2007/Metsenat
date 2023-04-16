@@ -42,13 +42,13 @@ export default {
     },
     computed: {
         ...mapGetters(['getStudentsList']),
-        ...mapGetters(['getStudentsCount']),
+        ...mapGetters(['studentsCount']),
         updateStudentsList() {
             return this.$store.state.studentsFilter
         }
     },
     watch: {
-        getStudentsCount: function (data) {
+        studentsCount: function (data) {
             this.pageCount = Math.floor(data.count / 10);
             this.activePage = data.active;
             this.startNum = 1
@@ -133,7 +133,7 @@ export default {
             </div>
             <div class="pagination">
                 <div class="pagination__count">
-                    {{ getStudentsCount.count ? getStudentsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
+                    {{ studentsCount.count ? studentsCount.count : 10 }} tadan {{ startNum ? startNum : 1 }}-{{ endNum
                         ?
                         endNum : 10 }} ko‘rsatilmoqda
                 </div>
@@ -146,27 +146,27 @@ export default {
                         </select>
                     </div>
                     <div class="pagination__box">
-                        <button :disabled="activePage <= 1"
-                            :class="activePage <= 1 ? 'disabled' : ''"
+                        <button :disabled="studentsCount.active <= 1"
+                            :class="studentsCount.active <= 1 ? 'disabled' : ''"
                             @click="minusPagination"
                             class="pagination__btn left">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
                         </button>
                         <div class="pagination__wrapper">
-                            <div v-if="activePage > 1"
-                                @click="getStudents(activePage - 1)"
-                                class="pagination__item">{{ activePage - 1 }}</div>
-                            <div class="pagination__item active">{{ activePage }}</div>
+                            <div v-if="studentsCount.active > 1"
+                                @click="getStudents(studentsCount.active - 1)"
+                                class="pagination__item">{{ studentsCount.active - 1 }}</div>
+                            <div class="pagination__item active">{{ studentsCount.active }}</div>
                             <div class="pagination__item">...</div>
-                            <div @click="getStudents(activePage + 1)"
-                                class="pagination__item">{{ activePage + 1 }}</div>
-                            <div @click="getStudents(activePage + 2)"
-                                class="pagination__item">{{ activePage + 2 }}</div>
+                            <div @click="getStudents(studentsCount.active + 1)"
+                                class="pagination__item">{{ studentsCount.active + 1 }}</div>
+                            <div @click="getStudents(studentsCount.active + 2)"
+                                class="pagination__item">{{ studentsCount.active + 2 }}</div>
                         </div>
-                        <button :disabled="activePage >= pageCount"
+                        <button :disabled="studentsCount.active >= pageCount"
                             @click="plusPagination"
-                            :class="activePage >= pageCount ? 'disabled' : ''"
+                            :class="studentsCount.active >= pageCount ? 'disabled' : ''"
                             class="pagination__btn">
                             <img src="../assets/icons/pagination.svg"
                                 alt="button">
