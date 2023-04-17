@@ -20,6 +20,7 @@ export default {
     methods: {
         closeAdd() {
             this.$emit('closeEditSponsor')
+            document.body.style.overflow = '';
         },
         updateSponsor() {
             const toast = useToast()
@@ -40,7 +41,7 @@ export default {
             });
 
             this.$emit('closeEditSponsor')
-
+            document.body.style.overflow = '';
         }
     }
 }

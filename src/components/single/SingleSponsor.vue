@@ -19,11 +19,13 @@ export default {
     data() {
         return {
             edit: false,
+            user: {}
         }
     },
     methods: {
         openModal() {
             this.edit = !this.edit;
+            document.body.style.overflow = 'hidden';
         },
     },
     computed: {
@@ -31,6 +33,11 @@ export default {
     },
     mounted() {
         this.$store.dispatch('detailSponsor', this.$route.params.id)
+    },
+    watch: {
+        singleSponsor: function (data) {
+            this.user = data
+        }
     }
 }
 </script>
@@ -95,7 +102,7 @@ export default {
 
     <sponsors-edit-modal @closeEdit="openModal"
         :open="edit"
-        :user="singleSponsor" />
+        :user="user" />
 </template>
 
 <style lang="scss" scoped>

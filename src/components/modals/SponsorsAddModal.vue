@@ -19,6 +19,7 @@ export default {
     methods: {
         closeAdd() {
             this.$emit('closeAdd')
+            document.body.style.overflow = '';
             this.sponsor = ''
             this.sum = ''
         },
@@ -42,6 +43,7 @@ export default {
             });
 
             this.$emit('closeAdd')
+            document.body.style.overflow = '';
 
         }
     }

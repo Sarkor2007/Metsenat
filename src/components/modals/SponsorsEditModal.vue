@@ -4,8 +4,6 @@ import saveIcon from '../../assets/icons/save.svg'
 
 import { useToast } from "vue-toastification"
 
-import { mapGetters } from 'vuex'
-
 </script>
 
 <script>
@@ -14,12 +12,13 @@ export default {
     props: ['open', 'user'],
     data() {
         return {
-            updateItem: {}
+            data: {}
         }
     },
     methods: {
         closeEdit() {
             this.$emit('closeEdit');
+            document.body.style.overflow = '';
         },
         updateSponsor() {
             const toast = useToast();
@@ -40,20 +39,20 @@ export default {
             });
 
             this.$emit('closeEdit');
+            document.body.style.overflow = '';
 
-            this.updateItem = {
+            let updateItem = {
                 id: this.data.id,
                 data: this.data
             };
 
-            this.$store.dispatch('updateSponsor', this.updateItem);
-
-            this.updateItem = {};
+            this.$store.dispatch('updateSponsor', updateItem);
+            updateItem = {};
         }
     },
-    computed: {
-        data() {
-            return this.user;
+    watch: {
+        user: function (data) {
+            Object.assign(this.data, data)
         }
     },
 }
@@ -63,7 +62,8 @@ export default {
     <div v-if="this.open"
         class="filter">
         <dialog :open="this.open">
-            <div class="filter__wrapper">
+            <form @submit.prevent="updateSponsor"
+                class="filter__wrapper">
 
                 <div class="filter__header">
                     <h3 class="filter__title">Tahrirlash</h3>
@@ -107,15 +107,10 @@ export default {
                             <li>
                                 <label for="status">
                                     <h3>Holati</h3>
-                                    <select class="filter__list-item"
-                                        name="status"
-                                        id="status"
-                                        v-model="data.get_status_display">
-                                        <option value="Tasdiqlangan">Tasdiqlangan</option>
-                                        <option value="Yangi">Yangi</option>
-                                        <option value="Bekor qilingan">Bekor qilingan</option>
-                                        <option value="Moderatsiyada">Moderatsiyada</option>
-                                    </select>
+                                    <input class="filter__list-item"
+                                        readonly
+                                        :value="data.get_status_display"
+                                        type="text">
                                 </label>
                             </li>
                             <li>
@@ -155,14 +150,14 @@ export default {
                     </div>
                 </div>
                 <div class="filter__bottom">
-                    <div @click="updateSponsor"
+                    <button type="submit"
                         class="filter__btn">
                         <img :src="saveIcon"
                             alt="save">
                         <h3>Saqlash</h3>
-                    </div>
+                    </button>
                 </div>
-            </div>
+            </form>
 
         </dialog>
     </div>

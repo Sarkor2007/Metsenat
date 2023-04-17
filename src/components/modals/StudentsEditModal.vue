@@ -10,10 +10,16 @@ import { useToast } from "vue-toastification"
 <script>
 export default {
     name: 'StudentsEditModal',
-    props: ['open'],
+    props: ['open', 'user', 'university'],
+    data() {
+        return {
+            data: {}
+        }
+    },
     methods: {
         closeEdit() {
             this.$emit('closeEdit')
+            document.body.style.overflow = '';
         },
         updateStudent() {
             const toast = useToast()
@@ -34,8 +40,28 @@ export default {
             });
 
             this.$emit('closeEdit')
+            document.body.style.overflow = '';
+
+            let updateItem = {
+                id: this.data.id,
+                data: {
+                    full_name: this.data.full_name,
+                    type: this.data.type,
+                    phone: this.data.phone,
+                    institute: this.data.institute.id,
+                    contract: this.data.contract
+                }
+            };
+
+            this.$store.dispatch('updateStudent', updateItem);
+            updateItem = {}
         }
-    }
+    },
+    watch: {
+        user: function (data) {
+            Object.assign(this.data, data)
+        }
+    },
 }
 </script>
 
@@ -43,7 +69,8 @@ export default {
     <div v-if="this.open"
         class="filter">
         <dialog :open="this.open">
-            <div class="filter__wrapper">
+            <form @submit.prevent="updateStudent"
+                class="filter__wrapper">
                 <div class="filter__header">
                     <h3 class="filter__title">Tahrirlash</h3>
                     <div class="filter__exit">
@@ -62,7 +89,7 @@ export default {
                                     <input class="filter__list-item"
                                         id="name"
                                         name="name"
-                                        value="Ishmuhammedov Aziz Ishqobilovich"
+                                        v-model="data.full_name"
                                         type="text">
                                 </label>
                             </li>
@@ -72,18 +99,20 @@ export default {
                                     <input class="filter__list-item"
                                         id="tel"
                                         name="tel"
-                                        value="+998 973-72-60"
+                                        v-model="data.phone"
                                         type="tel">
                                 </label>
                             </li>
                             <li>
                                 <label for="university">
                                     <h3>OTM</h3>
-                                    <select class="filter__list-item"
+                                    <select v-model="data.institute.id"
+                                        class="filter__list-item"
                                         name="university"
                                         id="university">
-                                        <option value="inha">Toshkent shahridagi INHA Universiteti</option>
-                                        <option value="milliy">O’zbekiston milliy universiteti</option>
+                                        <option v-for="item in university"
+                                            :key="item.id"
+                                            :value="item.id">{{ item.name }}</option>
                                     </select>
                                 </label>
                             </li>
@@ -101,14 +130,14 @@ export default {
                     </div>
                 </div>
                 <div class="filter__bottom">
-                    <div @click="updateStudent"
+                    <button type="submit"
                         class="filter__btn">
                         <img :src="saveIcon"
                             alt="save">
                         <h3>Saqlash</h3>
-                    </div>
+                    </button>
                 </div>
-            </div>
+            </form>
 
         </dialog>
     </div>

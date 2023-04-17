@@ -41,6 +41,16 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 })
+        },
+        updateStudent(context, payload) {
+            axios.put(`https://metsenatclub.xn--h28h.uz/api/v1/student-update/${payload.id}/`, payload.data)
+                .then((res) => {
+                    console.log('Студент обновлён: ', res);
+                    context.dispatch('detailStudent', payload.id)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
     },
     mutations: {

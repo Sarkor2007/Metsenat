@@ -16,7 +16,7 @@ export default {
                 })
         },
         detailSponsor(context, payload) {
-            axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/sponsor-detail/${payload}`)
+            axios.get(`https://metsenatclub.xn--h28h.uz/api/v1/sponsor-detail/${payload}/`)
                 .then((res) => {
                     context.commit('SINGLE_SPONSOR', res.data)
                 })
@@ -28,6 +28,7 @@ export default {
             axios.put(`https://metsenatclub.xn--h28h.uz/api/v1/sponsor-update/${payload.id}/`, payload.data)
                 .then((res) => {
                     console.log('Спонсор обновлён: ', res);
+                    context.dispatch('detailSponsor', payload.id)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -41,7 +42,6 @@ export default {
         },
         SINGLE_SPONSOR(state, payload) {
             state.detailSponsorItem = payload
-            console.log(payload);
         }
     },
     state: {

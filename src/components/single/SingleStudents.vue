@@ -43,22 +43,32 @@ export default {
     methods: {
         openModal() {
             this.edit = !this.edit
+            document.body.style.overflow = 'hidden';
         },
         openAdd() {
             this.add = !this.add;
+            document.body.style.overflow = 'hidden';
         },
         goBack() {
             this.$router.push('/admin/students')
         },
         editSponsorOpen() {
             this.editSponsor = !this.editSponsor
+            document.body.style.overflow = 'hidden';
         }
     },
     computed: {
         ...mapGetters(['singleStudent']),
+        ...mapGetters(['getUniversityList']),
     },
     mounted() {
         this.$store.dispatch('detailStudent', this.$route.params.id)
+        this.$store.dispatch('getUniversity')
+    },
+    watch: {
+        singleStudent: function (data) {
+            this.user = data
+        }
     }
 }
 </script>
@@ -188,11 +198,13 @@ export default {
     </section>
 
     <students-edit-modal @closeEdit="openModal"
-        :open="this.edit" />
+        :user="user"
+        :open="edit"
+        :university="getUniversityList" />
     <sponsors-add-modal @closeAdd="openAdd"
-        :open="this.add" />
+        :open="add" />
     <sponsor-edit-modal @closeEditSponsor="editSponsorOpen"
-        :open="this.editSponsor" />
+        :open="editSponsor" />
 </template>
 
 <style lang="scss" scoped>

@@ -24,7 +24,6 @@ export default {
                 phone: "",
                 institute: '',
                 contract: null,
-                given: 0
             }
         }
     },
@@ -41,7 +40,6 @@ export default {
                 phone: "",
                 institute: '',
                 contract: null,
-                given: 0
             }
 
             toast("Ученик добавлен!", {
