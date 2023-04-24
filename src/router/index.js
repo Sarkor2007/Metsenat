@@ -31,7 +31,7 @@ const router = createRouter({
         },
         {
             path: '/admin/dashboard',
-            name: 'dashboard',
+            name: 'home',
             component: AdminPage
         },
         {
@@ -50,6 +50,20 @@ const router = createRouter({
             component: SingleStudentsPage
         },
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    const auth = localStorage.getItem('token');
+
+    if (auth && to.name == 'login') {
+        next({ name: 'home' })
+    }
+
+    if (!auth && to.name !== 'login') {
+        next({ name: 'login' })
+    } else {
+        next()
+    }
 })
 
 export default router

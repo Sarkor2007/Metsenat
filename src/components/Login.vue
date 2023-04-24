@@ -1,6 +1,28 @@
 <script>
 export default {
     name: 'Login',
+    data() {
+        return {
+            form: {
+                email: '',
+                password: '',
+            },
+        }
+    },
+    methods: {
+        login() {
+            if (this.form.email === 'test' && this.form.password === '1234') {
+                localStorage.setItem('token', "dmlgbfbmlktmkrmvrmsrvomrtemwrpgmb");
+                this.form = {};
+                if (localStorage.getItem('token')) {
+                    this.$router.push({ name: 'home' })
+                }
+                alert('Successfully!')
+            } else {
+                alert('Email or Password is wrong!')
+            }
+        }
+    }
 }
 </script>
 
@@ -15,21 +37,23 @@ export default {
                 <h2 class="login__box-title">
                     Kirish
                 </h2>
-                <form>
+                <form @submit.prevent="login">
                     <label class="login__box-item"
                         for="login">
                         <h3>LOGIN</h3>
                         <input placeholder="login"
                             type="text"
                             name="login"
+                            v-model="form.email"
                             id="login">
                     </label>
                     <label class="login__box-item"
                         for="password">
-                        <h3>LOGIN</h3>
+                        <h3>PAROL</h3>
                         <input placeholder="password"
                             type="password"
                             name="password"
+                            v-model="form.password"
                             id="password">
                     </label>
                     <div class="captcha">
@@ -73,7 +97,8 @@ export default {
         max-width: 314px;
         height: auto;
         object-fit: contain;
-        img{
+
+        img {
             width: 100%;
         }
     }
@@ -85,6 +110,7 @@ export default {
         border: 1px solid #EBEEFC;
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
+
         @media (max-width: 768px) {
             padding: 32px 16px;
         }
@@ -142,6 +168,7 @@ export default {
             font-size: 15px;
             line-height: 21px;
             text-align: center;
+            cursor: pointer;
         }
 
         .captcha {

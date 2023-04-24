@@ -1,6 +1,12 @@
 <script>
 export default {
   name: "TheHeader",
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 
@@ -22,7 +28,8 @@ export default {
               alt="user">
           </div>
         </div>
-        <div class="header__logout">
+        <div @click="logout"
+          class="header__logout">
           <img src="../assets/icons/logout.svg"
             alt="log out">
         </div>
