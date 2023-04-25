@@ -6,12 +6,6 @@ import TheHeader from '../components/TheHeader.vue';
 <script>
 export default {
     components: { AddStudent, TheHeader },
-
-    data() {
-        return {
-        }
-    },
-
 }
 </script>
 

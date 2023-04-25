@@ -9,7 +9,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 <script>
 export default {
-    name: "Dashboard",
+    name: "TheDashboard",
     data() {
         return {
             dashboardList: [

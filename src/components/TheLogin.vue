@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'Login',
+    name: 'TheLogin',
     data() {
         return {
             form: {
@@ -19,6 +19,7 @@ export default {
                 }
                 alert('Successfully!')
             } else {
+                this.form = {};
                 alert('Email or Password is wrong!')
             }
         }
@@ -43,6 +44,7 @@ export default {
                         <h3>LOGIN</h3>
                         <input placeholder="login"
                             type="text"
+                            required
                             name="login"
                             v-model="form.email"
                             id="login">
@@ -53,6 +55,7 @@ export default {
                         <input placeholder="password"
                             type="password"
                             name="password"
+                            required
                             v-model="form.password"
                             id="password">
                     </label>

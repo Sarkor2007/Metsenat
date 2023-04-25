@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/LoginPage.vue'
 import AdminPage from '../views/AdminPage.vue'
+import ClientPage from '../views/ClientPage.vue'
 
 
 import SingleSponsorPage from '../views/SingleSponsorPage.vue'
@@ -49,18 +50,22 @@ const router = createRouter({
             name: 'singleStudents',
             component: SingleStudentsPage
         },
+        {
+            path: '/client',
+            name: 'client',
+            component: ClientPage
+        },
     ]
 })
 
 router.beforeEach((to, from, next) => {
     const auth = localStorage.getItem('token');
-
     if (auth && to.name == 'login') {
         next({ name: 'home' })
     }
 
-    if (!auth && to.name !== 'login') {
-        next({ name: 'login' })
+    if (!auth && to.name !== 'client') {
+        next({ name: 'client' });
     } else {
         next()
     }

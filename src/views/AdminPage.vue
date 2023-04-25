@@ -3,7 +3,7 @@ import TheHeader from '../components/TheHeader.vue'
 import NavigationPanel from '../components/NavigationPanel.vue'
 
 
-import Dashboard from '../components/Dashboard.vue'
+import TheDashboard from '../components/TheDashboard.vue'
 import Sponsors from '../components/Sponsors.vue'
 import Students from '../components/Students.vue'
 
@@ -21,7 +21,7 @@ export default {
     component: {
         TheHeader,
         NavigationPanel,
-        Dashboard,
+        TheDashboard,
         Sponsors,
         Students,
         SponsorModalFilter,
@@ -36,26 +36,23 @@ export default {
     methods: {
         updateSelectedComponent(newSelectedComponent) {
             this.selectedComponent = newSelectedComponent;
-        }
+            let path = `/admin/${this.selectedComponent}`
+            this.$router.push(path)
+        },
     },
     computed: {
         tabActived() {
             let activeTab
             for (const key in this.$store.state.tabView) {
-                if (this.$store.state.tabView[key].active == true) {
+                if (`/admin/${this.$store.state.tabView[key].value}` == this.$route.path) {
                     activeTab = this.$store.state.tabView[key].id
+                    this.$store.commit('CHANGE_TAB_ACTIVE', this.$store.state.tabView[key])
+                    let data = JSON.stringify(this.$store.state.tabView)
+                    localStorage.setItem('tabView', data)
                 }
             }
             return activeTab
         },
-        componentPath() {
-            return `/admin/${this.selectedComponent}`
-        }
-    },
-    watch: {
-        componentPath(newPath) {
-            this.$router.push(newPath)
-        }
     },
     mounted() {
         const activeItem = this.$store.state.tabView.find(item => item.active);
@@ -77,7 +74,7 @@ export default {
     <navigation-panel @updateSelectedComponent="updateSelectedComponent"
         :selectedComponent="this.selectedComponent" />
     <div class="wrapper">
-        <dashboard v-if="this.tabActived == 1" />
+        <TheDashboard v-if="this.tabActived == 1" />
         <sponsors v-else-if="this.tabActived == 2" />
         <students v-else-if="this.tabActived == 3" />
     </div>

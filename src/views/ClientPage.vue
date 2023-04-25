@@ -1,18 +1,18 @@
 <script setup>
-import TheLogin from '../components/TheLogin.vue'
+import ClientHeader from '../components/ClientHeader.vue'
 </script>
 
 <script>
 export default {
     name: "LoginPage",
     component: {
-        TheLogin,
+        ClientHeader,
     }
 }
 </script>
 
 <template>
-    <TheLogin />
+    <client-header />
 </template>
 
 <style lang="scss" scoped></style>
