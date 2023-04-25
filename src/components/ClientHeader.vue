@@ -47,6 +47,13 @@ export default {
             </div>
         </div>
     </header>
+    <section class="content">
+        <div class="content__left">
+            <div class="container">
+                <h1 class="content__left-title">Homiy sifatida ariza topshirish</h1>
+            </div>
+        </div>
+    </section>
 </template>
 
 <style lang="scss" scoped>
@@ -116,6 +123,22 @@ export default {
         padding: 8px 32px;
         border: 2px solid #3366FF;
         border-radius: 8px;
+    }
+}
+
+.content {
+    // display: flex;
+
+    &__left {
+        width: 60%;
+
+        &-title {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 140%;
+            letter-spacing: 0.01em;
+            color: #1D1D1F;
+        }
     }
 }
 </style>
