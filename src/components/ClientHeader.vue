@@ -8,41 +8,127 @@ export default {
         return {
             logoImg,
             checked,
+            otherInput: false,
             sumBox: [
                 {
+                    id: 1,
                     sum: 1000000,
                     active: true,
                 },
                 {
+                    id: 2,
                     sum: 5000000,
                     active: false,
                 },
                 {
+                    id: 3,
                     sum: 7000000,
                     active: false,
                 },
                 {
+                    id: 4,
                     sum: 10000000,
                     active: false,
                 },
                 {
+                    id: 5,
                     sum: 30000000,
                     active: false,
                 },
                 {
-                    sum: 1000000,
+                    id: 6,
+                    sum: 0,
                     active: false,
                 }
-            ]
+            ],
+            activeTab: [
+                {
+                    id: 1,
+                    class: 'left',
+                    active: true,
+                    title: 'Jismoniy shaxs'
+                },
+                {
+                    id: 2,
+                    class: 'right',
+                    active: false,
+                    title: 'Yuridik shaxs'
+                }
+            ],
+            sponsor: {
+                full_name: "",
+                phone: "",
+                sum: 0,
+                payment_type: [
+                    45
+                ],
+                firm: "",
+                spent: 0,
+                comment: ""
+            },
+            otherSum: '',
+            selectSum: ''
         }
     },
     methods: {
         addSpace(item) {
+            if (item == 0) {
+                return 'BOSHQA'
+            }
             return item.toLocaleString().replaceAll(',', ' ')
         },
         changeActive(item) {
             this.sumBox.map(el => el.active = false);
+            item.active = true;
+            if (item.sum === 0) {
+                this.sponsor.sum = this.otherSum
+            } else {
+                this.sponsor.sum = item.sum;
+            }
+        },
+        changeTab(item) {
+            this.activeTab.map(el => el.active = false)
             item.active = true
+        },
+        addSponsor() {
+            this.sponsor.sum = String(this.sponsor.sum)
+            if (this.sponsor.sum == 0) {
+                this.sponsor.sum = String(this.otherSum)
+            }
+            this.$store.dispatch('createSponsor', this.sponsor)
+
+            this.sponsor = {
+                full_name: "",
+                phone: "",
+                sum: 0,
+                payment_type: [
+                    45
+                ],
+                firm: "",
+                spent: 0,
+                comment: ""
+            }
+            this.sumBox = this.sumBox.map(el => {
+                el.active = false;
+                return el;
+            });
+            this.sumBox[0].active = true;
+            console.log(this.sumBox);
+        }
+    },
+    computed: {
+        activeOther() {
+            let result = false
+            for (let I = 0; I < this.sumBox.length; I++) {
+                const el = this.sumBox[I];
+                if (el.active == true && el.sum == 0) {
+                    result = true
+                }
+            }
+            return result
+        },
+        legalPerson() {
+            return this.activeTab[1].active === true
         }
     }
 }
@@ -85,16 +171,22 @@ export default {
         <div class="container">
             <div class="content__left">
                 <h1 class="content__left-title">Homiy sifatida ariza topshirish</h1>
-                <form class="content__left-form form">
+                <form @submit.prevent="addSponsor"
+                    class="content__left-form form">
                     <div class="form__tab">
-                        <div class="form__tab-item left active">Jismoniy shaxs</div>
-                        <div class="form__tab-item right">Yuridik shaxs</div>
+                        <div v-for="item in this.activeTab"
+                            :key="item.id"
+                            class="form__tab-item"
+                            @click="changeTab(item)"
+                            :class="!item.active ? item.class : `${item.class} active`">{{ item.title }}</div>
                     </div>
                     <div class="form__box">
                         <label class="form__box-item"
                             for="name">
                             <h3>F.I.Sh. (Familiya Ism Sharifingiz)</h3>
                             <input id="name"
+                                v-model="sponsor.full_name"
+                                required
                                 placeholder="Abdullayev Abdulla Abdulla o’g’li"
                                 type="text">
                         </label>
@@ -102,6 +194,8 @@ export default {
                             for="tel">
                             <h3>Telefon raqamingiz</h3>
                             <input id="tel"
+                                v-model="sponsor.phone"
+                                required
                                 placeholder="+998 00 000-00-00"
                                 type="text">
                         </label>
@@ -110,19 +204,37 @@ export default {
                             <div class="form__sum">
                                 <div v-for="(item, index) in sumBox"
                                     :key="index"
-                                    :class="item.active ? 'active' : ''"
                                     @click="changeActive(item)"
+                                    :class="{ active: item.active }"
                                     class="form__sum-item">
                                     <p>
                                         {{ addSpace(item.sum) }}
                                     </p>
-                                    <span>Uzs</span>
+                                    <span v-if="!item.sum == 0">Uzs</span>
                                     <img :src="checked"
                                         alt="check">
                                 </div>
+                                <input v-if="activeOther"
+                                    id="sum"
+                                    type="number"
+                                    required
+                                    v-model="otherSum"
+                                    placeholder="0"
+                                    class="form__sum-item other">
                             </div>
                         </div>
+                        <label v-if="legalPerson"
+                            class="form__box-item"
+                            for="firm">
+                            <h3>Telefon raqamingiz</h3>
+                            <input id="firm"
+                                v-model="sponsor.firm"
+                                required
+                                placeholder="Orient group"
+                                type="text">
+                        </label>
                     </div>
+                    <button class="form__btn">Yuborish</button>
                 </form>
             </div>
         </div>
@@ -285,7 +397,7 @@ body {
                     color: #1D1D1F;
                 }
 
-                input {
+                input:not(input[type='radio']) {
                     width: 100%;
                     padding: 12px 16px;
                     background: rgba(224, 231, 255, 0.2);
@@ -314,6 +426,22 @@ body {
                     align-items: center;
                     gap: 4px;
                     position: relative;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+
+                    &.other {
+                        cursor: text;
+                        grid-column-start: 1;
+                        grid-column-end: 4;
+                        background: rgba(224, 231, 255, 0.2);
+                        border: 1px solid #E0E7FF;
+                        border-radius: 6px;
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #000000;
+                    }
 
                     p {
                         font-weight: 500;
@@ -338,6 +466,7 @@ body {
 
                     &.active {
                         border: 2px solid #2E5BFF;
+                        background: #F9FAFF;
 
                         img {
                             display: inline-block;
@@ -348,6 +477,18 @@ body {
                         }
                     }
                 }
+            }
+
+            &__btn {
+                width: 100%;
+                padding: 14px 0px 15px;
+                background: #2E5BFF;
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 21px;
+                text-align: center;
+                color: #FFFFFF;
             }
         }
     }

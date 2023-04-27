@@ -33,7 +33,8 @@ const router = createRouter({
         {
             path: '/admin/dashboard',
             name: 'home',
-            component: AdminPage
+            component: AdminPage,
+            meta: { needLogin: true }
         },
         {
             path: '/admin/sponsors/single/:id',
@@ -58,17 +59,18 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
+
+router.beforeEach((to, from) => {
     const auth = localStorage.getItem('token');
-    if (auth && to.name == 'login') {
-        next({ name: 'home' })
+    if (auth && to.name == 'login' || auth && to.name == 'client') {
+        return { name: 'home' };
     }
 
-    if (!auth && to.name !== 'client') {
-        next({ name: 'client' });
-    } else {
-        next()
+    if (!auth && to.meta.needLogin) {
+        return { name: 'login' }
     }
-})
+
+});
+
 
 export default router

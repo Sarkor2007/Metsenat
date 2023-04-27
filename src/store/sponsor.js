@@ -33,6 +33,15 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 })
+        },
+        createSponsor(context, payload) {
+            axios.post('https://metsenatclub.xn--h28h.uz/api/v1/sponsor-create/', payload)
+                .then((res) => {
+                    console.log('Спонсор добавлен: ', res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
     },
     mutations: {
