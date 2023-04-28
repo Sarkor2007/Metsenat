@@ -180,7 +180,7 @@ export default {
                 <form @submit.prevent="addSponsor"
                     class="content__box-form form">
                     <div class="form__tab">
-                        <div v-for="item in this.activeTab"
+                        <div v-for="item in activeTab"
                             :key="item.id"
                             class="form__tab-item"
                             @click="changeTab(item)"

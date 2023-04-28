@@ -35,6 +35,13 @@ export default {
         sponsorSumFilter() {
             return this.$store.state.sponsorSumsFilter
         },
+        sponsorSumFilter() {
+            if (this.$store.state.sponsorSumsFilter) {
+                return this.$store.state.sponsorSumsFilter
+            } else {
+                console.log('error');
+            }
+        },
         selectedStatus: {
             get() {
                 return this.$store.state.selectedStatus;
@@ -77,7 +84,7 @@ export default {
                     Homiylik summasi
                 </h3>
                 <div class="filter__summ-box">
-                    <div v-for="(item, index) in this.sponsorSumFilter"
+                    <div v-for="(item, index) in sponsorSumFilter"
                         :key="index"
                         @click="sponsorSumToggle(item)"
                         :class="item.active == true && item.type == 'all' ? 'all active' : item.active ? 'active' : item.type == 'all' ? 'all' : ''"

@@ -30,7 +30,7 @@ export default {
 <template>
     <div class="login">
         <div class="login__wrapper">
-            <div @click="this.$router.push('/')"
+            <div @click="$router.push('/')"
                 class="login__logo">
                 <img src="../assets/images/login__logo.svg"
                     alt="logo">

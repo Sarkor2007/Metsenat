@@ -77,7 +77,7 @@ export default {
     <section class="students">
         <div class="container">
             <div class="students__add">
-                <div @click="this.$router.push('/admin/students/add')"
+                <div @click="$router.push('/admin/students/add')"
                     class="students__add-box">
                     <img src="../assets/icons/add.svg"
                         alt="add">

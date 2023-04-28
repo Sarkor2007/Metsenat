@@ -71,7 +71,7 @@ export default {
     <section class="add">
         <div class="add__header">
             <div class="container">
-                <button @click="this.$router.push('/admin/students')"
+                <button @click="$router.push('/admin/students')"
                     class="add__header-btn">
                     <img :src="leftarrowIcon"
                         alt="arrow">

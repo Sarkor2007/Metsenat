@@ -50,7 +50,7 @@ export default {
         <div class="container">
             <nav class="nav">
                 <ul class="nav__list">
-                    <li v-for="(item, index) in this.$store.state.tabView"
+                    <li v-for="(item, index) in $store.state.tabView"
                         :key="index"
                         @click="tabItem(item)"
                         :class="item.active ? 'active' : ''"
@@ -75,14 +75,14 @@ export default {
                             alt="search">
                     </button>
                 </div>
-                <button v-if="this.tabActived == 2"
+                <button v-if="tabActived == 2"
                     @click="activeFilter"
                     class="filter">
                     <img src="../assets/icons/filter.svg"
                         alt="filter">
                     <h3>Filter</h3>
                 </button>
-                <button v-else-if="this.tabActived == 3"
+                <button v-else-if="tabActived == 3"
                     @click="activeFilter"
                     class="filter">
                     <img src="../assets/icons/filter.svg"

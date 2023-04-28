@@ -46,7 +46,7 @@ export default {
     <section class="single">
         <div class="single__header">
             <div class="container">
-                <button @click="this.$router.push('/admin/sponsors')"
+                <button @click="$router.push('/admin/sponsors')"
                     class="single__header-btn">
                     <img :src="leftarrowIcon"
                         alt="arrow">

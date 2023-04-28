@@ -51,9 +51,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="this.open"
+    <div v-if="open"
         class="filter">
-        <dialog :open="this.open">
+        <dialog :open="open">
             <div class="filter__wrapper">
 
                 <div class="filter__header">

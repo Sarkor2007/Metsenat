@@ -59,9 +59,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="this.open"
+    <div v-if="open"
         class="filter">
-        <dialog :open="this.open">
+        <dialog :open="open">
             <form @submit.prevent="updateSponsor"
                 class="filter__wrapper">
 
