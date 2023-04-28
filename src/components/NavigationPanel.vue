@@ -1,10 +1,9 @@
 <script>
 export default {
     name: "NavigationPanel",
-    props: ['selectedComponent'],
     data() {
         return {
-            selectComponent: this.selectedComponent
+            selectComponent: 'dashboard'
         }
     },
     methods: {

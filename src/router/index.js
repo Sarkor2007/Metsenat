@@ -19,14 +19,8 @@ const routes = [
         component: LoginPage
     },
     {
-        path: '/admin/dashboard',
+        path: '/',
         name: 'home',
-        component: AdminPage,
-        meta: { needLogin: true }
-    },
-    {
-        path: '/client',
-        name: 'client',
         component: ClientPage
     },
     {
@@ -38,6 +32,12 @@ const routes = [
     {
         path: '/admin/sponsors',
         name: 'sponsors',
+        component: AdminPage,
+        meta: { needLogin: true }
+    },
+    {
+        path: '/admin/dashboard',
+        name: 'dashboard',
         component: AdminPage,
         meta: { needLogin: true }
     },
@@ -71,8 +71,8 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     const auth = localStorage.getItem('token');
-    if (auth && to.name == 'login' || auth && to.name == 'client') {
-        return { name: 'home' };
+    if (auth && to.name == 'login' || auth && to.name == 'home') {
+        return { name: 'dashboard' };
     }
 
     if (!auth && to.meta.needLogin) {

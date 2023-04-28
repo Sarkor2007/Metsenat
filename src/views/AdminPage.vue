@@ -28,27 +28,22 @@ export default {
         StudentsModalFilter,
 
     },
-    data() {
-        return {
-            selectedComponent: ''
-        }
-    },
     methods: {
         updateSelectedComponent(newSelectedComponent) {
-            this.selectedComponent = newSelectedComponent;
-            let path = `/admin/${this.selectedComponent}`
+            let path = `/admin/${newSelectedComponent}`
             this.$router.push(path)
         },
     },
     computed: {
         tabActived() {
-            let activeTab
-            for (const key in this.$store.state.tabView) {
-                if (`/admin/${this.$store.state.tabView[key].value}` == this.$route.path) {
+            let activeTab;
+            let el = this.$store.state.tabView;
+            for (const key in el) {
+                if (`/admin/${el[key].value}` == this.$route.path) {
                     activeTab = this.$store.state.tabView[key].id
-                    this.$store.commit('CHANGE_TAB_ACTIVE', this.$store.state.tabView[key])
-                    let data = JSON.stringify(this.$store.state.tabView)
-                    localStorage.setItem('tabVie    w', data)
+                    this.$store.commit('CHANGE_TAB_ACTIVE', el[key])
+                    let data = JSON.stringify(el)
+                    localStorage.setItem('tabView', data)
                 }
             }
             return activeTab
@@ -62,14 +57,11 @@ export default {
         } else if (this.$route.path === '/admin/students') {
             this.selectedComponent = 'students';
         }
-        
-        const activeItem = this.$store.state.tabView.find(item => item.active);
 
+        const activeItem = this.$store.state.tabView.find(item => item.active);
         if (activeItem) {
             this.$router.push(`/admin/${activeItem.value}`);
         }
-
-
     }
 }
 </script>
@@ -77,12 +69,11 @@ export default {
 
 <template>
     <the-header />
-    <navigation-panel @updateSelectedComponent="updateSelectedComponent"
-        :selectedComponent="this.selectedComponent" />
+    <navigation-panel @updateSelectedComponent="updateSelectedComponent" />
     <div class="wrapper">
-        <TheDashboard v-if="this.tabActived == 1" />
-        <sponsors v-else-if="this.tabActived == 2" />
-        <students v-else-if="this.tabActived == 3" />
+        <TheDashboard v-if="tabActived == 1" />
+        <sponsors v-else-if="tabActived == 2" />
+        <students v-else-if="tabActived == 3" />
     </div>
 
     <sponsor-modal-filter />

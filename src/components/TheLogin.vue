@@ -15,7 +15,7 @@ export default {
                 localStorage.setItem('token', "dmlgbfbmlktmkrmvrmsrvomrtemwrpgmb");
                 this.form = {};
                 if (localStorage.getItem('token')) {
-                    this.$router.push({ name: 'home' })
+                    this.$router.push({ name: 'dashboard' })
                 }
                 alert('Successfully!')
             } else {
@@ -30,7 +30,8 @@ export default {
 <template>
     <div class="login">
         <div class="login__wrapper">
-            <div class="login__logo">
+            <div @click="this.$router.push('/')"
+                class="login__logo">
                 <img src="../assets/images/login__logo.svg"
                     alt="logo">
             </div>
@@ -100,6 +101,7 @@ export default {
         max-width: 314px;
         height: auto;
         object-fit: contain;
+        cursor: pointer;
 
         img {
             width: 100%;
