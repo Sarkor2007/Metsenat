@@ -48,21 +48,27 @@ export default {
                     activeTab = this.$store.state.tabView[key].id
                     this.$store.commit('CHANGE_TAB_ACTIVE', this.$store.state.tabView[key])
                     let data = JSON.stringify(this.$store.state.tabView)
-                    localStorage.setItem('tabView', data)
+                    localStorage.setItem('tabVie    w', data)
                 }
             }
             return activeTab
         },
     },
     mounted() {
+        if (this.$route.path === '/admin/dashboard') {
+            this.selectedComponent = 'dashboard';
+        } else if (this.$route.path === '/admin/sponsors') {
+            this.selectedComponent = 'sponsors';
+        } else if (this.$route.path === '/admin/students') {
+            this.selectedComponent = 'students';
+        }
+        
         const activeItem = this.$store.state.tabView.find(item => item.active);
 
         if (activeItem) {
             this.$router.push(`/admin/${activeItem.value}`);
         }
 
-        this.$store.dispatch('fetchSponsors', 1)
-        this.$store.dispatch('fetchStudents', 1)
 
     }
 }
