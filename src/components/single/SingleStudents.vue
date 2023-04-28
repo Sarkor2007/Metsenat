@@ -173,8 +173,9 @@ export default {
                     <h3 class="edit">Amallar</h3>
                 </div>
                 <div class="sponsors__body">
-                    <ul>
-                        <li v-for="(item, index) in sponsors"
+                    <ul class="sponsors__body-list">
+                        <li class="sponsors__body-item"
+                            v-for="(item, index) in sponsors"
                             :key="index">
                             <h3 class="number">{{ ++index }}</h3>
                             <h3 class="name">{{ item.name }}</h3>
@@ -225,6 +226,12 @@ export default {
             width: 100%;
             justify-content: space-between;
             align-items: center;
+            row-gap: 24px;
+
+            @media (max-width: 576px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         &-left {
@@ -234,6 +241,13 @@ export default {
         }
 
         &-right {
+            max-width: 205px;
+            width: 100%;
+
+            @media (max-width: 480px) {
+                max-width: 100%;
+            }
+
             button {
                 cursor: pointer;
                 background: #EDF1FD;
@@ -243,6 +257,11 @@ export default {
                 display: flex;
                 align-items: center;
                 gap: 10px;
+                width: 100%;
+
+                @media (max-width: 480px) {
+                    justify-content: center;
+                }
 
                 h3 {
                     font-weight: 500;
@@ -273,18 +292,28 @@ export default {
     }
 
     &__body {
-        max-width: 790px;
-        width: 100%;
+        max-width: 800px;
+        width: 95%;
         background: #FFFFFF;
         border: 1px solid #EBEEFC;
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
         padding: 24px 32px;
 
+        @media (max-width: 576px) {
+            padding: 24px 16px;
+        }
+
         &-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 16px;
+
+            @media (max-width: 480px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
             .title {
                 font-weight: 700;
@@ -301,6 +330,11 @@ export default {
                 padding: 10px 30px;
                 background: #EDF1FD;
                 border-radius: 5px;
+
+                @media (max-width: 480px) {
+                    width: 100%;
+                    justify-content: center;
+                }
 
                 &__text {
                     font-weight: 500;
@@ -383,12 +417,17 @@ export default {
             align-items: center;
             flex-wrap: wrap;
             row-gap: 24px;
+            column-gap: 16px;
 
             .item {
-                width: 50%;
+                width: calc(50% - 8px);
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
+
+                @media (max-width: 576px) {
+                    width: 100%;
+                }
 
                 &__title {
                     font-weight: 500;
@@ -416,13 +455,23 @@ export default {
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
         padding: 24px 32px;
-        max-width: 790px;
-        width: 100%;
+        max-width: 800px;
+        width: 95%;
+
+        @media (max-width: 576px) {
+            padding: 24px 16px;
+        }
 
         &-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            row-gap: 16px;
+
+            @media (max-width: 576px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
 
@@ -444,6 +493,11 @@ export default {
             align-items: center;
             gap: 10px;
 
+            @media (max-width: 480px) {
+                width: 100%;
+                justify-content: center;
+            }
+
             h3 {
                 font-weight: 500;
                 font-size: 14px;
@@ -461,6 +515,28 @@ export default {
         }
 
         .sponsors {
+
+            @media (max-width: 576px) {
+                overflow-x: auto;
+                padding-bottom: 16px;
+
+                &::-webkit-scrollbar {
+                    height: 4px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: rgb(202, 202, 202);
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: gray;
+                }
+
+                &::-webkit-scrollbar-thumb:hover {
+                    background: rgb(172, 172, 172);
+                }
+            }
+
             .number {
                 width: 7%;
             }
@@ -482,6 +558,10 @@ export default {
                 display: flex;
                 align-items: center;
 
+                @media (max-width: 576px) {
+                    min-width: 576px;
+                }
+
                 h3 {
                     font-weight: 500;
                     font-size: 12px;
@@ -494,63 +574,66 @@ export default {
             }
 
             &__body {
-                ul {
+                &-list {
                     display: flex;
                     flex-direction: column;
                     gap: 12px;
                     width: 100%;
 
-                    li {
+                    @media (max-width: 576px) {
+                        min-width: 576px;
+                    }
+                }
+
+                &-item {
+                    display: flex;
+                    align-items: center;
+                    height: 60px;
+                    background: #FBFBFC;
+                    border: 1px solid rgba(46, 91, 255, 0.08);
+                    border-radius: 8px;
+
+                    h3 {
+                        text-align: center;
+                    }
+
+                    .number {
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 22px;
+                        color: #1D1D1F;
+                    }
+
+                    .name {
+                        font-weight: 500;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #1D1D1F;
+                    }
+
+                    .sum {
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 22px;
+                        color: #2E384D;
+
+                        span {
+                            color: #B2B7C1;
+                        }
+                    }
+
+                    .edit {
                         display: flex;
-                        align-items: center;
-                        height: 60px;
-                        background: #FBFBFC;
-                        border: 1px solid rgba(46, 91, 255, 0.08);
-                        border-radius: 8px;
+                        justify-content: center;
 
-
-                        h3 {
-                            text-align: center;
-                        }
-
-                        .number {
-                            font-weight: 400;
-                            font-size: 15px;
-                            line-height: 22px;
-                            color: #1D1D1F;
-                        }
-
-                        .name {
-                            font-weight: 500;
-                            font-size: 15px;
-                            line-height: 18px;
-                            color: #1D1D1F;
-                        }
-
-                        .sum {
-                            font-weight: 500;
-                            font-size: 14px;
-                            line-height: 22px;
-                            color: #2E384D;
-
-                            span {
-                                color: #B2B7C1;
-                            }
-                        }
-
-                        .edit {
+                        button {
+                            cursor: pointer;
+                            width: 40px;
+                            height: 40px;
                             display: flex;
+                            align-items: center;
                             justify-content: center;
-
-                            button {
-                                cursor: pointer;
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                background: transparent;
-                            }
+                            background: transparent;
                         }
                     }
                 }
@@ -559,9 +642,13 @@ export default {
     }
 
     &__bottom {
-        // position: absolute;
-        // bottom: 0;
-        // z-index: -1;
+        img {
+            width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            display: none;
+        }
     }
 }
 </style>

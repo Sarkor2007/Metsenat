@@ -49,6 +49,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
   }
 
   &__logo {
@@ -59,6 +61,11 @@ export default {
     display: flex;
     align-items: center;
     gap: 40px;
+
+    @media (max-width: 576px) {
+      width: 100%;
+      justify-content: space-between;
+    }
   }
 
   &__user {

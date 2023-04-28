@@ -170,10 +170,13 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;;
     z-index: 2;
     background: rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
 
     dialog {
         padding: 100px 0px;
@@ -185,12 +188,16 @@ export default {
         background: #FFFFFF;
         border-radius: 12px;
         padding: 28px;
-        max-width: 590px;
-        width: 100%;
+        max-width: 600px;
+        width: 95%;
         margin: auto;
         display: flex;
         flex-direction: column;
         gap: 28px;
+
+        @media (max-width: 480px) {
+            padding: 20px  16px;
+        }
     }
 
     &__header {

@@ -225,21 +225,30 @@ export default {
         width: 100%;
         gap: 28px;
         margin-top: 40px;
-        max-width: 790px;
-        width: 100%;
+        max-width: 800px;
+        width: 95%;
         background: #FFFFFF;
         border: 1px solid #EBEEFC;
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
         border-radius: 12px;
         padding: 24px 32px;
 
+        @media (max-width: 576px) {
+            margin-top: 10px;
+        }
+
         &-box {
             display: flex;
             align-items: center;
             gap: 28px;
+            flex-wrap: wrap;
 
             label {
                 width: calc(50% - 14px);
+
+                @media (max-width: 576px) {
+                    width: 100%;
+                }
 
                 input[type=number]::-webkit-inner-spin-button,
                 input[type=number]::-webkit-outer-spin-button {

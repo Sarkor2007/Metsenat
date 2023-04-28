@@ -127,13 +127,16 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2;
     background: rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
 
     dialog {
         padding: 100px 0px;

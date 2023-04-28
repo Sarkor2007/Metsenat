@@ -23,12 +23,14 @@ const router = createRouter({
         {
             path: '/admin/students',
             name: 'students',
-            component: AdminPage
+            component: AdminPage,
+            meta: { needLogin: true }
         },
         {
             path: '/admin/sponsors',
             name: 'sponsors',
-            component: AdminPage
+            component: AdminPage,
+            meta: { needLogin: true }
         },
         {
             path: '/admin/dashboard',
@@ -39,17 +41,20 @@ const router = createRouter({
         {
             path: '/admin/sponsors/single/:id',
             name: 'singleSponsor',
-            component: SingleSponsorPage
+            component: SingleSponsorPage,
+            meta: { needLogin: true }
         },
         {
             path: '/admin/students/add',
             name: 'add',
-            component: AddStudentPage
+            component: AddStudentPage,
+            meta: { needLogin: true }
         },
         {
             path: '/admin/students/single/:id',
             name: 'singleStudents',
-            component: SingleStudentsPage
+            component: SingleStudentsPage,
+            meta: { needLogin: true }
         },
         {
             path: '/client',

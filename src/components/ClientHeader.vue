@@ -1,14 +1,17 @@
 <script>
 import logoImg from '../assets/images/client-logo.svg'
 import checked from '../assets/icons/checked.svg'
+import yesIcon from '../assets/icons/yes.svg'
 
 export default {
-    name: "TheHeader",
+    name: "ClientHeader",
     data() {
         return {
             logoImg,
+            yesIcon,
             checked,
             otherInput: false,
+            sendActive: false,
             sumBox: [
                 {
                     id: 1,
@@ -113,7 +116,7 @@ export default {
                 return el;
             });
             this.sumBox[0].active = true;
-            console.log(this.sumBox);
+            this.sendActive = true
         }
     },
     computed: {
@@ -129,7 +132,7 @@ export default {
         },
         legalPerson() {
             return this.activeTab[1].active === true
-        }
+        },
     }
 }
 </script>
@@ -154,25 +157,28 @@ export default {
                         <a href="#">Soliq imtiyozlari</a>
                     </li>
                 </ul>
-                <div @click="$router.push('/login')"
-                    class="header__login">
-                    <img src="../assets/icons/login.svg"
-                        alt="log out">
-                    <h3>Kirish</h3>
+                <div class="header__menu-box">
+                    <div @click="$router.push('/login')"
+                        class="header__login">
+                        <img src="../assets/icons/login.svg"
+                            alt="log out">
+                        <h3>Kirish</h3>
+                    </div>
+                    <a href="#"
+                        class="header__signup">
+                        Ro‘yxatdan o’tish
+                    </a>
                 </div>
-                <a href="#"
-                    class="header__signup">
-                    Ro‘yxatdan o’tish
-                </a>
             </div>
         </div>
     </header>
     <section class="content">
         <div class="container">
-            <div class="content__left">
-                <h1 class="content__left-title">Homiy sifatida ariza topshirish</h1>
+            <div v-if="!sendActive"
+                class="content__box">
+                <h1 class="content__box-title">Homiy sifatida ariza topshirish</h1>
                 <form @submit.prevent="addSponsor"
-                    class="content__left-form form">
+                    class="content__box-form form">
                     <div class="form__tab">
                         <div v-for="item in this.activeTab"
                             :key="item.id"
@@ -237,6 +243,21 @@ export default {
                     <button class="form__btn">Yuborish</button>
                 </form>
             </div>
+            <div class="send"
+                v-else>
+                <div class="send-box">
+                    <div class="send-item">
+                        <img :src="yesIcon"
+                            alt="yes">
+                    </div>
+                    <h1 class="send-title">
+                        Ma’lumotlar tekshirish uchun yuborildi.
+                    </h1>
+                    <h3 class="send-subtitle">
+                        Tez orada siz bilan operatorimiz bog’lanib, barcha ma’lumotlarni aniqlashtiradi.
+                    </h3>
+                </div>
+            </div>
         </div>
     </section>
 </template>
@@ -259,6 +280,13 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        column-gap: 50px;
+        row-gap: 30px;
+
+        @media (max-width: 1000px) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     &__logo {
@@ -268,13 +296,42 @@ body {
     &__menu {
         display: flex;
         align-items: center;
-        gap: 40px;
+        column-gap: 40px;
+        row-gap: 20px;
+
+        @media (max-width: 1000px) {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 670px) {
+            flex-direction: column;
+        }
+
+        &-box {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+
+            @media (max-width: 670px) {
+                max-width: 480px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+        }
     }
 
     &__nav {
         display: flex;
         align-items: center;
         gap: 40px;
+
+        @media (max-width: 670px) {
+            max-width: 480px;
+            width: 100%;
+            justify-content: space-between;
+        }
 
         &-item {
             a {
@@ -292,6 +349,10 @@ body {
         display: flex;
         align-items: center;
         gap: 6px;
+        padding: 0px 12px;
+        border: 2px solid black;
+        height: 44px;
+        border-radius: 8px;
 
         img {
             height: 100%;
@@ -318,14 +379,57 @@ body {
 }
 
 .content {
-    // display: flex;
-
-    &__left {
-        padding: 76px 100px 76px 0px;
-        width: 60%;
-        margin: 0;
+    .send {
+        width: 100%;
+        padding-top: 150px;
         background: #FFFFFF;
-        border-right: 1px solid rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-box {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        &-item {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 6px solid #E8F3DD;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-title {
+            margin-top: 32px;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 18px;
+            text-align: center;
+            color: #2E384D;
+        }
+
+        &-subtitle {
+            margin-top: 10px;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            color: #B2B7C1;
+        }
+    }
+
+    &__box {
+        padding: 76px 0px;
+        width: 100%;
+        max-width: 800px;
+        margin: auto;
+        background: #FFFFFF;
 
         &-title {
             font-weight: 700;
@@ -386,6 +490,8 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
+
+
                 }
 
                 h3 {
@@ -415,6 +521,10 @@ body {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 16px;
 
+                @media (max-width: 500px) {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
                 &-item {
                     cursor: pointer;
                     background: #FFFFFF;
@@ -441,6 +551,10 @@ body {
                         font-size: 15px;
                         line-height: 18px;
                         color: #000000;
+
+                        @media (max-width: 500px) {
+                            grid-column-end: 3;
+                        }
                     }
 
                     p {

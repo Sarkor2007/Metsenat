@@ -401,6 +401,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 25px;
+
+    @media (max-width: 630px) {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
 
     &__count {
         font-weight: 400;
@@ -412,11 +418,17 @@ export default {
     &__show {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 6px;
         font-weight: 400;
         font-size: 15px;
         line-height: 22px;
         color: #1D1D1F;
+
+        p {
+            @media (max-width: 410px) {
+                display: none;
+            }
+        }
 
         select {
             cursor: pointer;
@@ -435,7 +447,12 @@ export default {
     &__block {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
+
+        @media (max-width: 630px) {
+            width: 100%;
+            justify-content: space-between;
+        }
     }
 
     &__box {

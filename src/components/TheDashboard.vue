@@ -82,23 +82,48 @@ export default {
 .dashboard {
     padding: 48px 0px;
 
+    @media (max-width: 576px) {
+        padding: 12px 0px;
+    }
+
     &__features {
         display: flex;
         align-items: center;
-        gap: 30px;
+        row-gap: 30px;
+        column-gap: 30px;
+        flex-wrap: wrap;
+
+        @media (max-width: 992px) {
+            column-gap: 10px;
+            row-gap: 10px;
+        }
 
         &-item {
-            width: calc(100% / 3 - 15px);
+            width: calc(100% / 3 - 20px);
             background: #FFFFFF;
             border: 1px solid rgba(46, 91, 255, 0.08);
             border-radius: 8px;
             padding: 24px;
+
+            @media (max-width: 992px) {
+                width: calc(100% / 2 - 5px);
+                padding: 16px;
+            }
+
+            @media (max-width: 576px) {
+                width: 100%;
+                padding: 24px 40px;
+            }
         }
 
         .item {
             display: flex;
             align-items: center;
             gap: 16px;
+
+            @media (max-width: 576px) {
+                gap: 40px;
+            }
 
             &__img {
                 width: 48px;

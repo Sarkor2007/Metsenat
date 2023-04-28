@@ -106,16 +106,23 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 25px;
     }
 
     .nav {
         width: 100%;
         max-width: 580px;
 
+        @media (max-width: 992px) {
+            max-width: 100%;
+        }
+
         &__list {
             width: 100%;
             display: flex;
             align-items: center;
+
 
             &-item {
                 cursor: pointer;
@@ -132,6 +139,7 @@ export default {
                 position: relative;
 
                 color: rgba(51, 102, 255, 0.6);
+
 
                 &.active {
                     border: 2px solid #3366FF;
@@ -169,12 +177,20 @@ export default {
         align-items: center;
         gap: 20px;
 
+        @media (max-width: 992px) {
+            width: 100%;
+        }
+
         .search {
             max-width: 284px;
             width: 100%;
             position: relative;
             background: #E8E8E8;
             border-radius: 5px;
+
+            @media (max-width: 992px) {
+                max-width: 100%;
+            }
 
             &__btn {
                 background: transparent;

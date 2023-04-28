@@ -132,12 +132,16 @@ export default {
         background: #FFFFFF;
         border-radius: 12px;
         padding: 28px;
-        max-width: 590px;
-        width: 100%;
+        max-width: 600px;
+        width: 95%;
         margin: auto;
         display: flex;
         flex-direction: column;
         gap: 28px;
+
+        @media (max-width: 576px) {
+            padding: 16px;
+        }
     }
 
     &__header {
@@ -219,6 +223,14 @@ export default {
                 align-items: center;
                 position: relative;
 
+                @media (max-width: 600px) {
+                    width: calc(100% / 3 - 8px);
+                }
+
+                @media (max-width: 480px) {
+                    width: calc(100% / 2 - 6px);
+                }
+
                 span {
                     font-weight: 400;
                     color: #2E5BFF;
@@ -252,6 +264,10 @@ export default {
         flex-direction: column;
         gap: 8px;
 
+        @media (max-width: 576px) {
+            width: 100%;
+        }
+
         &-title {
             font-weight: 500;
             font-size: 12px;
@@ -268,6 +284,11 @@ export default {
             border: 1px solid #E0E7FF;
             border-radius: 6px;
             padding: 11px 16px;
+
+            @media (max-width: 576px) {
+                max-width: 100%;
+            }
+
         }
     }
 
@@ -278,6 +299,11 @@ export default {
         justify-content: flex-end;
         gap: 16px;
 
+        @media (max-width: 480px) {
+            justify-content: center;
+            flex-direction: column;
+        }
+
         button {
             display: flex;
             gap: 10px;
@@ -287,6 +313,10 @@ export default {
             height: 42px;
             padding: 0px 32px;
             cursor: pointer;
+
+            @media (max-width: 480px) {
+                justify-content: center;
+            }
 
             h3 {
                 font-weight: 500;

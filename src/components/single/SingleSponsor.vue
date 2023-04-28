@@ -119,8 +119,13 @@ export default {
 
         .container {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 20px;
+
+            @media (max-width: 576px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         &-btn {
@@ -168,12 +173,23 @@ export default {
             display: flex;
             align-items: center;
             gap: 12px;
+            width: calc(100% - 56px);
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            @media (max-width: 576px) {
+                width: 100%;
+                align-items: flex-start;
+            }
         }
     }
 
     &__body {
-        max-width: 790px;
-        width: 100%;
+        max-width: 800px;
+        width: 95%;
         background: #FFFFFF;
         border: 1px solid #EBEEFC;
         box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.03);
@@ -181,10 +197,20 @@ export default {
         padding: 24px 32px;
         margin-top: 40px;
 
+        @media (max-width: 576px) {
+            margin-top: 10px;
+        }
+
         &-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 20px;
+
+            @media (max-width: 440px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
             .title {
                 font-weight: 700;
@@ -201,6 +227,10 @@ export default {
                 padding: 10px 30px;
                 background: #EDF1FD;
                 border-radius: 5px;
+
+                @media (max-width: 440px) {
+                    width: 100%;
+                }
 
                 &__text {
                     font-weight: 500;
@@ -252,6 +282,10 @@ export default {
                 flex-direction: column;
                 gap: 12px;
 
+                @media (max-width: 480px) {
+                    width: 100%;
+                }
+
                 &__title {
                     font-weight: 500;
                     font-size: 12px;
@@ -276,6 +310,14 @@ export default {
         position: absolute;
         bottom: 0;
         z-index: -1;
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+        }
     }
 }
 </style>
